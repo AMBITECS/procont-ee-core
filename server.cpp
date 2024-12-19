@@ -45,8 +45,10 @@ int getSO_ERROR(int fd)
 {
    int err = 1;
    socklen_t len = sizeof err;
-   if (-1 == getsockopt(fd, SOL_SOCKET, SO_ERROR, (char *)&err, &len)) perror("getSO_ERROR");
-   if (err) errno = err;              // set errno to the socket SO_ERROR
+   if (-1 == getsockopt(fd, SOL_SOCKET, SO_ERROR, (char *)&err, &len))
+      perror("getSO_ERROR");
+   if (err)
+      errno = err;              // set errno to the socket SO_ERROR
    return err;
 }
 
@@ -84,7 +86,7 @@ bool SetSocketBlockingEnabled(int fd, bool blocking)
 //-----------------------------------------------------------------------------
 int createSocket(uint16_t port)
 {
-    unsigned char log_msg[1000];
+    char log_msg[1000];
     int socket_fd;
     struct sockaddr_in server_addr;
 
@@ -92,7 +94,7 @@ int createSocket(uint16_t port)
     socket_fd = socket(AF_INET,SOCK_STREAM,0);
     if (socket_fd<0)
     {
-        sprintf((char*)log_msg, "Server: error creating stream socket => %s\n", strerror(errno));
+        sprintf(log_msg, "Server: error creating stream socket => %s\n", strerror(errno));
         log(log_msg);
         return -1;
     }
@@ -113,14 +115,14 @@ int createSocket(uint16_t port)
     //Bind socket
     if (bind(socket_fd,(struct sockaddr *)&server_addr,sizeof(server_addr)) < 0)
     {
-        sprintf((char*)log_msg, "Server: error binding socket => %s\n", strerror(errno));
+        sprintf(log_msg, "Server: error binding socket => %s\n", strerror(errno));
         log(log_msg);
         return -1;
     }
     
     // we accept max 5 pending connections
     listen(socket_fd,5);
-    sprintf((char*)log_msg, "Server: Listening on port %d\n", port);
+    sprintf(log_msg, "Server: Listening on port %d\n", port);
     log(log_msg);
 
     return socket_fd;
@@ -132,21 +134,21 @@ int createSocket(uint16_t port)
 //-----------------------------------------------------------------------------
 int waitForClient(int socket_fd, int protocol_type)
 {
-    unsigned char log_msg[1000];
+    char log_msg[1000];
     int client_fd;
-    bool *run_server;
     struct sockaddr_in client_addr;
-    socklen_t client_len = sizeof(client_addr);
-    memset(&client_addr, 0, sizeof(client_addr));
-    client_addr.sin_family = AF_INET;
-    //client_addr.sin_port = htons(1502);
+    bool *run_server;
+    socklen_t client_len;
 
-    if (protocol_type == MODBUS_PROTOCOL)	run_server = &run_modbus;
-    else if (protocol_type == ENIP_PROTOCOL)	run_server = &run_enip;
-
-    sprintf((char*)log_msg, "Server: waiting for new client...\n");
+    if (protocol_type == MODBUS_PROTOCOL)
+        run_server = &run_modbus;
+    else if (protocol_type == ENIP_PROTOCOL)
+        run_server = &run_enip;
+    
+    sprintf(log_msg, "Server: waiting for new client...\n");
     log(log_msg);
 
+    client_len = sizeof(client_addr);
     while (*run_server)
     {
         client_fd = accept(socket_fd, (struct sockaddr *)&client_addr, &client_len); //non-blocking call
@@ -154,9 +156,6 @@ int waitForClient(int socket_fd, int protocol_type)
         {
             SetSocketBlockingEnabled(client_fd, true);
             break;
-        } else {
-            //sprintf((char*)log_msg, "Server: socket accept error => %s\n", strerror(errno));
-            //log(log_msg);
         }
         sleepms(100);
     }
@@ -181,15 +180,14 @@ int listenToClient(int client_fd, unsigned char *buffer)
 //-----------------------------------------------------------------------------
 void processMessage(unsigned char *buffer, int bufferSize, int client_fd, int protocol_type)
 {
-    int messageSize;
     if (protocol_type == MODBUS_PROTOCOL)
     {
-        messageSize = processModbusMessage(buffer, bufferSize);
+        int messageSize = processModbusMessage(buffer, bufferSize);
         write(client_fd, buffer, messageSize);
     }
     else if (protocol_type == ENIP_PROTOCOL)
     {
-        messageSize = processEnipMessage(buffer, bufferSize);
+        int messageSize = processEnipMessage(buffer, bufferSize);
         write(client_fd, buffer, messageSize);
     }
 }
@@ -199,7 +197,7 @@ void processMessage(unsigned char *buffer, int bufferSize, int client_fd, int pr
 //-----------------------------------------------------------------------------
 void *handleConnections(void *arguments)
 {
-    unsigned char log_msg[1000];
+    char log_msg[1000];
     int *args = (int *)arguments;
     int client_fd = args[0];
     int protocol_type = args[1];
@@ -207,10 +205,12 @@ void *handleConnections(void *arguments)
     int messageSize;
     bool *run_server;
     
-    if (protocol_type == MODBUS_PROTOCOL)	run_server = &run_modbus;
-    else if (protocol_type == ENIP_PROTOCOL)	run_server = &run_enip;
+    if (protocol_type == MODBUS_PROTOCOL)
+        run_server = &run_modbus;
+    else if (protocol_type == ENIP_PROTOCOL)
+        run_server = &run_enip;
 
-    sprintf((char*)log_msg, "Server: Thread created for client ID: %d\n", client_fd);
+    sprintf(log_msg, "Server: Thread created for client ID: %d\n", client_fd);
     log(log_msg);
 
     while(*run_server)
@@ -219,11 +219,19 @@ void *handleConnections(void *arguments)
         //int messageSize;
 
         messageSize = listenToClient(client_fd, buffer);
-        if (messageSize <= 0 || messageSize > NET_BUFFER_SIZE) {
-            // something has gone wrong or the client has closed connection
-            if (messageSize == 0) sprintf((char*)log_msg, "Modbus Server: client ID: %d has closed the connection\n", client_fd);
-            else sprintf((char*)log_msg, "Modbus Server: Something is wrong with the  client ID: %d message Size : %i\n", client_fd, messageSize);
-            log(log_msg);
+        if (messageSize <= 0 || messageSize > NET_BUFFER_SIZE)
+        {
+            // something has  gone wrong or the client has closed connection
+            if (messageSize == 0)
+            {
+                sprintf(log_msg, "Modbus Server: client ID: %d has closed the connection\n", client_fd);
+                log(log_msg);
+            }
+            else
+            {
+                sprintf(log_msg, "Modbus Server: Something is wrong with the  client ID: %d message Size : %i\n", client_fd, messageSize);
+                log(log_msg);
+            }
             break;
         }
 
@@ -231,7 +239,7 @@ void *handleConnections(void *arguments)
     }
     //printf("Debug: Closing client socket and calling pthread_exit in server.cpp\n");
     close(client_fd);
-    sprintf((char*)log_msg, "Terminating Modbus connections thread\r\n");
+    sprintf(log_msg, "Terminating Modbus connections thread\r\n");
     log(log_msg);
     pthread_exit(NULL);
 }
@@ -243,21 +251,26 @@ void *handleConnections(void *arguments)
 //-----------------------------------------------------------------------------
 void startServer(uint16_t port, int protocol_type)
 {
-    unsigned char log_msg[1000];
+    char log_msg[1000];
     int socket_fd, client_fd;
     bool *run_server;
     
     socket_fd = createSocket(port);
     
-    if (protocol_type == MODBUS_PROTOCOL)	run_server = &run_modbus;
-    else if (protocol_type == ENIP_PROTOCOL)	run_server = &run_enip;
+    if (protocol_type == MODBUS_PROTOCOL)
+    {
+        //mapUnusedIO();
+        run_server = &run_modbus;
+    }
+    else if (protocol_type == ENIP_PROTOCOL)
+        run_server = &run_enip;
     
     while(*run_server)
     {
         client_fd = waitForClient(socket_fd, protocol_type); //block until a client connects
         if (client_fd < 0)
         {
-            sprintf((char*)log_msg, "Server: Error accepting client!\n");
+            sprintf(log_msg, "Server: Error accepting client!\n");
             log(log_msg);
         }
 
@@ -266,19 +279,19 @@ void startServer(uint16_t port, int protocol_type)
             int arguments[2];
             pthread_t thread;
             int ret = -1;
-            sprintf((char*)log_msg, "Server: Client accepted! Creating thread for the new client ID: %d...\n", client_fd);
+            sprintf(log_msg, "Server: Client accepted! Creating thread for the new client ID: %d...\n", client_fd);
             log(log_msg);
             arguments[0] = client_fd;
             arguments[1] = protocol_type;
             ret = pthread_create(&thread, NULL, handleConnections, (void*)arguments);
-            if (ret==0) {
+            if (ret==0) 
+            {
                 pthread_detach(thread);
-                printf("Modbus thread started...!\n");
             }
         }
     }
     close(socket_fd);
     close(client_fd);
-    sprintf((char*)log_msg, "Terminating Server thread\r\n");
+    sprintf(log_msg, "Terminating Server thread\r\n");
     log(log_msg);
 }

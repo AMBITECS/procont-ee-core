@@ -32,10 +32,11 @@
 
 //Internal buffers for I/O and memory. These buffers are defined in the
 //auto-generated glueVars.cpp file
-#define BUFFER_SIZE		    1024
+#define BUFFER_SIZE		1024
 
-#define LOGSTR_SIZE		    1024
+//#define LOGSTR_SIZE		    1024
 #define INTERACTIVE_PORT    43628
+
 
 /*********************/
 /*  IEC Types defs   */
@@ -73,13 +74,21 @@ extern IEC_BYTE *byte_output[BUFFER_SIZE];
 extern IEC_UINT *int_input[BUFFER_SIZE];
 extern IEC_UINT *int_output[BUFFER_SIZE];
 
+//32bit I/O
+extern IEC_UDINT *dint_input[BUFFER_SIZE];
+extern IEC_UDINT *dint_output[BUFFER_SIZE];
+
+//64bit I/O
+extern IEC_ULINT *lint_input[BUFFER_SIZE];
+extern IEC_ULINT *lint_output[BUFFER_SIZE];
+
 //Memory
 extern IEC_UINT *int_memory[BUFFER_SIZE];
-extern IEC_DINT *dint_memory[BUFFER_SIZE];
-extern IEC_LINT *lint_memory[BUFFER_SIZE];
+extern IEC_UDINT *dint_memory[BUFFER_SIZE];
+extern IEC_ULINT *lint_memory[BUFFER_SIZE];
 
 //Special Functions
-extern IEC_LINT *special_functions[BUFFER_SIZE];
+extern IEC_ULINT *special_functions[BUFFER_SIZE];
 
 //lock for the buffer
 extern pthread_mutex_t bufferLock;
@@ -105,24 +114,22 @@ void finalizeHardware();
 void updateBuffersIn();
 void updateBuffersOut();
 
-//custom_layer.h
-void initCustomLayer();
-void updateCustomIn();
-void updateCustomOut();
-extern int ignored_bool_inputs[];
-extern int ignored_bool_outputs[];
-extern int ignored_int_inputs[];
-extern int ignored_int_outputs[];
-
-//main.cpp
-void sleep_until(struct timespec *ts, int delay);
+//utils.cpp
+void sleep_until(struct timespec *ts, long long delay);
 void sleepms(int milliseconds);
-void log(unsigned char *logmsg);
-bool pinNotPresent(int *ignored_vector, int vector_size, int pinNumber);
-extern uint8_t run_openplc;
+void log(char *logmsg);
+void handleSpecialFunctions();
+void timespec_diff(struct timespec *a, struct timespec *b, struct timespec *result);
+void *interactiveServerThread(void *arg);
+void disableOutputs();
+void RecordCycletimeLatency(long cycle_time, long sleep_latency);
+
+void setModbusRtsPin(uint8_t pin);
 extern unsigned char log_buffer[1000000];
 extern int log_index;
-void handleSpecialFunctions();
+
+//main.cpp
+extern uint8_t run_openplc;
 
 //server.cpp
 void startServer(uint16_t port, int protocol_type);
@@ -155,6 +162,7 @@ void initializeMB();
 void *querySlaveDevices(void *arg);
 void updateBuffersIn_MB();
 void updateBuffersOut_MB();
+extern uint8_t rpi_modbus_rts_pin;     // If <> 0, expect hardware RTS to be used with this pin
 
 //dnp3.cpp
 void dnp3StartServer(int port);

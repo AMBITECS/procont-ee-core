@@ -36,8 +36,11 @@
 #include <time.h>
 
 #include "ladder.h"
+#define BUFFER_SIZE 1024
 
 //Global Variables
+bool ethercat_configured = 0;
+char ethercat_conf_file[BUFFER_SIZE];
 bool run_modbus = 0;
 uint16_t modbus_port = 502;
 bool run_dnp3 = 0;
@@ -58,6 +61,12 @@ pthread_t dnp3_thread;
 pthread_t enip_thread;
 pthread_t pstorage_thread;
 
+//-----------------------------------------------------------------------------
+// Configure Ethercat
+//-----------------------------------------------------------------------------
+int configureEthercat(){
+    return 1;
+}
 //-----------------------------------------------------------------------------
 // Start the Modbus Thread
 //-----------------------------------------------------------------------------
@@ -93,7 +102,7 @@ void *pstorageThread(void *arg)
 //-----------------------------------------------------------------------------
 // Read the argument from a command function
 //-----------------------------------------------------------------------------
-int readCommandArgument(/*unsigned*/ char *command)
+int readCommandArgument(const /*unsigned*/ char *command)
 {
     int i = 0;
     int j = 0;
@@ -111,6 +120,30 @@ int readCommandArgument(/*unsigned*/ char *command)
     
     return atoi(argument);
 }
+//-----------------------------------------------------------------------------
+// Read string argument from a command function
+//-----------------------------------------------------------------------------
+/*unsigned*/ char *readCommandArgumentStr(const /*unsigned*/ char *command)
+{
+    int i = 0;
+    int j = 0;
+
+    static /*unsigned*/ char argument[1024];
+//    unsigned char *argument;
+//    argument = (unsigned char *)malloc(1024 * sizeof(unsigned char));
+    
+    while (command[i] != '(' && command[i] != '\0') i++;
+    if (command[i] == '(') i++;
+    while (command[i] != ')' && command[i] != '\0')
+    {
+        argument[j] = command[i];
+        i++;
+        j++;
+        argument[j] = '\0';
+    }
+    
+    return argument;
+}
 
 //-----------------------------------------------------------------------------
 // Create the socket and bind it. Returns the file descriptor for the socket
@@ -118,7 +151,7 @@ int readCommandArgument(/*unsigned*/ char *command)
 //-----------------------------------------------------------------------------
 int createSocket_interactive(int port)
 {
-    unsigned char log_msg[1000];
+    char log_msg[1000];
     int socket_fd;
     struct sockaddr_in server_addr;
 
@@ -126,7 +159,7 @@ int createSocket_interactive(int port)
     socket_fd = socket(AF_INET,SOCK_STREAM,0);
     if (socket_fd<0)
     {
-        sprintf((char*)log_msg, "Interactive Server: error creating stream socket => %s\n", strerror(errno));
+        sprintf(log_msg, "Interactive Server: error creating stream socket => %s\n", strerror(errno));
         log(log_msg);
         exit(1);
     }
@@ -147,13 +180,13 @@ int createSocket_interactive(int port)
     //Bind socket
     if (bind(socket_fd,(struct sockaddr *)&server_addr,sizeof(server_addr)) < 0)
     {
-        sprintf((char*)log_msg, "Interactive Server: error binding socket => %s\n", strerror(errno));
+        sprintf(log_msg, "Interactive Server: error binding socket => %s\n", strerror(errno));
         log(log_msg);
         exit(1);
     }
     // we accept max 5 pending connections
     listen(socket_fd,5);
-    sprintf((char*)log_msg, "Interactive Server: Listening on port %d\n", port);
+    sprintf(log_msg, "Interactive Server: Listening on port %d\n", port);
     log(log_msg);
 
     return socket_fd;
@@ -201,175 +234,188 @@ int listenToClient_interactive(int client_fd, unsigned char *buffer)
 //-----------------------------------------------------------------------------
 // Process client's commands for the interactive server
 //-----------------------------------------------------------------------------
-void processCommand(unsigned char *buffer, int client_fd)
+void processCommand(/*unsigned*/ char *buffer, int client_fd)
 {
-    unsigned char log_msg[1000];
+    char log_msg[1200];
     int count_char = 0;
     
     if (processing_command)
     {
-        count_char = sprintf((char*)buffer, "Processing command...\n");
+        count_char = sprintf(buffer, "Processing command...\n");
         write(client_fd, buffer, count_char);
         return;
     }
     
-    if (strncmp((char*)buffer, "quit()", 6) == 0)
+    if (strncmp(buffer, "quit()", 6) == 0)
     {
         processing_command = true;
-        sprintf((char*)log_msg, "Issued quit() command\n");
+        sprintf(log_msg, "Issued quit() command\n");
         log(log_msg);
         if (run_modbus)
         {
             run_modbus = 0;
             pthread_join(modbus_thread, NULL);
-            sprintf((char*)log_msg, "Modbus server was stopped\n");
+            sprintf(log_msg, "Modbus server was stopped\n");
             log(log_msg);
         }
         if (run_dnp3)
         {
             run_dnp3 = 0;
             pthread_join(dnp3_thread, NULL);
-            sprintf((char*)log_msg, "DNP3 server was stopped\n");
+            sprintf(log_msg, "DNP3 server was stopped\n");
             log(log_msg);
         }
         run_openplc = 0;
         processing_command = false;
     }
-    else if (strncmp((char*)buffer, "start_modbus(", 13) == 0)
+    else if (strncmp(buffer, "start_ethercat(", 15) == 0)
     {
         processing_command = true;
-        modbus_port = readCommandArgument((char*)buffer);
-        sprintf((char*)log_msg, "Issued start_modbus() command to start on port: %d\n", modbus_port);
+        char *argument;
+        argument = readCommandArgumentStr(buffer);
+        strcpy(ethercat_conf_file, argument);
+        free(argument);
+        sprintf(log_msg, "Issued start_ethercat() command to start with config: %s\n", ethercat_conf_file);
+        log(log_msg);
+        //Configure ethercat
+        ethercat_configured = configureEthercat();
+        processing_command = false;
+    }
+    else if (strncmp(buffer, "start_modbus(", 13) == 0)
+    {
+        processing_command = true;
+        modbus_port = readCommandArgument((buffer));
+        sprintf(log_msg, "Issued start_modbus() command to start on port: %d\n", modbus_port);
         log(log_msg);
         if (run_modbus)
         {
-            sprintf((char*)log_msg, "Modbus server already active. Restarting on port: %d\n", modbus_port);
+            sprintf(log_msg, "Modbus server already active. Restarting on port: %d\n", modbus_port);
             log(log_msg);
             //Stop Modbus server
-            run_modbus = 0;
-            pthread_join(modbus_thread, NULL);
-            sprintf((char*)log_msg, "Modbus server was stopped\n");
+            run_modbus = false;
+            pthread_join(modbus_thread, nullptr);
+            sprintf(log_msg, "Modbus server was stopped\n");
             log(log_msg);
         }
         //Start Modbus server
         run_modbus = 1;
-        pthread_create(&modbus_thread, NULL, modbusThread, NULL);
+        pthread_create(&modbus_thread, nullptr, modbusThread, nullptr);
         processing_command = false;
     }
-    else if (strncmp((char*)buffer, "stop_modbus()", 13) == 0)
+    else if (strncmp(buffer, "stop_modbus()", 13) == 0)
     {
         processing_command = true;
-        sprintf((char*)log_msg, "Issued stop_modbus() command\n");
+        sprintf(log_msg, "Issued stop_modbus() command\n");
         log(log_msg);
         if (run_modbus)
         {
             run_modbus = 0;
             pthread_join(modbus_thread, NULL);
-            sprintf((char*)log_msg, "Modbus server was stopped\n");
+            sprintf(log_msg, "Modbus server was stopped\n");
             log(log_msg);
         }
         processing_command = false;
     }
-    else if (strncmp((char*)buffer, "start_dnp3(", 11) == 0)
+    else if (strncmp(buffer, "start_dnp3(", 11) == 0)
     {
         processing_command = true;
-        dnp3_port = readCommandArgument((char*)buffer);
-        sprintf((char*)log_msg, "Issued start_dnp3() command to start on port: %d\n", dnp3_port);
+        dnp3_port = readCommandArgument(buffer);
+        sprintf(log_msg, "Issued start_dnp3() command to start on port: %d\n", dnp3_port);
         log(log_msg);
         if (run_dnp3)
         {
-            sprintf((char*)log_msg, "DNP3 server already active. Restarting on port: %d\n", dnp3_port);
+            sprintf(log_msg, "DNP3 server already active. Restarting on port: %d\n", dnp3_port);
             log(log_msg);
             //Stop DNP3 server
-            run_dnp3 = 0;
-            pthread_join(dnp3_thread, NULL);
-            sprintf((char*)log_msg, "DNP3 server was stopped\n");
+            run_dnp3 = false;
+            pthread_join(dnp3_thread, nullptr);
+            sprintf(log_msg, "DNP3 server was stopped\n");
             log(log_msg);
         }
         //Start DNP3 server
         run_dnp3 = 1;
-        pthread_create(&dnp3_thread, NULL, dnp3Thread, NULL);
+        pthread_create(&dnp3_thread, nullptr, dnp3Thread, nullptr);
         processing_command = false;
     }
-    else if (strncmp((char*)buffer, "stop_dnp3()", 11) == 0)
+    else if (strncmp(buffer, "stop_dnp3()", 11) == 0)
     {
         processing_command = true;
-        sprintf((char*)log_msg, "Issued stop_dnp3() command\n");
+        sprintf(log_msg, "Issued stop_dnp3() command\n");
         log(log_msg);
         if (run_dnp3)
         {
-            run_dnp3 = 0;
-            pthread_join(dnp3_thread, NULL);
-            sprintf((char*)log_msg, "DNP3 server was stopped\n");
+            run_dnp3 = false;
+            pthread_join(dnp3_thread, nullptr);
+            sprintf(log_msg, "DNP3 server was stopped\n");
             log(log_msg);
         }
         processing_command = false;
     }
-    else if (strncmp((char*)buffer, "start_enip(", 11) == 0)
+    else if (strncmp(buffer, "start_enip(", 11) == 0)
     {
         processing_command = true;
-        enip_port = readCommandArgument((char*)buffer);
-        sprintf((char*)log_msg, "Issued start_enip() command to start on port: %d\n", enip_port);
+        enip_port = readCommandArgument(buffer);
+        sprintf(log_msg, "Issued start_enip() command to start on port: %d\n", enip_port);
         log(log_msg);
         if (run_enip)
         {
-            sprintf((char*)log_msg, "EtherNet/IP server already active. Restarting on port: %d\n", enip_port);
+            sprintf(log_msg, "EtherNet/IP server already active. Restarting on port: %d\n", enip_port);
             log(log_msg);
             //Stop Enip server
             run_enip = 0;
-            pthread_join(enip_thread, NULL);
-            sprintf((char*)log_msg, "EtherNet/IP server was stopped\n");
+            pthread_join(enip_thread, nullptr);
+            sprintf(log_msg, "EtherNet/IP server was stopped\n");
             log(log_msg);
         }
         //Start Enip server
         run_enip = 1;
-        pthread_create(&enip_thread, NULL, enipThread, NULL);
+        pthread_create(&enip_thread, nullptr, enipThread, nullptr);
         processing_command = false;
     }
-    else if (strncmp((char*)buffer, "stop_enip()", 11) == 0)
+    else if (strncmp(buffer, "stop_enip()", 11) == 0)
     {
         processing_command = true;
-        sprintf((char*)log_msg, "Issued stop_enip() command\n");
+        sprintf(log_msg, "Issued stop_enip() command\n");
         log(log_msg);
         if (run_enip)
         {
-            run_enip = 0;
-            pthread_join(enip_thread, NULL);
-            sprintf((char*)log_msg, "EtherNet/IP server was stopped\n");
+            run_enip = false;
+            pthread_join(enip_thread, nullptr);
+            sprintf(log_msg, "EtherNet/IP server was stopped\n");
             log(log_msg);
         }
         processing_command = false;
     }
-    else if (strncmp((char*)buffer, "start_pstorage(", 15) == 0)
+    else if (strncmp(buffer, "start_pstorage(", 15) == 0)
     {
         processing_command = true;
-        pstorage_polling = readCommandArgument((char*)buffer);
-        sprintf((char*)log_msg, "Issued start_pstorage() command with polling rate of %d seconds\n", pstorage_polling);
+        pstorage_polling = readCommandArgument(buffer);
+        sprintf(log_msg, "Issued start_pstorage() command with polling rate of %d seconds\n", pstorage_polling);
         log(log_msg);
         if (run_pstorage)
         {
-            sprintf((char*)log_msg, "Persistent Storage server already active. Changing polling rate to: %d\n", pstorage_polling);
+            sprintf(log_msg, "Persistent Storage server already active. Changing polling rate to: %d\n", pstorage_polling);
             log(log_msg);
         }
         //Start Enip server
-        run_pstorage = 1;
-        pthread_create(&pstorage_thread, NULL, pstorageThread, NULL);
+        run_pstorage = true;
+        pthread_create(&pstorage_thread, nullptr, pstorageThread, nullptr);
         processing_command = false;
     }
-    else if (strncmp((char*)buffer, "stop_pstorage()", 15) == 0)
+    else if (strncmp(buffer, "stop_pstorage()", 15) == 0)
     {
         processing_command = true;
-        sprintf((char*)log_msg, "Issued stop_pstorage() command\n");
+        sprintf(log_msg, "Issued stop_pstorage() command\n");
         log(log_msg);
         if (run_pstorage)
         {
-            run_pstorage = 0;
-            sprintf((char*)log_msg, "Persistent Storage thread was stopped\n");
+            run_pstorage = false;
+            sprintf(log_msg, "Persistent Storage thread was stopped\n");
             log(log_msg);
         }
         processing_command = false;
     }
-    else if (strncmp((char*)buffer, "runtime_logs()", 14) == 0)
+    else if (strncmp(buffer, "runtime_logs()", 14) == 0)
     {
         processing_command = true;
         printf("Issued runtime_logs() command\n");
@@ -377,11 +423,11 @@ void processCommand(unsigned char *buffer, int client_fd)
         processing_command = false;
         return;
     }
-    else if (strncmp((char*)buffer, "exec_time()", 11) == 0)
+    else if (strncmp(buffer, "exec_time()", 11) == 0)
     {
         processing_command = true;
         time(&end_time);
-        count_char = sprintf((char*)buffer, "%llu\n", (unsigned long long)difftime(end_time, start_time));
+        count_char = sprintf(buffer, "%llu\n", (unsigned long long)difftime(end_time, start_time));
         write(client_fd, buffer, count_char);
         processing_command = false;
         return;
@@ -389,13 +435,13 @@ void processCommand(unsigned char *buffer, int client_fd)
     else
     {
         processing_command = true;
-        count_char = sprintf((char*)buffer, "Error: unrecognized command\n");
+        count_char = sprintf(buffer, "Error: unrecognized command\n");
         write(client_fd, buffer, count_char);
         processing_command = false;
         return;
     }
     
-    count_char = sprintf((char*)buffer, "OK\n");
+    count_char = sprintf(buffer, "OK\n");
     write(client_fd, buffer, count_char);
 }
 
@@ -406,9 +452,9 @@ void processMessage_interactive(unsigned char *buffer, int bufferSize, int clien
 {
     for (int i = 0; i < bufferSize; i++)
     {
-        if (buffer[i] == '\r' || buffer[i] == '\n' || buffer[i] == 0 || command_index >= 1024)
+        if (buffer[i] == '\r' || buffer[i] == '\n' || command_index >= 1024)
         {
-            processCommand(server_command, client_fd);
+            processCommand((char*)server_command, client_fd);
             command_index = 0;
             break;
         }
@@ -464,7 +510,7 @@ void *handleConnections_interactive(void *arguments)
 //-----------------------------------------------------------------------------
 void startInteractiveServer(int port)
 {
-    unsigned char log_msg[1000];
+    char log_msg[1000];
     int socket_fd, client_fd;
     socket_fd = createSocket_interactive(port);
 
@@ -473,9 +519,10 @@ void startInteractiveServer(int port)
         client_fd = waitForClient_interactive(socket_fd); //block until a client connects
         if (client_fd < 0)
         {
-            sprintf((char*)log_msg, "Interactive Server: Error accepting client!\n");
+            sprintf(log_msg, "Interactive Server: Error accepting client!\n");
             log(log_msg);
         }
+
         else
         {
             int arguments[1];
@@ -485,7 +532,10 @@ void startInteractiveServer(int port)
             printf("Interactive Server: Client accepted! Creating thread for the new client ID: %d...\n", client_fd);
             arguments[0] = client_fd;
             ret = pthread_create(&thread, NULL, handleConnections_interactive, arguments);
-            if (ret==0) pthread_detach(thread);
+            if (ret==0) 
+            {
+                pthread_detach(thread);
+            }
         }
     }
     
