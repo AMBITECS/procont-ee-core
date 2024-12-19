@@ -33,7 +33,6 @@
 #include <poll.h>
 
 #include "ladder.h"
-#include "custom_layer.h"
 
 #if !defined(ARRAY_SIZE)
     #define ARRAY_SIZE(x) (sizeof((x)) / sizeof((x)[0]))
@@ -91,14 +90,14 @@ int requestSYSFS(char *path, char *command)
     }
 }
 
-//-----------------------------------------------------------------------------
-// Look for all available I/Os connected to Neuron. Scan from 1_01 to 10_10
-//-----------------------------------------------------------------------------
+//------------------------------------------------------------------------------------------------------------
+// Look for all available I/Os connected to Neuron. Scan from 1_01 to 10_20. With specific scan for user leds 
+//------------------------------------------------------------------------------------------------------------
 void searchForIO()
 {
     char path[200];
     char path_fmt[200];
-    unsigned char log_msg[1000];
+    char log_msg[1000];
     
     sprintf(log_msg, "Neuron: Searching for I/O...\n");
     log(log_msg);
@@ -110,7 +109,7 @@ void searchForIO()
     {
         for (int major = 1; major < 10; major++)
         {
-            for (int minor = 1; minor < 10; minor++)
+            for (int minor = 1; minor < 20; minor++)
             {
                 sprintf(path, path_fmt, group, major, minor);
                 char *command = "read";
@@ -124,7 +123,7 @@ void searchForIO()
             }
         }
     }
-    
+
     /* look for digital outputs */
     strcpy(path_fmt, "/sys/devices/platform/unipi_plc/io_group%d/do_%d_%02d/do_value");
     index = 0;
@@ -132,7 +131,7 @@ void searchForIO()
     {
         for (int major = 1; major < 10; major++)
         {
-            for (int minor = 1; minor < 10; minor++)
+            for (int minor = 1; minor < 20; minor++)
             {
                 sprintf(path, path_fmt, group, major, minor);
                 char *command = "read";
@@ -153,7 +152,7 @@ void searchForIO()
     {
         for (int major = 1; major < 10; major++)
         {
-            for (int minor = 1; minor < 10; minor++)
+            for (int minor = 1; minor < 20; minor++)
             {
                 sprintf(path, path_fmt, group, major, minor);
                 char *command = "read";
@@ -166,8 +165,27 @@ void searchForIO()
                 }
             }
         }
+
     }
-    
+
+    /* look for digital outputs (user leds) */
+    strcpy(path_fmt, "/sys/devices/platform/unipi_plc/io_group%d/leds/unipi:green:uled-x%d/brightness");
+    for (int group = 1; group < 10; group++)
+    {
+        for (int major = 0; major < 10; major++)
+        {
+            sprintf(path, path_fmt, group, major);
+            char *command = "read";
+            if (requestSYSFS(path, command) >= 0)
+            {
+                /* valid I/O. Add to the list */
+                strcpy(digital_outputs[index], path);                
+                index++;
+                digital_outputs[index][0] = '\0';
+            }
+        }
+    }
+
     /* look for analog inputs */
     strcpy(path_fmt, "/sys/devices/platform/unipi_plc/io_group%d/ai_%d_%d/in_voltage0_raw");
     index = 0;
@@ -175,7 +193,7 @@ void searchForIO()
     {
         for (int major = 1; major < 10; major++)
         {
-            for (int minor = 1; minor < 10; minor++)
+            for (int minor = 1; minor < 20; minor++)
             {
                 sprintf(path, path_fmt, group, major, minor);
                 char *command = "read";
@@ -197,7 +215,7 @@ void searchForIO()
     {
         for (int major = 1; major < 10; major++)
         {
-            for (int minor = 1; minor < 10; minor++)
+            for (int minor = 1; minor < 20; minor++)
             {
                 sprintf(path, path_fmt, group, major, minor);
                 char *command = "read";
@@ -284,15 +302,13 @@ void finalizeHardware()
 //-----------------------------------------------------------------------------
 void updateBuffersIn()
 {
-	pthread_mutex_lock(&bufferLock); //lock mutex
+    pthread_mutex_lock(&bufferLock); //lock mutex
     
     /* read digital inputs */
     int i = 0;
     while (digital_inputs[i][0] != '\0')
     {   
-        if (pinNotPresent(ignored_bool_inputs, ARRAY_SIZE(ignored_bool_inputs), i))
-            if (bool_input[i/8][i%8] != NULL) *bool_input[i/8][i%8] = requestSYSFS(digital_inputs[i], "read");
-        
+        if (bool_input[i/8][i%8] != NULL) *bool_input[i/8][i%8] = requestSYSFS(digital_inputs[i], "read");
         i++;
     }
     
@@ -300,18 +316,17 @@ void updateBuffersIn()
     i = 0;
     while (analog_inputs[i][0] != '\0')
     {
-        if (pinNotPresent(ignored_int_inputs, ARRAY_SIZE(ignored_int_inputs), i))
-            if (int_input[i] != NULL)
-            {
-                uint32_t value = (uint32_t)((float)requestSYSFS(analog_inputs[i], "read") * 6.5535);
-                if (value > 65535) value = 65535;
-                *int_input[i] = (uint16_t)value;
-            }
+        if (int_input[i] != NULL)
+        {
+            uint32_t value = (uint32_t)((float)requestSYSFS(analog_inputs[i], "read") * 6.5535);
+            if (value > 65535) value = 65535;
+            *int_input[i] = (uint16_t)value;
+        }
         
         i++;
     }
 
-	pthread_mutex_unlock(&bufferLock); //unlock mutex
+    pthread_mutex_unlock(&bufferLock); //unlock mutex
 }
 
 //-----------------------------------------------------------------------------
@@ -321,21 +336,18 @@ void updateBuffersIn()
 //-----------------------------------------------------------------------------
 void updateBuffersOut()
 {
-	pthread_mutex_lock(&bufferLock); //lock mutex
+    pthread_mutex_lock(&bufferLock); //lock mutex
     
     /* write digital outputs */
     int i = 0;
     while (digital_outputs[i][0] != '\0')
     {
-        if (pinNotPresent(ignored_bool_outputs, ARRAY_SIZE(ignored_bool_outputs), i))
+        if (bool_output[i/8][i%8] != NULL) 
         {
-            if (bool_output[i/8][i%8] != NULL) 
-            {
-                if (*bool_output[i/8][i%8])
-                    requestSYSFS(digital_outputs[i], "write=1");
-                else
-                    requestSYSFS(digital_outputs[i], "write=0");
-            }
+            if (*bool_output[i/8][i%8])
+                requestSYSFS(digital_outputs[i], "write=1");
+            else
+                requestSYSFS(digital_outputs[i], "write=0");
         }
         i++;
     }
@@ -344,20 +356,17 @@ void updateBuffersOut()
     i = 0;
     while (analog_outputs[i][0] != '\0')
     {
-        if (pinNotPresent(ignored_int_outputs, ARRAY_SIZE(ignored_int_outputs), i))
+        if (int_output[i] != NULL) 
         {
-            if (int_output[i] != NULL) 
-            {
-                char value_fmt[100];
-                char value[100];
-                strcpy(value_fmt, "write=%f");
-                sprintf(value, value_fmt, ((float)*int_output[i]/6.5535));
-                requestSYSFS(analog_outputs[i], value);
-            }
+            char value_fmt[100];
+            char value[100];
+            strcpy(value_fmt, "write=%f");
+            sprintf(value, value_fmt, ((float)*int_output[i]/6.5535));
+            requestSYSFS(analog_outputs[i], value);
         }
         i++;
     }
     
-	pthread_mutex_unlock(&bufferLock); //unlock mutex
+    pthread_mutex_unlock(&bufferLock); //unlock mutex
     
 }

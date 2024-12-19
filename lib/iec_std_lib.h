@@ -41,6 +41,10 @@
 #include <string.h>
 #include <stdarg.h>
 
+#ifdef __CYGWIN__
+#include <sys/types.h>
+#endif
+
 #ifdef DEBUG_IEC
 #define DBG(...) printf(__VA_ARGS__);
 #define DBG_TYPE(TYPENAME, name) __print_##TYPENAME(name);
@@ -53,6 +57,8 @@
  * Include type defs.
  */
 #include "iec_types_all.h"
+// Reverted to exclude this. Including <sys/time.h> broke all the other platforms. Might need to check for an alternative for Alpine
+//#include <sys/time.h>
 
 extern TIME __CURRENT_TIME;
 extern BOOL __DEBUG;
@@ -236,7 +242,7 @@ static inline IEC_TIMESPEC __time_to_timespec(int sign, double mseconds, double 
 
 
 /* NOTE: The following function was turned into a macro, so it could be used to initialize the initial value of TOD (TIME_OF_DAY) variables */
-/* NOTE: many (but not all) of the same comments made regarding __time_to_timespec() are also valid here, so go and read those comments too! */
+/* NOTE: many (but not all) of the same comments made regarding __time_to_timespec() are also valid here, so go and read those comments too!
 /*
 static inline IEC_TIMESPEC __tod_to_timespec(double seconds, double minutes, double hours) {
   IEC_TIMESPEC ts;
@@ -375,7 +381,8 @@ static inline TIME __time_mul(TIME IN1, LREAL IN2){
   LREAL s_f = IN1.tv_sec * IN2;
   time_t s = (time_t)s_f;
   div_t ns = div((int)((LREAL)IN1.tv_nsec * IN2), 1000000000);
-  TIME res = {(long)s + ns.quot, (long)((long)ns.rem + (s_f - s) * 1000000000) };
+  TIME res = {(long)s + ns.quot,
+		      (long)ns.rem + (s_f - s) * 1000000000 };
   __normalize_timespec(&res);
   return res;
 }
@@ -533,7 +540,7 @@ static inline LREAL __string_to_real(STRING IN) {
     /*   TO_TIME   */
     /***************/
 static inline TIME    __int_to_time(LINT IN)  {return (TIME){IN, 0};}
-static inline TIME   __real_to_time(LREAL IN) {return (TIME){(long int)IN, (long int)(IN - (LINT)IN) * 1000000000};}
+static inline TIME   __real_to_time(LREAL IN) {return (TIME){IN, (IN - (LINT)IN) * 1000000000};}
 static inline TIME __string_to_time(STRING IN){
     __strlen_t l;
     /* TODO :
@@ -580,7 +587,7 @@ static inline STRING __time_to_string(TIME IN){
     div_t days;
     /*t#5d14h12m18s3.5ms*/
     res = __INIT_STRING;
-    days = div((int /*&*/)IN.tv_sec, SECONDS_PER_DAY);
+    days = div((int &)IN.tv_sec, SECONDS_PER_DAY);
     if(!days.rem && IN.tv_nsec == 0){
         res.len = snprintf((char*)&res.body, STR_MAX_LEN, "T#%dd", days.quot);
     }else{
@@ -727,10 +734,6 @@ static inline LWORD __uint_to_bcd(ULINT IN){
 #define __move_(TYPENAME)\
 static inline TYPENAME __move_##TYPENAME(TYPENAME op1) {return op1;}
 __ANY(__move_)
-
-
-
-
 
 
 

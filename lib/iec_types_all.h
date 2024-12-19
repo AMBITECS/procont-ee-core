@@ -86,6 +86,8 @@ typedef struct {\
   IEC_##type fvalue;\
 } __IEC_##type##_p;
 
+
+
 #define __DECLARE_DERIVED_TYPE(type, base)\
 typedef base type;\
 typedef __IEC_##base##_t __IEC_##type##_t;\

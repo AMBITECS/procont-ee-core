@@ -37,9 +37,17 @@
     #define ARRAY_SIZE(x) (sizeof((x)) / sizeof((x)[0]))
 #endif
 
-#define MAX_INPUT 		14
-#define MAX_OUTPUT 		11
-#define MAX_ANALOG_OUT	1
+#define MAX_INPUT 		8
+#define MAX_OUTPUT 		8
+#define MAX_ANALOG_OUT	2
+
+// Single pin definitions
+#define I2C_SDA			2
+#define I2C_SCL			3
+#define MODBUS_TX		4
+#define MODBUS_RX		5
+#define MODBUS_RTS		6
+#define ONEWIRE			23
 
 /********************I/O PINS CONFIGURATION*********************
  * A good source for RaspberryPi I/O pins information is:
@@ -50,15 +58,20 @@
 ****************************************************************/
 //inBufferPinMask: pin mask for each input, which
 //means what pin is mapped to that OpenPLC input
-int inBufferPinMask[MAX_INPUT] = { 2, 3, 4, 17, 27, 22, 10, 9, 11, 5, 6, 13, 19, 26 };
+//Order is intentional to match the GPIO mapping table of PiPLC at https://github.com/chrismettal/piplc#gpio-mapping
+//while having all inputs mapped "in order" from left to right
+int inBufferPinMask[MAX_INPUT] = { 17, 27, 22, 10, 9, 11, 13, 26 };
 
 //outBufferPinMask: pin mask for each output, which
 //means what pin is mapped to that OpenPLC output
-int outBufferPinMask[MAX_OUTPUT] =	{ 14, 15, 23, 24, 25, 8, 7, 12, 16, 20, 21 };
+//
+//Order is intentional to match the GPIO mapping table of PiPLC at https://github.com/chrismettal/piplc#gpio-mapping
+//while having all relays mapped "in order" from left to right
+int outBufferPinMask[MAX_OUTPUT] =	{ 24, 25, 8, 7, 12, 16, 20, 21};
 
 //analogOutBufferPinMask: pin mask for the analog PWM
 //output of the RaspberryPi
-int analogOutBufferPinMask[MAX_ANALOG_OUT] = { 18 };
+int analogOutBufferPinMask[MAX_ANALOG_OUT] = { 18, 19 };
 
 //-----------------------------------------------------------------------------
 // This function is called by the main OpenPLC routine when it is initializing.
@@ -73,10 +86,7 @@ void initializeHardware()
     for (int i = 0; i < MAX_INPUT; i++)
     {
         gpioSetMode(inBufferPinMask[i], PI_INPUT);
-        if (i != 0 && i != 1) //pull down can't be enabled on the first two pins
-        {
-            gpioSetPullUpDown(inBufferPinMask[i], PI_PUD_DOWN); //pull down enabled
-        }
+        gpioSetPullUpDown(inBufferPinMask[i], PI_PUD_UP); //pull up enabled
     }
 
     //set pins as output
@@ -91,6 +101,13 @@ void initializeHardware()
         gpioSetMode(analogOutBufferPinMask[i], PI_ALT5);
         gpioSetPWMrange(analogOutBufferPinMask[i], 1024);
     }
+
+    // Modbus
+    setModbusRtsPin(MODBUS_RTS);
+
+    // I²C?
+
+    // 1-Wire?
 }
 
 //-----------------------------------------------------------------------------
@@ -114,7 +131,7 @@ void updateBuffersIn()
     //INPUT
     for (int i = 0; i < MAX_INPUT; i++)
     {
-        if (bool_input[i/8][i%8] != NULL) *bool_input[i/8][i%8] = gpioRead(inBufferPinMask[i]);
+        if (bool_input[i/8][i%8] != NULL) *bool_input[i/8][i%8] = !gpioRead(inBufferPinMask[i]);
     }
 
     pthread_mutex_unlock(&bufferLock); //unlock mutex
