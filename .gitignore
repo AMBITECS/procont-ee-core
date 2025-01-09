@@ -83,4 +83,4 @@ compile_commands.json
 *_qmlcache.qrc
 /Platform.cmake
 
-/tmp/
+/__tmp/
