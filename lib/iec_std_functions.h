@@ -1,3 +1,5 @@
+#pragma clang diagnostic push
+#pragma ide diagnostic ignored "bugprone-reserved-identifier"
 /*
  * copyright 2008 Edouard TISSERANT
  * copyright 2011 Mario de Sousa (msousa@fe.up.pt)
@@ -414,7 +416,7 @@ __ANY_UINT(__abs_unsigned)
 __ANY_REAL(__sqrt)
 
 
-/**************/
+  /**************/
   /*     LN     */
   /**************/
 #define __ln(TYPENAME) __numeric(LN_, TYPENAME, log)
@@ -1585,3 +1587,5 @@ static inline DT CONCAT_DATE_TOD(EN_ENO_PARAMS, DATE IN1, TOD IN2){
 
 
 #endif /* _IEC_STD_FUNCTIONS_H */
+
+#pragma clang diagnostic pop

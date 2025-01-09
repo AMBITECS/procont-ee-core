@@ -16,26 +16,23 @@
 //
 // Every I/O on the ignored vectors will be skipped by OpenPLC hardware layer
 //-----------------------------------------------------------------------------
-int ignored_bool_inputs[] = {-1};
+int ignored_bool_inputs[]  = {-1};
 int ignored_bool_outputs[] = {-1};
-int ignored_int_inputs[] = {-1};
-int ignored_int_outputs[] = {-1};
+int ignored_int_inputs[]   = {-1};
+int ignored_int_outputs[]  = {-1};
 
 //-----------------------------------------------------------------------------
 // This function is called by the main OpenPLC routine when it is initializing.
 // Hardware initialization procedures for your custom layer should be here.
 //-----------------------------------------------------------------------------
-void initCustomLayer()
-{
-}
+void initCustomLayer() { }
 
 //-----------------------------------------------------------------------------
 // This function is called by OpenPLC in a loop. Here the internal input
 // buffers must be updated with the values you want. Make sure to use the mutex 
 // bufferLock to protect access to the buffers on a threaded environment.
 //-----------------------------------------------------------------------------
-void updateCustomIn()
-{
+void updateCustomIn() {
     // Example Code - Overwritting %IW3 with a fixed value
     // If you want to have %IW3 constantly reading a fixed value (for example, 53)
     // you must add %IW3 to the ignored vectors above, and then just insert this 
@@ -48,8 +45,7 @@ void updateCustomIn()
 // buffers must be updated with the values you want. Make sure to use the mutex 
 // bufferLock to protect access to the buffers on a threaded environment.
 //-----------------------------------------------------------------------------
-void updateCustomOut()
-{
+void updateCustomOut() {
     // Example Code - Sending %QW5 value over I2C
     // If you want to have %QW5 output to be sent over I2C instead of the
     // traditional output for your board, all you have to do is, first add
@@ -62,3 +58,5 @@ void updateCustomOut()
     // must also add those I/Os to the ignored vectors, otherwise OpenPLC
     // will try to control your I2C pins and your I2C message won't work.
 }
+
+//-----------------------------------------------------------------------------

@@ -1,3 +1,5 @@
+#pragma clang diagnostic push
+#pragma ide diagnostic ignored "bugprone-reserved-identifier"
 #ifndef __ACCESSOR_H
 #define __ACCESSOR_H
 
@@ -6,19 +8,11 @@
 #define __IEC_P(type) __IEC_##type##_p
 
 // variable primitive 
-#ifdef __cplusplus
-    #define __DEFINE_IEC_T(type, name) __IEC_T(type) name={};
-    #define __DEFINE_IEC_P(type, name) __IEC_P(type) name={};
-    #define __DEFINE_VAR(type, zone, name)\
-                   type  zone##__##name = {};\
-            static type* GLOBAL__##name = &(zone##__##name);
-#else
-    #define __DEFINE_IEC_T(type, name) __IEC_T(type) name;
-    #define __DEFINE_IEC_P(type, name) __IEC_P(type) name;
-    #define __DEFINE_VAR(type, zone, name)\
-                   type  zone##__##name;\
-            static type* GLOBAL__##name = &(zone##__##name);
-#endif
+#define __DEFINE_IEC_T(type, name) __IEC_T(type) name={};
+#define __DEFINE_IEC_P(type, name) __IEC_P(type) name={};
+#define __DEFINE_VAR(type, zone, name)\
+               type  zone##__##name = {};\
+        static type* GLOBAL__##name = &(zone##__##name);
 
 // variable definition 
 #define __DEFINE_GLOBAL(type, domain, name)             __DEFINE_VAR(__IEC_T(type), domain, name);\
@@ -129,3 +123,5 @@
 #define __SET_EXTERNAL_FB(prefix, name, suffix, new_value)  __SET_VAL_FB(prefix, name, suffix, new_value)
 
 #endif //__ACCESSOR_H
+
+#pragma clang diagnostic pop

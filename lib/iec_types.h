@@ -1,9 +1,12 @@
+#pragma clang diagnostic push
+#pragma ide diagnostic ignored "bugprone-reserved-identifier"
+
 #ifndef IEC_TYPES_H
 #define IEC_TYPES_H
 
-#include <limits.h>
-#include <float.h>
-#include <stdint.h>
+#include <climits>
+#include <cfloat>
+#include <cstdint>
 
 /*********************/
 /*  IEC Types defs   */
@@ -81,3 +84,5 @@ typedef struct {
 } /* __attribute__((packed)) */ IEC_STRING;  /* packed is gcc specific! */
 
 #endif /*IEC_TYPES_H*/
+
+#pragma clang diagnostic pop

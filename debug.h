@@ -3,7 +3,7 @@
 
 void set_endianness(uint8_t value);
 
-uint16_t get_var_count(void);
+uint16_t get_var_count();
 
 //__attribute__((weak))
 size_t get_var_size(size_t);// {return 0;}
@@ -18,6 +18,6 @@ void force_var(size_t, bool, void *);// {}
 void set_trace(size_t, bool, void *);// {}
 
 //__attribute__((weak))
-void trace_reset(void);// {}
+void trace_reset();// {}
 
 #endif
