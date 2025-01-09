@@ -84,3 +84,5 @@ compile_commands.json
 /Platform.cmake
 
 /__tmp/
+
+openplc
