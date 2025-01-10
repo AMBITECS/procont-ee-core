@@ -951,36 +951,43 @@ STRING ID2STR(
       (SINT)0));
   /* FOR ... */
   I = 0;
-  while( I <= 3 ) {
-    {
-      USINT __case_expression = (IDS.table[(I) - (0)] - 10);
-      if ((__case_expression == 0)) {
-        CH.table[(I) - (0)] = __STRING_LITERAL(1,"A");
-      }
-      else if ((__case_expression == 1)) {
-        CH.table[(I) - (0)] = __STRING_LITERAL(1,"B");
-      }
-      else if ((__case_expression == 2)) {
-        CH.table[(I) - (0)] = __STRING_LITERAL(1,"C");
-      }
-      else if ((__case_expression == 3)) {
-        CH.table[(I) - (0)] = __STRING_LITERAL(1,"D");
-      }
-      else if ((__case_expression == 4)) {
-        CH.table[(I) - (0)] = __STRING_LITERAL(1,"E");
-      }
-      else if ((__case_expression == 5)) {
-        CH.table[(I) - (0)] = __STRING_LITERAL(1,"F");
-      }
-      else {
-        CH.table[(I) - (0)] = USINT_TO_STRING(
-          (BOOL)__BOOL_LITERAL(TRUE),
-          NULL,
-          (USINT)IDS.table[(I) - (0)]);
-      }
-    };
-    /* BY ... (of FOR loop) */
-    I = (I + 1);
+  {
+    int __do_increment = 0;
+    while(1) {
+      if(__do_increment){
+        /* BY ... (of FOR loop) */
+        I = (I + 1);
+      } else __do_increment = 1;
+      if(I <= 3      ){
+        {
+          USINT __case_expression = (IDS.table[(I) - (0)] - 10);
+          if ((__case_expression == 0)) {
+            CH.table[(I) - (0)] = __STRING_LITERAL(1,"A");
+          }
+          else if ((__case_expression == 1)) {
+            CH.table[(I) - (0)] = __STRING_LITERAL(1,"B");
+          }
+          else if ((__case_expression == 2)) {
+            CH.table[(I) - (0)] = __STRING_LITERAL(1,"C");
+          }
+          else if ((__case_expression == 3)) {
+            CH.table[(I) - (0)] = __STRING_LITERAL(1,"D");
+          }
+          else if ((__case_expression == 4)) {
+            CH.table[(I) - (0)] = __STRING_LITERAL(1,"E");
+          }
+          else if ((__case_expression == 5)) {
+            CH.table[(I) - (0)] = __STRING_LITERAL(1,"F");
+          }
+          else {
+            CH.table[(I) - (0)] = USINT_TO_STRING(
+              (BOOL)__BOOL_LITERAL(TRUE),
+              NULL,
+              (USINT)IDS.table[(I) - (0)]);
+          }
+        };
+      }else break;
+    }
   } /* END_FOR */;
   ID2STR = MAKEMSG(
     (BOOL)__BOOL_LITERAL(TRUE),
@@ -4840,17 +4847,24 @@ TDOT DO_FINDDOT(
   if ((N > 0)) {
     /* FOR ... */
     I = 0;
-    while( I <= (N - 1) ) {
-      if (((P.table[(I) - (0)] != IGN) || (N == 1))) {
-        DO_FINDDOT = DOTS.table[(I) - (0)];
-        DO_FINDDOT.V = SINT_TO_INT(
-          (BOOL)__BOOL_LITERAL(TRUE),
-          NULL,
-          (SINT)P.table[(I) - (0)]);
-        break;
-      };
-      /* BY ... (of FOR loop) */
-      I = (I + 1);
+    {
+      int __do_increment = 0;
+      while(1) {
+        if(__do_increment){
+          /* BY ... (of FOR loop) */
+          I = (I + 1);
+        } else __do_increment = 1;
+        if(I <= (N - 1)        ){
+          if (((P.table[(I) - (0)] != IGN) || (N == 1))) {
+            DO_FINDDOT = DOTS.table[(I) - (0)];
+            DO_FINDDOT.V = SINT_TO_INT(
+              (BOOL)__BOOL_LITERAL(TRUE),
+              NULL,
+              (SINT)P.table[(I) - (0)]);
+            break;
+          };
+        }else break;
+      }
     } /* END_FOR */;
   };
 
@@ -8309,110 +8323,131 @@ void GRID2UL_body__(GRID2UL *data__) {
   __SET_VAR(data__->,IDX,,0);
   /* FOR ... */
   __SET_VAR(data__->,K,,0);
-  while( __GET_VAR(data__->K,) <= (__GET_VAR(data__->SH,.KN.table[(2) - (0)]) - 1) ) {
-    /* FOR ... */
-    __SET_VAR(data__->,J,,0);
-    while( __GET_VAR(data__->J,) <= (__GET_VAR(data__->SH,.KN.table[(1) - (0)]) - 1) ) {
-      /* FOR ... */
-      __SET_VAR(data__->,I,,0);
-      while( __GET_VAR(data__->I,) <= (__GET_VAR(data__->SH,.KN.table[(0) - (0)]) - 1) ) {
-        __SET_VAR(data__->,W,.table[(__GET_VAR(data__->M4,)) - (0)],VAR_V(
-          (BOOL)__BOOL_LITERAL(TRUE),
-          NULL,
-          (TVAR)GET_VAR(
-            (BOOL)__BOOL_LITERAL(TRUE),
-            NULL,
-            (THANDLE)__GET_VAR(data__->HGR,),
-            (TPOS8)__GET_VAR(data__->PGR,),
-            (P_INT)KNOFF(
-              (BOOL)__BOOL_LITERAL(TRUE),
-              NULL,
-              (INT)__GET_VAR(data__->SH,.KN.table[(0) - (0)]),
-              (INT)__GET_VAR(data__->SH,.KN.table[(1) - (0)]),
-              (INT)__GET_VAR(data__->SH,.KN.table[(2) - (0)]),
-              (INT)__GET_VAR(data__->I,),
-              (INT)__GET_VAR(data__->J,),
-              (INT)__GET_VAR(data__->K,)),
-            (USINT)0),
-          (BOOL)__BOOL_LITERAL(TRUE)));
-        if ((__GET_VAR(data__->ILOG,) < 4096)) {
-          if ((LEN__ULINT__STRING(
-            (BOOL)__BOOL_LITERAL(TRUE),
-            NULL,
-            (STRING)__GET_VAR(data__->MSG,)) == 0)) {
-            __SET_VAR(data__->,MSG,,MAKEMSG(
-              (BOOL)__BOOL_LITERAL(TRUE),
-              NULL,
-              (STRING)__STRING_LITERAL(6," =!=> "),
-              (STRING)__STRING_LITERAL(0,""),
-              (STRING)__STRING_LITERAL(0,""),
-              (STRING)__STRING_LITERAL(0,"")));
-          };
-          __SET_VAR(data__->,MSG,,MAKEMSG(
-            (BOOL)__BOOL_LITERAL(TRUE),
-            NULL,
-            (STRING)__GET_VAR(data__->MSG,),
-            (STRING)INT_TO_STRING(
-              (BOOL)__BOOL_LITERAL(TRUE),
-              NULL,
-              (INT)__GET_VAR(data__->W,.table[(__GET_VAR(data__->M4,)) - (0)])),
-            (STRING)__STRING_LITERAL(1," "),
-            (STRING)__STRING_LITERAL(0,"")));
-          if ((MOD__INT__INT__INT(
-            (BOOL)__BOOL_LITERAL(TRUE),
-            NULL,
-            (INT)(__GET_VAR(data__->ILOG,) + 1),
-            (INT)64) == 0)) {
-            __SET_VAR(data__->,MSG,,LOGMSG(
-              (BOOL)__BOOL_LITERAL(TRUE),
-              NULL,
-              (STRING)MAKEMSG(
-                (BOOL)__BOOL_LITERAL(TRUE),
-                NULL,
-                (STRING)__GET_VAR(data__->MSG,),
-                (STRING)__STRING_LITERAL(0,""),
-                (STRING)__STRING_LITERAL(0,""),
-                (STRING)__STRING_LITERAL(0,"")),
-              (LOGLEVEL)LOGLEVEL__DEBUG,
-              (TERROR)TERROR__E_SUCCESS));
-          };
-          __SET_VAR(data__->,ILOG,,(__GET_VAR(data__->ILOG,) + 1));
-        };
-        __SET_VAR(data__->,M4,,(__GET_VAR(data__->M4,) + 1));
-        if ((MOD__INT__INT__INT(
-          (BOOL)__BOOL_LITERAL(TRUE),
-          NULL,
-          (INT)__GET_VAR(data__->M4,),
-          (INT)4) == 0)) {
-          __SET_VAR(data__->,M4,,0);
-          __SET_VAR(data__->,L,.table[(__GET_VAR(data__->N4,)) - (0)],INT4UL(
-            (BOOL)__BOOL_LITERAL(TRUE),
-            NULL,
-            (INT)__GET_VAR(data__->W,.table[(0) - (0)]),
-            (INT)__GET_VAR(data__->W,.table[(1) - (0)]),
-            (INT)__GET_VAR(data__->W,.table[(2) - (0)]),
-            (INT)__GET_VAR(data__->W,.table[(3) - (0)])));
-          __SET_VAR(data__->,N4,,(__GET_VAR(data__->N4,) + 1));
-          if ((MOD__INT__INT__INT(
-            (BOOL)__BOOL_LITERAL(TRUE),
-            NULL,
-            (INT)__GET_VAR(data__->N4,),
-            (INT)4) == 0)) {
-            __SET_VAR(data__->,N4,,0);
-            __SET_VAR(data__->_SETLONG4.,I,,__GET_VAR(data__->IDX,));
-            __SET_VAR(data__->_SETLONG4.,LONG4,,__GET_VAR(data__->L,));
-            SETLONG4_body__(&data__->_SETLONG4);
-            __SET_VAR(data__->,IDX,,(__GET_VAR(data__->IDX,) + 1));
-          };
-        };
+  {
+    int __do_increment = 0;
+    while(1) {
+      if(__do_increment){
         /* BY ... (of FOR loop) */
-        __SET_VAR(data__->,I,,(__GET_VAR(data__->I,) + 1));
-      } /* END_FOR */;
-      /* BY ... (of FOR loop) */
-      __SET_VAR(data__->,J,,(__GET_VAR(data__->J,) + 1));
-    } /* END_FOR */;
-    /* BY ... (of FOR loop) */
-    __SET_VAR(data__->,K,,(__GET_VAR(data__->K,) + 1));
+        __SET_VAR(data__->,K,,(__GET_VAR(data__->K,) + 1));
+      } else __do_increment = 1;
+      if(__GET_VAR(data__->K,) <= (__GET_VAR(data__->SH,.KN.table[(2) - (0)]) - 1)      ){
+        /* FOR ... */
+        __SET_VAR(data__->,J,,0);
+        {
+          int __do_increment = 0;
+          while(1) {
+            if(__do_increment){
+              /* BY ... (of FOR loop) */
+              __SET_VAR(data__->,J,,(__GET_VAR(data__->J,) + 1));
+            } else __do_increment = 1;
+            if(__GET_VAR(data__->J,) <= (__GET_VAR(data__->SH,.KN.table[(1) - (0)]) - 1)            ){
+              /* FOR ... */
+              __SET_VAR(data__->,I,,0);
+              {
+                int __do_increment = 0;
+                while(1) {
+                  if(__do_increment){
+                    /* BY ... (of FOR loop) */
+                    __SET_VAR(data__->,I,,(__GET_VAR(data__->I,) + 1));
+                  } else __do_increment = 1;
+                  if(__GET_VAR(data__->I,) <= (__GET_VAR(data__->SH,.KN.table[(0) - (0)]) - 1)                  ){
+                    __SET_VAR(data__->,W,.table[(__GET_VAR(data__->M4,)) - (0)],VAR_V(
+                      (BOOL)__BOOL_LITERAL(TRUE),
+                      NULL,
+                      (TVAR)GET_VAR(
+                        (BOOL)__BOOL_LITERAL(TRUE),
+                        NULL,
+                        (THANDLE)__GET_VAR(data__->HGR,),
+                        (TPOS8)__GET_VAR(data__->PGR,),
+                        (P_INT)KNOFF(
+                          (BOOL)__BOOL_LITERAL(TRUE),
+                          NULL,
+                          (INT)__GET_VAR(data__->SH,.KN.table[(0) - (0)]),
+                          (INT)__GET_VAR(data__->SH,.KN.table[(1) - (0)]),
+                          (INT)__GET_VAR(data__->SH,.KN.table[(2) - (0)]),
+                          (INT)__GET_VAR(data__->I,),
+                          (INT)__GET_VAR(data__->J,),
+                          (INT)__GET_VAR(data__->K,)),
+                        (USINT)0),
+                      (BOOL)__BOOL_LITERAL(TRUE)));
+                    if ((__GET_VAR(data__->ILOG,) < 4096)) {
+                      if ((LEN__ULINT__STRING(
+                        (BOOL)__BOOL_LITERAL(TRUE),
+                        NULL,
+                        (STRING)__GET_VAR(data__->MSG,)) == 0)) {
+                        __SET_VAR(data__->,MSG,,MAKEMSG(
+                          (BOOL)__BOOL_LITERAL(TRUE),
+                          NULL,
+                          (STRING)__STRING_LITERAL(6," =!=> "),
+                          (STRING)__STRING_LITERAL(0,""),
+                          (STRING)__STRING_LITERAL(0,""),
+                          (STRING)__STRING_LITERAL(0,"")));
+                      };
+                      __SET_VAR(data__->,MSG,,MAKEMSG(
+                        (BOOL)__BOOL_LITERAL(TRUE),
+                        NULL,
+                        (STRING)__GET_VAR(data__->MSG,),
+                        (STRING)INT_TO_STRING(
+                          (BOOL)__BOOL_LITERAL(TRUE),
+                          NULL,
+                          (INT)__GET_VAR(data__->W,.table[(__GET_VAR(data__->M4,)) - (0)])),
+                        (STRING)__STRING_LITERAL(1," "),
+                        (STRING)__STRING_LITERAL(0,"")));
+                      if ((MOD__INT__INT__INT(
+                        (BOOL)__BOOL_LITERAL(TRUE),
+                        NULL,
+                        (INT)(__GET_VAR(data__->ILOG,) + 1),
+                        (INT)64) == 0)) {
+                        __SET_VAR(data__->,MSG,,LOGMSG(
+                          (BOOL)__BOOL_LITERAL(TRUE),
+                          NULL,
+                          (STRING)MAKEMSG(
+                            (BOOL)__BOOL_LITERAL(TRUE),
+                            NULL,
+                            (STRING)__GET_VAR(data__->MSG,),
+                            (STRING)__STRING_LITERAL(0,""),
+                            (STRING)__STRING_LITERAL(0,""),
+                            (STRING)__STRING_LITERAL(0,"")),
+                          (LOGLEVEL)LOGLEVEL__DEBUG,
+                          (TERROR)TERROR__E_SUCCESS));
+                      };
+                      __SET_VAR(data__->,ILOG,,(__GET_VAR(data__->ILOG,) + 1));
+                    };
+                    __SET_VAR(data__->,M4,,(__GET_VAR(data__->M4,) + 1));
+                    if ((MOD__INT__INT__INT(
+                      (BOOL)__BOOL_LITERAL(TRUE),
+                      NULL,
+                      (INT)__GET_VAR(data__->M4,),
+                      (INT)4) == 0)) {
+                      __SET_VAR(data__->,M4,,0);
+                      __SET_VAR(data__->,L,.table[(__GET_VAR(data__->N4,)) - (0)],INT4UL(
+                        (BOOL)__BOOL_LITERAL(TRUE),
+                        NULL,
+                        (INT)__GET_VAR(data__->W,.table[(0) - (0)]),
+                        (INT)__GET_VAR(data__->W,.table[(1) - (0)]),
+                        (INT)__GET_VAR(data__->W,.table[(2) - (0)]),
+                        (INT)__GET_VAR(data__->W,.table[(3) - (0)])));
+                      __SET_VAR(data__->,N4,,(__GET_VAR(data__->N4,) + 1));
+                      if ((MOD__INT__INT__INT(
+                        (BOOL)__BOOL_LITERAL(TRUE),
+                        NULL,
+                        (INT)__GET_VAR(data__->N4,),
+                        (INT)4) == 0)) {
+                        __SET_VAR(data__->,N4,,0);
+                        __SET_VAR(data__->_SETLONG4.,I,,__GET_VAR(data__->IDX,));
+                        __SET_VAR(data__->_SETLONG4.,LONG4,,__GET_VAR(data__->L,));
+                        SETLONG4_body__(&data__->_SETLONG4);
+                        __SET_VAR(data__->,IDX,,(__GET_VAR(data__->IDX,) + 1));
+                      };
+                    };
+                  }else break;
+                }
+              } /* END_FOR */;
+            }else break;
+          }
+        } /* END_FOR */;
+      }else break;
+    }
   } /* END_FOR */;
   if ((LEN__ULINT__STRING(
     (BOOL)__BOOL_LITERAL(TRUE),
@@ -12771,65 +12806,86 @@ TPOS8 IT_INITTEMP(
       (BOOL)__BOOL_LITERAL(FALSE)));
   /* FOR ... */
   I = 0;
-  while( I <= (SH.KN.table[(0) - (0)] - 1) ) {
-    /* FOR ... */
-    J = 0;
-    while( J <= (SH.KN.table[(1) - (0)] - 1) ) {
-      /* FOR ... */
-      K = 0;
-      while( K <= (SH.KN.table[(2) - (0)] - 1) ) {
-        OFF = KNOFF(
-          (BOOL)__BOOL_LITERAL(TRUE),
-          NULL,
-          (INT)SH.KN.table[(0) - (0)],
-          (INT)SH.KN.table[(1) - (0)],
-          (INT)SH.KN.table[(2) - (0)],
-          (INT)I,
-          (INT)J,
-          (INT)K);
-        if (CLR) {
-          PIT = SET_VAR(
-            (BOOL)__BOOL_LITERAL(TRUE),
-            NULL,
-            (THANDLE)ITS_GR(
-              (BOOL)__BOOL_LITERAL(TRUE),
-              NULL,
-              (TPOS8)0),
-            (TPOS8)PIT,
-            (P_INT)OFF,
-            (TVAR)0,
-            (USINT)0xFF);
-        };
-        PIT = SET_VAR(
-          (BOOL)__BOOL_LITERAL(TRUE),
-          NULL,
-          (THANDLE)ITS_GR(
-            (BOOL)__BOOL_LITERAL(TRUE),
-            NULL,
-            (TPOS8)0),
-          (TPOS8)PIT,
-          (P_INT)OFF,
-          (TVAR)_VAR(
-            (BOOL)__BOOL_LITERAL(TRUE),
-            NULL,
-            (INT)T2C(
-              (BOOL)__BOOL_LITERAL(TRUE),
-              NULL,
-              (REAL)TEMP),
-            (INT)T2C(
-              (BOOL)__BOOL_LITERAL(TRUE),
-              NULL,
-              (REAL)TEMP),
-            (BOOL)__BOOL_LITERAL(FALSE)),
-          (USINT)0);
+  {
+    int __do_increment = 0;
+    while(1) {
+      if(__do_increment){
         /* BY ... (of FOR loop) */
-        K = (K + 1);
-      } /* END_FOR */;
-      /* BY ... (of FOR loop) */
-      J = (J + 1);
-    } /* END_FOR */;
-    /* BY ... (of FOR loop) */
-    I = (I + 1);
+        I = (I + 1);
+      } else __do_increment = 1;
+      if(I <= (SH.KN.table[(0) - (0)] - 1)      ){
+        /* FOR ... */
+        J = 0;
+        {
+          int __do_increment = 0;
+          while(1) {
+            if(__do_increment){
+              /* BY ... (of FOR loop) */
+              J = (J + 1);
+            } else __do_increment = 1;
+            if(J <= (SH.KN.table[(1) - (0)] - 1)            ){
+              /* FOR ... */
+              K = 0;
+              {
+                int __do_increment = 0;
+                while(1) {
+                  if(__do_increment){
+                    /* BY ... (of FOR loop) */
+                    K = (K + 1);
+                  } else __do_increment = 1;
+                  if(K <= (SH.KN.table[(2) - (0)] - 1)                  ){
+                    OFF = KNOFF(
+                      (BOOL)__BOOL_LITERAL(TRUE),
+                      NULL,
+                      (INT)SH.KN.table[(0) - (0)],
+                      (INT)SH.KN.table[(1) - (0)],
+                      (INT)SH.KN.table[(2) - (0)],
+                      (INT)I,
+                      (INT)J,
+                      (INT)K);
+                    if (CLR) {
+                      PIT = SET_VAR(
+                        (BOOL)__BOOL_LITERAL(TRUE),
+                        NULL,
+                        (THANDLE)ITS_GR(
+                          (BOOL)__BOOL_LITERAL(TRUE),
+                          NULL,
+                          (TPOS8)0),
+                        (TPOS8)PIT,
+                        (P_INT)OFF,
+                        (TVAR)0,
+                        (USINT)0xFF);
+                    };
+                    PIT = SET_VAR(
+                      (BOOL)__BOOL_LITERAL(TRUE),
+                      NULL,
+                      (THANDLE)ITS_GR(
+                        (BOOL)__BOOL_LITERAL(TRUE),
+                        NULL,
+                        (TPOS8)0),
+                      (TPOS8)PIT,
+                      (P_INT)OFF,
+                      (TVAR)_VAR(
+                        (BOOL)__BOOL_LITERAL(TRUE),
+                        NULL,
+                        (INT)T2C(
+                          (BOOL)__BOOL_LITERAL(TRUE),
+                          NULL,
+                          (REAL)TEMP),
+                        (INT)T2C(
+                          (BOOL)__BOOL_LITERAL(TRUE),
+                          NULL,
+                          (REAL)TEMP),
+                        (BOOL)__BOOL_LITERAL(FALSE)),
+                      (USINT)0);
+                  }else break;
+                }
+              } /* END_FOR */;
+            }else break;
+          }
+        } /* END_FOR */;
+      }else break;
+    }
   } /* END_FOR */;
   IT_INITTEMP = PIT;
 
@@ -13054,20 +13110,34 @@ goto __error
         RI.table[(2) - (0)].B = 2;
         /* FOR ... */
         I = 0;
-        while( I <= 1 ) {
-          /* FOR ... */
-          J = 0;
-          while( J <= (1 - I) ) {
-            if ((RI.table[(J) - (0)].A > RI.table[((J + 1)) - (0)].A)) {
-              TEMP = RI.table[(J) - (0)];
-              RI.table[(J) - (0)] = RI.table[((J + 1)) - (0)];
-              RI.table[((J + 1)) - (0)] = TEMP;
-            };
-            /* BY ... (of FOR loop) */
-            J = (J + 1);
-          } /* END_FOR */;
-          /* BY ... (of FOR loop) */
-          I = (I + 1);
+        {
+          int __do_increment = 0;
+          while(1) {
+            if(__do_increment){
+              /* BY ... (of FOR loop) */
+              I = (I + 1);
+            } else __do_increment = 1;
+            if(I <= 1            ){
+              /* FOR ... */
+              J = 0;
+              {
+                int __do_increment = 0;
+                while(1) {
+                  if(__do_increment){
+                    /* BY ... (of FOR loop) */
+                    J = (J + 1);
+                  } else __do_increment = 1;
+                  if(J <= (1 - I)                  ){
+                    if ((RI.table[(J) - (0)].A > RI.table[((J + 1)) - (0)].A)) {
+                      TEMP = RI.table[(J) - (0)];
+                      RI.table[(J) - (0)] = RI.table[((J + 1)) - (0)];
+                      RI.table[((J + 1)) - (0)] = TEMP;
+                    };
+                  }else break;
+                }
+              } /* END_FOR */;
+            }else break;
+          }
         } /* END_FOR */;
         if ((((RI.table[(1) - (0)].A + RI.table[(2) - (0)].A) / RI.table[(0) - (0)].A) > 4.0)) {
           SH.KN.table[(RI.table[(0) - (0)].B) - (0)] = 8;
@@ -13892,89 +13962,110 @@ TPOS8 IT_UPDATE(
   COND.TMAX.V = -16384;
   /* FOR ... */
   I = 0;
-  while( I <= (KN.table[(0) - (0)] - 1) ) {
-    /* FOR ... */
-    J = 0;
-    while( J <= (KN.table[(1) - (0)] - 1) ) {
-      /* FOR ... */
-      K = 0;
-      while( K <= (KN.table[(2) - (0)] - 1) ) {
-        OFF = KNOFF(
-          (BOOL)__BOOL_LITERAL(TRUE),
-          NULL,
-          (INT)KN.table[(0) - (0)],
-          (INT)KN.table[(1) - (0)],
-          (INT)KN.table[(2) - (0)],
-          (INT)I,
-          (INT)J,
-          (INT)K);
-        TV = GET_VAR(
-          (BOOL)__BOOL_LITERAL(TRUE),
-          NULL,
-          (THANDLE)ITS_GR(
-            (BOOL)__BOOL_LITERAL(TRUE),
-            NULL,
-            (TPOS8)0),
-          (TPOS8)PIT,
-          (P_INT)OFF,
-          (USINT)0);
-        IVAR = VAR_V(
-          (BOOL)__BOOL_LITERAL(TRUE),
-          NULL,
-          (TVAR)TV,
-          (BOOL)__BOOL_LITERAL(TRUE));
-        TMID = (((TMID * INT_TO_REAL(
-          (BOOL)__BOOL_LITERAL(TRUE),
-          NULL,
-          (INT)COUNT)) + (INT_TO_REAL(
-          (BOOL)__BOOL_LITERAL(TRUE),
-          NULL,
-          (INT)IVAR) / 100.0)) / INT_TO_REAL(
-          (BOOL)__BOOL_LITERAL(TRUE),
-          NULL,
-          (INT)(COUNT + 1)));
-        if ((IVAR < COND.TMIN.V)) {
-          COND.TMIN = _DOT(
-            (BOOL)__BOOL_LITERAL(TRUE),
-            NULL,
-            (INT)IVAR,
-            (INT)I,
-            (INT)J,
-            (INT)K);
-        };
-        if ((IVAR > COND.TMAX.V)) {
-          COND.TMAX = _DOT(
-            (BOOL)__BOOL_LITERAL(TRUE),
-            NULL,
-            (INT)IVAR,
-            (INT)I,
-            (INT)J,
-            (INT)K);
-        };
-        TV = VAR_UP(
-          (BOOL)__BOOL_LITERAL(TRUE),
-          NULL,
-          (TVAR)TV);
-        PIT = SET_VAR(
-          (BOOL)__BOOL_LITERAL(TRUE),
-          NULL,
-          (THANDLE)ITS_GR(
-            (BOOL)__BOOL_LITERAL(TRUE),
-            NULL,
-            (TPOS8)0),
-          (TPOS8)PIT,
-          (P_INT)OFF,
-          (TVAR)TV,
-          (USINT)0);
-        COUNT = (COUNT + 1);
+  {
+    int __do_increment = 0;
+    while(1) {
+      if(__do_increment){
         /* BY ... (of FOR loop) */
-        K = (K + 1);
-      } /* END_FOR */;
-      /* BY ... (of FOR loop) */
-      J = (J + 1);
-    } /* END_FOR */;
-    /* BY ... (of FOR loop) */
-    I = (I + 1);
+        I = (I + 1);
+      } else __do_increment = 1;
+      if(I <= (KN.table[(0) - (0)] - 1)      ){
+        /* FOR ... */
+        J = 0;
+        {
+          int __do_increment = 0;
+          while(1) {
+            if(__do_increment){
+              /* BY ... (of FOR loop) */
+              J = (J + 1);
+            } else __do_increment = 1;
+            if(J <= (KN.table[(1) - (0)] - 1)            ){
+              /* FOR ... */
+              K = 0;
+              {
+                int __do_increment = 0;
+                while(1) {
+                  if(__do_increment){
+                    /* BY ... (of FOR loop) */
+                    K = (K + 1);
+                  } else __do_increment = 1;
+                  if(K <= (KN.table[(2) - (0)] - 1)                  ){
+                    OFF = KNOFF(
+                      (BOOL)__BOOL_LITERAL(TRUE),
+                      NULL,
+                      (INT)KN.table[(0) - (0)],
+                      (INT)KN.table[(1) - (0)],
+                      (INT)KN.table[(2) - (0)],
+                      (INT)I,
+                      (INT)J,
+                      (INT)K);
+                    TV = GET_VAR(
+                      (BOOL)__BOOL_LITERAL(TRUE),
+                      NULL,
+                      (THANDLE)ITS_GR(
+                        (BOOL)__BOOL_LITERAL(TRUE),
+                        NULL,
+                        (TPOS8)0),
+                      (TPOS8)PIT,
+                      (P_INT)OFF,
+                      (USINT)0);
+                    IVAR = VAR_V(
+                      (BOOL)__BOOL_LITERAL(TRUE),
+                      NULL,
+                      (TVAR)TV,
+                      (BOOL)__BOOL_LITERAL(TRUE));
+                    TMID = (((TMID * INT_TO_REAL(
+                      (BOOL)__BOOL_LITERAL(TRUE),
+                      NULL,
+                      (INT)COUNT)) + (INT_TO_REAL(
+                      (BOOL)__BOOL_LITERAL(TRUE),
+                      NULL,
+                      (INT)IVAR) / 100.0)) / INT_TO_REAL(
+                      (BOOL)__BOOL_LITERAL(TRUE),
+                      NULL,
+                      (INT)(COUNT + 1)));
+                    if ((IVAR < COND.TMIN.V)) {
+                      COND.TMIN = _DOT(
+                        (BOOL)__BOOL_LITERAL(TRUE),
+                        NULL,
+                        (INT)IVAR,
+                        (INT)I,
+                        (INT)J,
+                        (INT)K);
+                    };
+                    if ((IVAR > COND.TMAX.V)) {
+                      COND.TMAX = _DOT(
+                        (BOOL)__BOOL_LITERAL(TRUE),
+                        NULL,
+                        (INT)IVAR,
+                        (INT)I,
+                        (INT)J,
+                        (INT)K);
+                    };
+                    TV = VAR_UP(
+                      (BOOL)__BOOL_LITERAL(TRUE),
+                      NULL,
+                      (TVAR)TV);
+                    PIT = SET_VAR(
+                      (BOOL)__BOOL_LITERAL(TRUE),
+                      NULL,
+                      (THANDLE)ITS_GR(
+                        (BOOL)__BOOL_LITERAL(TRUE),
+                        NULL,
+                        (TPOS8)0),
+                      (TPOS8)PIT,
+                      (P_INT)OFF,
+                      (TVAR)TV,
+                      (USINT)0);
+                    COUNT = (COUNT + 1);
+                  }else break;
+                }
+              } /* END_FOR */;
+            }else break;
+          }
+        } /* END_FOR */;
+      }else break;
+    }
   } /* END_FOR */;
   #define GetFbVar(var,...) __GET_VAR(data__->var,__VA_ARGS__)
   #define SetFbVar(var,val,...) __SET_VAR(data__->,var,__VA_ARGS__,val)
@@ -14148,30 +14239,37 @@ STRING BYTE2STR(
   }
   /* FOR ... */
   I = 7;
-  while( ((-1) > 0)? (I <= (0)) : (I >= (0))  ) {
-    if (((BT & SHL__BYTE__BYTE__SINT(
-      (BOOL)__BOOL_LITERAL(TRUE),
-      NULL,
-      (BYTE)1,
-      (SINT)I)) != 0)) {
-      STR = MAKEMSG(
-        (BOOL)__BOOL_LITERAL(TRUE),
-        NULL,
-        (STRING)STR,
-        (STRING)__STRING_LITERAL(1,"1"),
-        (STRING)__STRING_LITERAL(0,""),
-        (STRING)__STRING_LITERAL(0,""));
-    } else {
-      STR = MAKEMSG(
-        (BOOL)__BOOL_LITERAL(TRUE),
-        NULL,
-        (STRING)STR,
-        (STRING)__STRING_LITERAL(1,"0"),
-        (STRING)__STRING_LITERAL(0,""),
-        (STRING)__STRING_LITERAL(0,""));
-    };
-    /* BY ... (of FOR loop) */
-    I = (I + -1);
+  {
+    int __do_increment = 0;
+    while(1) {
+      if(__do_increment){
+        /* BY ... (of FOR loop) */
+        I = (I + -1);
+      } else __do_increment = 1;
+      if(((-1) > 0)? (I <= (0)) : (I >= (0))       ){
+        if (((BT & SHL__BYTE__BYTE__SINT(
+          (BOOL)__BOOL_LITERAL(TRUE),
+          NULL,
+          (BYTE)1,
+          (SINT)I)) != 0)) {
+          STR = MAKEMSG(
+            (BOOL)__BOOL_LITERAL(TRUE),
+            NULL,
+            (STRING)STR,
+            (STRING)__STRING_LITERAL(1,"1"),
+            (STRING)__STRING_LITERAL(0,""),
+            (STRING)__STRING_LITERAL(0,""));
+        } else {
+          STR = MAKEMSG(
+            (BOOL)__BOOL_LITERAL(TRUE),
+            NULL,
+            (STRING)STR,
+            (STRING)__STRING_LITERAL(1,"0"),
+            (STRING)__STRING_LITERAL(0,""),
+            (STRING)__STRING_LITERAL(0,""));
+        };
+      }else break;
+    }
   } /* END_FOR */;
   BYTE2STR = STR;
 
@@ -14669,11 +14767,18 @@ void P_RES_body__(P_RES *data__) {
       (UINT)0)));
   /* FOR ... */
   __SET_VAR(data__->,PIT,,0);
-  while( __GET_VAR(data__->PIT,) <= (__GET_EXTERNAL(data__->HDR,.NI) - 1) ) {
-    __SET_VAR(data__->_WRITEITEM.,PIT,,__GET_VAR(data__->PIT,));
-    WRITEITEM_body__(&data__->_WRITEITEM);
-    /* BY ... (of FOR loop) */
-    __SET_VAR(data__->,PIT,,(__GET_VAR(data__->PIT,) + 1));
+  {
+    int __do_increment = 0;
+    while(1) {
+      if(__do_increment){
+        /* BY ... (of FOR loop) */
+        __SET_VAR(data__->,PIT,,(__GET_VAR(data__->PIT,) + 1));
+      } else __do_increment = 1;
+      if(__GET_VAR(data__->PIT,) <= (__GET_EXTERNAL(data__->HDR,.NI) - 1)      ){
+        __SET_VAR(data__->_WRITEITEM.,PIT,,__GET_VAR(data__->PIT,));
+        WRITEITEM_body__(&data__->_WRITEITEM);
+      }else break;
+    }
   } /* END_FOR */;
   __SET_VAR(data__->,MSG,,LOGMSG(
     (BOOL)__BOOL_LITERAL(TRUE),
@@ -14732,37 +14837,58 @@ void P_RES_body__(P_RES *data__) {
     __SET_VAR(data__->,ILOG,,0);
     /* FOR ... */
     __SET_VAR(data__->,I,,0);
-    while( __GET_VAR(data__->I,) <= (__GET_VAR(data__->SH,.KN.table[(0) - (0)]) - 1) ) {
-      /* FOR ... */
-      __SET_VAR(data__->,J,,0);
-      while( __GET_VAR(data__->J,) <= (__GET_VAR(data__->SH,.KN.table[(1) - (0)]) - 1) ) {
-        /* FOR ... */
-        __SET_VAR(data__->,K,,0);
-        while( __GET_VAR(data__->K,) <= (__GET_VAR(data__->SH,.KN.table[(2) - (0)]) - 1) ) {
-          __SET_VAR(data__->,DOT,,LINK_VAR(
-            (BOOL)__BOOL_LITERAL(TRUE),
-            NULL,
-            (THANDLE)ITS_GR2(
-              (BOOL)__BOOL_LITERAL(TRUE),
-              NULL,
-              (TPOS8)0),
-            (TPOS8)0,
-            (TSHAPE)__GET_VAR(data__->SH,),
-            (INT)__GET_VAR(data__->I,),
-            (INT)__GET_VAR(data__->J,),
-            (INT)__GET_VAR(data__->K,),
-            (USINT)0,
-            (TPOS8)-1,
-            (REAL)0.1,
-            (REAL)0.1));
+    {
+      int __do_increment = 0;
+      while(1) {
+        if(__do_increment){
           /* BY ... (of FOR loop) */
-          __SET_VAR(data__->,K,,(__GET_VAR(data__->K,) + 1));
-        } /* END_FOR */;
-        /* BY ... (of FOR loop) */
-        __SET_VAR(data__->,J,,(__GET_VAR(data__->J,) + 1));
-      } /* END_FOR */;
-      /* BY ... (of FOR loop) */
-      __SET_VAR(data__->,I,,(__GET_VAR(data__->I,) + 1));
+          __SET_VAR(data__->,I,,(__GET_VAR(data__->I,) + 1));
+        } else __do_increment = 1;
+        if(__GET_VAR(data__->I,) <= (__GET_VAR(data__->SH,.KN.table[(0) - (0)]) - 1)        ){
+          /* FOR ... */
+          __SET_VAR(data__->,J,,0);
+          {
+            int __do_increment = 0;
+            while(1) {
+              if(__do_increment){
+                /* BY ... (of FOR loop) */
+                __SET_VAR(data__->,J,,(__GET_VAR(data__->J,) + 1));
+              } else __do_increment = 1;
+              if(__GET_VAR(data__->J,) <= (__GET_VAR(data__->SH,.KN.table[(1) - (0)]) - 1)              ){
+                /* FOR ... */
+                __SET_VAR(data__->,K,,0);
+                {
+                  int __do_increment = 0;
+                  while(1) {
+                    if(__do_increment){
+                      /* BY ... (of FOR loop) */
+                      __SET_VAR(data__->,K,,(__GET_VAR(data__->K,) + 1));
+                    } else __do_increment = 1;
+                    if(__GET_VAR(data__->K,) <= (__GET_VAR(data__->SH,.KN.table[(2) - (0)]) - 1)                    ){
+                      __SET_VAR(data__->,DOT,,LINK_VAR(
+                        (BOOL)__BOOL_LITERAL(TRUE),
+                        NULL,
+                        (THANDLE)ITS_GR2(
+                          (BOOL)__BOOL_LITERAL(TRUE),
+                          NULL,
+                          (TPOS8)0),
+                        (TPOS8)0,
+                        (TSHAPE)__GET_VAR(data__->SH,),
+                        (INT)__GET_VAR(data__->I,),
+                        (INT)__GET_VAR(data__->J,),
+                        (INT)__GET_VAR(data__->K,),
+                        (USINT)0,
+                        (TPOS8)-1,
+                        (REAL)0.1,
+                        (REAL)0.1));
+                    }else break;
+                  }
+                } /* END_FOR */;
+              }else break;
+            }
+          } /* END_FOR */;
+        }else break;
+      }
     } /* END_FOR */;
     if ((LEN__ULINT__STRING(
       (BOOL)__BOOL_LITERAL(TRUE),
@@ -15762,85 +15888,92 @@ goto __exit
       };
       /* FOR ... */
       I = 0;
-      while( I <= N ) {
-        K.table[(2) - (0)] = I;
-        PI = P0;
-        PI.table[(IX) - (0)] = (P0.table[(IX) - (0)] + (H0.table[(IX) - (0)] * INT_TO_REAL(
-          (BOOL)__BOOL_LITERAL(TRUE),
-          NULL,
-          (INT)I)));
-        if (((AX != 0) && (IX == OX.X))) {
-          RI = (PI.table[(IX) - (0)] * 0.001);
-          HI = (H0.table[(IX) - (0)] * 0.001);
-        } else if (((AX != 0) && (IX == OX.Y))) {
-          P = REFORM(
-            (BOOL)__BOOL_LITERAL(TRUE),
-            NULL,
-            (WORD)SH.WF,
-            (REAL)PI.table[(OX.Y) - (0)],
-            (REAL)PI.table[(OX.X) - (0)],
-            (REAL)SH.PL.table[(OX.X) - (0)],
-            (REAL)SH.LX.table[(OX.X) - (0)]);
-          PI.table[(OX.X) - (0)] = P.table[(0) - (0)];
-          RI = (PI.table[(OX.X) - (0)] * 0.001);
-          HI = (RI * RADI(
-            (BOOL)__BOOL_LITERAL(TRUE),
-            NULL,
-            (REAL)H0.table[(IX) - (0)]));
-        } else {
-          RI = 1.0E6;
-          HI = (H0.table[(IX) - (0)] * 0.001);
-        };
-        M = _MATTER(
-          (BOOL)__BOOL_LITERAL(TRUE),
-          NULL,
-          (REAL)(CM.KT / (CM.PL * CM.CP)),
-          (REAL)CM.KT,
-          (REAL)HI,
-          (REAL)0.0);
-        OFF = KNOFF(
-          (BOOL)__BOOL_LITERAL(TRUE),
-          NULL,
-          (INT)SH.KN.table[(0) - (0)],
-          (INT)SH.KN.table[(1) - (0)],
-          (INT)SH.KN.table[(2) - (0)],
-          (INT)K.table[(CX.X) - (0)],
-          (INT)K.table[(CX.Y) - (0)],
-          (INT)K.table[(CX.Z) - (0)]);
-        TI1 = C2T(
-          (BOOL)__BOOL_LITERAL(TRUE),
-          NULL,
-          (INT)VAR_V(
-            (BOOL)__BOOL_LITERAL(TRUE),
-            NULL,
-            (TVAR)GET_VAR(
+      {
+        int __do_increment = 0;
+        while(1) {
+          if(__do_increment){
+            /* BY ... (of FOR loop) */
+            I = (I + 1);
+          } else __do_increment = 1;
+          if(I <= N          ){
+            K.table[(2) - (0)] = I;
+            PI = P0;
+            PI.table[(IX) - (0)] = (P0.table[(IX) - (0)] + (H0.table[(IX) - (0)] * INT_TO_REAL(
               (BOOL)__BOOL_LITERAL(TRUE),
               NULL,
-              (THANDLE)ITS_GR(
+              (INT)I)));
+            if (((AX != 0) && (IX == OX.X))) {
+              RI = (PI.table[(IX) - (0)] * 0.001);
+              HI = (H0.table[(IX) - (0)] * 0.001);
+            } else if (((AX != 0) && (IX == OX.Y))) {
+              P = REFORM(
                 (BOOL)__BOOL_LITERAL(TRUE),
                 NULL,
-                (TPOS8)0),
-              (TPOS8)PIT,
-              (P_INT)OFF,
-              (USINT)0),
-            (BOOL)__BOOL_LITERAL(TRUE)));
-        if (((I == 0) || (I == N))) {
-          TV = GET_VAR(
-            (BOOL)__BOOL_LITERAL(TRUE),
-            NULL,
-            (THANDLE)ITS_GR(
+                (WORD)SH.WF,
+                (REAL)PI.table[(OX.Y) - (0)],
+                (REAL)PI.table[(OX.X) - (0)],
+                (REAL)SH.PL.table[(OX.X) - (0)],
+                (REAL)SH.LX.table[(OX.X) - (0)]);
+              PI.table[(OX.X) - (0)] = P.table[(0) - (0)];
+              RI = (PI.table[(OX.X) - (0)] * 0.001);
+              HI = (RI * RADI(
+                (BOOL)__BOOL_LITERAL(TRUE),
+                NULL,
+                (REAL)H0.table[(IX) - (0)]));
+            } else {
+              RI = 1.0E6;
+              HI = (H0.table[(IX) - (0)] * 0.001);
+            };
+            M = _MATTER(
               (BOOL)__BOOL_LITERAL(TRUE),
               NULL,
-              (TPOS8)0),
-            (TPOS8)PIT,
-            (P_INT)OFF,
-            (USINT)(IX + 1));
-          PIT2 = VAR_P(
-            (BOOL)__BOOL_LITERAL(TRUE),
-            NULL,
-            (TVAR)TV);
-          #define GetFbVar(var,...) __GET_VAR(data__->var,__VA_ARGS__)
-          #define SetFbVar(var,val,...) __SET_VAR(data__->,var,__VA_ARGS__,val)
+              (REAL)(CM.KT / (CM.PL * CM.CP)),
+              (REAL)CM.KT,
+              (REAL)HI,
+              (REAL)0.0);
+            OFF = KNOFF(
+              (BOOL)__BOOL_LITERAL(TRUE),
+              NULL,
+              (INT)SH.KN.table[(0) - (0)],
+              (INT)SH.KN.table[(1) - (0)],
+              (INT)SH.KN.table[(2) - (0)],
+              (INT)K.table[(CX.X) - (0)],
+              (INT)K.table[(CX.Y) - (0)],
+              (INT)K.table[(CX.Z) - (0)]);
+            TI1 = C2T(
+              (BOOL)__BOOL_LITERAL(TRUE),
+              NULL,
+              (INT)VAR_V(
+                (BOOL)__BOOL_LITERAL(TRUE),
+                NULL,
+                (TVAR)GET_VAR(
+                  (BOOL)__BOOL_LITERAL(TRUE),
+                  NULL,
+                  (THANDLE)ITS_GR(
+                    (BOOL)__BOOL_LITERAL(TRUE),
+                    NULL,
+                    (TPOS8)0),
+                  (TPOS8)PIT,
+                  (P_INT)OFF,
+                  (USINT)0),
+                (BOOL)__BOOL_LITERAL(TRUE)));
+            if (((I == 0) || (I == N))) {
+              TV = GET_VAR(
+                (BOOL)__BOOL_LITERAL(TRUE),
+                NULL,
+                (THANDLE)ITS_GR(
+                  (BOOL)__BOOL_LITERAL(TRUE),
+                  NULL,
+                  (TPOS8)0),
+                (TPOS8)PIT,
+                (P_INT)OFF,
+                (USINT)(IX + 1));
+              PIT2 = VAR_P(
+                (BOOL)__BOOL_LITERAL(TRUE),
+                NULL,
+                (TVAR)TV);
+              #define GetFbVar(var,...) __GET_VAR(data__->var,__VA_ARGS__)
+              #define SetFbVar(var,val,...) __SET_VAR(data__->,var,__VA_ARGS__,val)
 
             // Доступ к свойствам элемента-2
             TITEM *pItem2 = ((PIT2==-1) ? NULL : &(__GET_GLOBAL_ITS()->IT.table[PIT2]));
@@ -15864,265 +15997,386 @@ goto __exit
             }
             
           
-          #undef GetFbVar
-          #undef SetFbVar
+              #undef GetFbVar
+              #undef SetFbVar
 ;
-          TMID2 = C2T(
-            (BOOL)__BOOL_LITERAL(TRUE),
-            NULL,
-            (INT)CN_MID(
-              (BOOL)__BOOL_LITERAL(TRUE),
-              NULL,
-              (TCOND)GET_CN(
+              TMID2 = C2T(
                 (BOOL)__BOOL_LITERAL(TRUE),
                 NULL,
-                (TPOS8)PIT2)));
-          PM2.AIR = (IM2 == 0);
-          PM2.OIL = (CM2.MD != 0.0);
-          PM2.FLUID = (PM2.OIL || PM2.AIR);
-          PM2.SOLID = !(PM2.FLUID);
-          if ((VX2 == 0.0)) {
-            VI2 = 0.0;
-            QI2 = 0.0;
-          } else {
-            if (PM2.FLUID) {
-              VI2 = ABS__REAL__REAL(
-                (BOOL)__BOOL_LITERAL(TRUE),
-                NULL,
-                (REAL)VX2);
-            } else {
-              QI2 = (VX2 / INT_TO_REAL(
-                (BOOL)__BOOL_LITERAL(TRUE),
-                NULL,
-                (INT)4096));
-            };
-          };
-          TI2 = C2T(
-            (BOOL)__BOOL_LITERAL(TRUE),
-            NULL,
-            (INT)VAR_V(
-              (BOOL)__BOOL_LITERAL(TRUE),
-              NULL,
-              (TVAR)TV,
-              (BOOL)__BOOL_LITERAL(TRUE)));
-          if ((((K.table[(0) - (0)] == 0) && (K.table[(1) - (0)] == 0)) && (PIT == 3))) {
-            MSG = MAKEMSG(
-              (BOOL)__BOOL_LITERAL(TRUE),
-              NULL,
-              (STRING)__STRING_LITERAL(8,"-> Ti2= "),
-              (STRING)REAL_TO_STRING(
-                (BOOL)__BOOL_LITERAL(TRUE),
-                NULL,
-                (REAL)TI2),
-              (STRING)__STRING_LITERAL(0,""),
-              (STRING)__STRING_LITERAL(0,""));
-            MSG = MAKEMSG(
-              (BOOL)__BOOL_LITERAL(TRUE),
-              NULL,
-              (STRING)MSG,
-              (STRING)__STRING_LITERAL(6," off= "),
-              (STRING)INT_TO_STRING(
-                (BOOL)__BOOL_LITERAL(TRUE),
-                NULL,
-                (INT)OFF.A),
-              (STRING)__STRING_LITERAL(0,""));
-            MSG = MAKEMSG(
-              (BOOL)__BOOL_LITERAL(TRUE),
-              NULL,
-              (STRING)MSG,
-              (STRING)__STRING_LITERAL(6," PIT= "),
-              (STRING)SINT_TO_STRING(
-                (BOOL)__BOOL_LITERAL(TRUE),
-                NULL,
-                (SINT)PIT2),
-              (STRING)__STRING_LITERAL(0,""));
-            MSG = MAKEMSG(
-              (BOOL)__BOOL_LITERAL(TRUE),
-              NULL,
-              (STRING)MSG,
-              (STRING)__STRING_LITERAL(6," Hi2= "),
-              (STRING)REAL_TO_STRING(
-                (BOOL)__BOOL_LITERAL(TRUE),
-                NULL,
-                (REAL)HI2),
-              (STRING)__STRING_LITERAL(0,""));
-            MSG = LOGMSG(
-              (BOOL)__BOOL_LITERAL(TRUE),
-              NULL,
-              (STRING)MSG,
-              (LOGLEVEL)LOGLEVEL__DEBUG,
-              (TERROR)TERROR__E_SUCCESS);
-          };
-          M2 = _MATTER(
-            (BOOL)__BOOL_LITERAL(TRUE),
-            NULL,
-            (REAL)(CM2.KT / (CM2.PL * CM2.CP)),
-            (REAL)CM2.KT,
-            (REAL)0.001,
-            (REAL)0.0);
-          if ((I == 0)) {
-            if (PM2.AIR) {
-              if (__BOOL_LITERAL(TRUE)) {
-                M.K = KTO_AIR(
+                (INT)CN_MID(
                   (BOOL)__BOOL_LITERAL(TRUE),
                   NULL,
-                  (REAL)1.0);
-                ALFAS.table[(0) - (0)] = ALFA_03(
-                  (BOOL)__BOOL_LITERAL(TRUE),
-                  NULL,
-                  (REAL)HT,
-                  (TMATTER)M,
-                  (REAL)TI1,
-                  (REAL)TI2,
-                  (REAL)QI1,
-                  (REAL)VI1,
-                  (REAL)RI,
-                  (BOOL)__BOOL_LITERAL(TRUE));
+                  (TCOND)GET_CN(
+                    (BOOL)__BOOL_LITERAL(TRUE),
+                    NULL,
+                    (TPOS8)PIT2)));
+              PM2.AIR = (IM2 == 0);
+              PM2.OIL = (CM2.MD != 0.0);
+              PM2.FLUID = (PM2.OIL || PM2.AIR);
+              PM2.SOLID = !(PM2.FLUID);
+              if ((VX2 == 0.0)) {
+                VI2 = 0.0;
+                QI2 = 0.0;
               } else {
-                ALFA.A = 0.0;
-                ALFA.B = TI2;
-                ALFAS.table[(0) - (0)] = ALFA_I(
-                  (BOOL)__BOOL_LITERAL(TRUE),
-                  NULL,
-                  (REAL)HT,
-                  (TMATTER)M,
-                  (P_RERE)ALFA,
-                  (REAL)TI1,
-                  (REAL)QI1,
-                  (REAL)VI1,
-                  (REAL)RI);
+                if (PM2.FLUID) {
+                  VI2 = ABS__REAL__REAL(
+                    (BOOL)__BOOL_LITERAL(TRUE),
+                    NULL,
+                    (REAL)VX2);
+                } else {
+                  QI2 = (VX2 / INT_TO_REAL(
+                    (BOOL)__BOOL_LITERAL(TRUE),
+                    NULL,
+                    (INT)4096));
+                };
               };
-            } else if ((PM.SOLID && PM2.OIL)) {
-              M.K = KTO_OIL(
+              TI2 = C2T(
                 (BOOL)__BOOL_LITERAL(TRUE),
                 NULL,
-                (REAL)1.0,
+                (INT)VAR_V(
+                  (BOOL)__BOOL_LITERAL(TRUE),
+                  NULL,
+                  (TVAR)TV,
+                  (BOOL)__BOOL_LITERAL(TRUE)));
+              if ((((K.table[(0) - (0)] == 0) && (K.table[(1) - (0)] == 0)) && (PIT == 3))) {
+                MSG = MAKEMSG(
+                  (BOOL)__BOOL_LITERAL(TRUE),
+                  NULL,
+                  (STRING)__STRING_LITERAL(8,"-> Ti2= "),
+                  (STRING)REAL_TO_STRING(
+                    (BOOL)__BOOL_LITERAL(TRUE),
+                    NULL,
+                    (REAL)TI2),
+                  (STRING)__STRING_LITERAL(0,""),
+                  (STRING)__STRING_LITERAL(0,""));
+                MSG = MAKEMSG(
+                  (BOOL)__BOOL_LITERAL(TRUE),
+                  NULL,
+                  (STRING)MSG,
+                  (STRING)__STRING_LITERAL(6," off= "),
+                  (STRING)INT_TO_STRING(
+                    (BOOL)__BOOL_LITERAL(TRUE),
+                    NULL,
+                    (INT)OFF.A),
+                  (STRING)__STRING_LITERAL(0,""));
+                MSG = MAKEMSG(
+                  (BOOL)__BOOL_LITERAL(TRUE),
+                  NULL,
+                  (STRING)MSG,
+                  (STRING)__STRING_LITERAL(6," PIT= "),
+                  (STRING)SINT_TO_STRING(
+                    (BOOL)__BOOL_LITERAL(TRUE),
+                    NULL,
+                    (SINT)PIT2),
+                  (STRING)__STRING_LITERAL(0,""));
+                MSG = MAKEMSG(
+                  (BOOL)__BOOL_LITERAL(TRUE),
+                  NULL,
+                  (STRING)MSG,
+                  (STRING)__STRING_LITERAL(6," Hi2= "),
+                  (STRING)REAL_TO_STRING(
+                    (BOOL)__BOOL_LITERAL(TRUE),
+                    NULL,
+                    (REAL)HI2),
+                  (STRING)__STRING_LITERAL(0,""));
+                MSG = LOGMSG(
+                  (BOOL)__BOOL_LITERAL(TRUE),
+                  NULL,
+                  (STRING)MSG,
+                  (LOGLEVEL)LOGLEVEL__DEBUG,
+                  (TERROR)TERROR__E_SUCCESS);
+              };
+              M2 = _MATTER(
+                (BOOL)__BOOL_LITERAL(TRUE),
+                NULL,
+                (REAL)(CM2.KT / (CM2.PL * CM2.CP)),
+                (REAL)CM2.KT,
+                (REAL)0.001,
                 (REAL)0.0);
-              ALFAS.table[(0) - (0)] = ALFA_03(
+              if ((I == 0)) {
+                if (PM2.AIR) {
+                  if (__BOOL_LITERAL(TRUE)) {
+                    M.K = KTO_AIR(
+                      (BOOL)__BOOL_LITERAL(TRUE),
+                      NULL,
+                      (REAL)1.0);
+                    ALFAS.table[(0) - (0)] = ALFA_03(
+                      (BOOL)__BOOL_LITERAL(TRUE),
+                      NULL,
+                      (REAL)HT,
+                      (TMATTER)M,
+                      (REAL)TI1,
+                      (REAL)TI2,
+                      (REAL)QI1,
+                      (REAL)VI1,
+                      (REAL)RI,
+                      (BOOL)__BOOL_LITERAL(TRUE));
+                  } else {
+                    ALFA.A = 0.0;
+                    ALFA.B = TI2;
+                    ALFAS.table[(0) - (0)] = ALFA_I(
+                      (BOOL)__BOOL_LITERAL(TRUE),
+                      NULL,
+                      (REAL)HT,
+                      (TMATTER)M,
+                      (P_RERE)ALFA,
+                      (REAL)TI1,
+                      (REAL)QI1,
+                      (REAL)VI1,
+                      (REAL)RI);
+                  };
+                } else if ((PM.SOLID && PM2.OIL)) {
+                  M.K = KTO_OIL(
+                    (BOOL)__BOOL_LITERAL(TRUE),
+                    NULL,
+                    (REAL)1.0,
+                    (REAL)0.0);
+                  ALFAS.table[(0) - (0)] = ALFA_03(
+                    (BOOL)__BOOL_LITERAL(TRUE),
+                    NULL,
+                    (REAL)HT,
+                    (TMATTER)M,
+                    (REAL)TI1,
+                    (REAL)(TMID2 - ((TMID2 - 20.0) / 2.2)),
+                    (REAL)QI1,
+                    (REAL)VI1,
+                    (REAL)RI,
+                    (BOOL)__BOOL_LITERAL(TRUE));
+                } else {
+                  ALFA.A = 0.0;
+                  ALFA.B = TI2;
+                  if (__BOOL_LITERAL(TRUE)) {
+                    ALFAS.table[(0) - (0)] = ALFA_I(
+                      (BOOL)__BOOL_LITERAL(TRUE),
+                      NULL,
+                      (REAL)HT,
+                      (TMATTER)M,
+                      (P_RERE)ALFA,
+                      (REAL)TI1,
+                      (REAL)QI1,
+                      (REAL)VI1,
+                      (REAL)RI);
+                  } else {
+                    M2.H = 0.001;
+                    ALFAS.table[(0) - (0)] = ALFA_04(
+                      (BOOL)__BOOL_LITERAL(TRUE),
+                      NULL,
+                      (REAL)HT,
+                      (TMATTER)M,
+                      (TMATTER)M2,
+                      (P_RERE)ALFA,
+                      (REAL)TI1,
+                      (REAL)QI1,
+                      (REAL)QI2);
+                  };
+                };
+              } else if ((I == N)) {
+                if (PM2.AIR) {
+                  if (__BOOL_LITERAL(TRUE)) {
+                    M.K = KTO_AIR(
+                      (BOOL)__BOOL_LITERAL(TRUE),
+                      NULL,
+                      (REAL)1.0);
+                    XX = BETA_N3(
+                      (BOOL)__BOOL_LITERAL(TRUE),
+                      NULL,
+                      (REAL)HT,
+                      (TMATTER)M,
+                      (P_RERE)ALFAS.table[((N - 1)) - (0)],
+                      (REAL)TI1,
+                      (REAL)TI2,
+                      (REAL)QI1,
+                      (REAL)VI1,
+                      (REAL)RI,
+                      (BOOL)__BOOL_LITERAL(TRUE));
+                  } else {
+                    ALFAS.table[(N) - (0)] = ALFA_I(
+                      (BOOL)__BOOL_LITERAL(TRUE),
+                      NULL,
+                      (REAL)HT,
+                      (TMATTER)M,
+                      (P_RERE)ALFAS.table[((N - 1)) - (0)],
+                      (REAL)TI1,
+                      (REAL)QI1,
+                      (REAL)VI1,
+                      (REAL)RI);
+                    XX = TEMP_I(
+                      (BOOL)__BOOL_LITERAL(TRUE),
+                      NULL,
+                      (P_RERE)ALFAS.table[(N) - (0)],
+                      (REAL)TI2);
+                  };
+                } else if ((PM.SOLID && PM2.OIL)) {
+                  M.K = KTO_OIL(
+                    (BOOL)__BOOL_LITERAL(TRUE),
+                    NULL,
+                    (REAL)1.0,
+                    (REAL)0.0);
+                  XX = BETA_N3(
+                    (BOOL)__BOOL_LITERAL(TRUE),
+                    NULL,
+                    (REAL)HT,
+                    (TMATTER)M,
+                    (P_RERE)ALFAS.table[((N - 1)) - (0)],
+                    (REAL)TI1,
+                    (REAL)(TMID2 - ((TMID2 - 20.0) / 2.2)),
+                    (REAL)QI1,
+                    (REAL)VI1,
+                    (REAL)RI,
+                    (BOOL)__BOOL_LITERAL(TRUE));
+                } else {
+                  if (__BOOL_LITERAL(TRUE)) {
+                    ALFAS.table[(N) - (0)] = ALFA_I(
+                      (BOOL)__BOOL_LITERAL(TRUE),
+                      NULL,
+                      (REAL)HT,
+                      (TMATTER)M,
+                      (P_RERE)ALFAS.table[((N - 1)) - (0)],
+                      (REAL)TI1,
+                      (REAL)QI1,
+                      (REAL)VI1,
+                      (REAL)RI);
+                    XX = TEMP_I(
+                      (BOOL)__BOOL_LITERAL(TRUE),
+                      NULL,
+                      (P_RERE)ALFAS.table[(N) - (0)],
+                      (REAL)TI2);
+                  } else {
+                    M2.H = 0.001;
+                    XX = BETA_N4(
+                      (BOOL)__BOOL_LITERAL(TRUE),
+                      NULL,
+                      (REAL)HT,
+                      (TMATTER)M,
+                      (TMATTER)M2,
+                      (P_RERE)ALFAS.table[((N - 1)) - (0)],
+                      (REAL)TI1,
+                      (REAL)TI2,
+                      (REAL)QI1,
+                      (REAL)QI2);
+                  };
+                };
+                PIT = SET_VAR(
+                  (BOOL)__BOOL_LITERAL(TRUE),
+                  NULL,
+                  (THANDLE)ITS_GR(
+                    (BOOL)__BOOL_LITERAL(TRUE),
+                    NULL,
+                    (TPOS8)0),
+                  (TPOS8)PIT,
+                  (P_INT)OFF,
+                  (TVAR)_VAR(
+                    (BOOL)__BOOL_LITERAL(TRUE),
+                    NULL,
+                    (INT)T2C(
+                      (BOOL)__BOOL_LITERAL(TRUE),
+                      NULL,
+                      (REAL)XX),
+                    (INT)-16384,
+                    (BOOL)__BOOL_LITERAL(FALSE)),
+                  (USINT)0);
+                if ((((K.table[(0) - (0)] == 0) && (K.table[(1) - (0)] == 0)) && (PIT == 3))) {
+                  MSG = MAKEMSG(
+                    (BOOL)__BOOL_LITERAL(TRUE),
+                    NULL,
+                    (STRING)__STRING_LITERAL(3," T["),
+                    (STRING)INT_TO_STRING(
+                      (BOOL)__BOOL_LITERAL(TRUE),
+                      NULL,
+                      (INT)I),
+                    (STRING)__STRING_LITERAL(3,"]= "),
+                    (STRING)REAL_TO_STRING(
+                      (BOOL)__BOOL_LITERAL(TRUE),
+                      NULL,
+                      (REAL)XX));
+                  MSG = MAKEMSG(
+                    (BOOL)__BOOL_LITERAL(TRUE),
+                    NULL,
+                    (STRING)MSG,
+                    (STRING)__STRING_LITERAL(5," M.a="),
+                    (STRING)REAL_TO_STRING(
+                      (BOOL)__BOOL_LITERAL(TRUE),
+                      NULL,
+                      (REAL)M.A),
+                    (STRING)__STRING_LITERAL(0,""));
+                  MSG = MAKEMSG(
+                    (BOOL)__BOOL_LITERAL(TRUE),
+                    NULL,
+                    (STRING)MSG,
+                    (STRING)__STRING_LITERAL(5," M.h="),
+                    (STRING)REAL_TO_STRING(
+                      (BOOL)__BOOL_LITERAL(TRUE),
+                      NULL,
+                      (REAL)M.H),
+                    (STRING)__STRING_LITERAL(0,""));
+                  MSG = MAKEMSG(
+                    (BOOL)__BOOL_LITERAL(TRUE),
+                    NULL,
+                    (STRING)MSG,
+                    (STRING)__STRING_LITERAL(5," M.l="),
+                    (STRING)REAL_TO_STRING(
+                      (BOOL)__BOOL_LITERAL(TRUE),
+                      NULL,
+                      (REAL)M.L),
+                    (STRING)__STRING_LITERAL(0,""));
+                  MSG = MAKEMSG(
+                    (BOOL)__BOOL_LITERAL(TRUE),
+                    NULL,
+                    (STRING)MSG,
+                    (STRING)__STRING_LITERAL(3," R="),
+                    (STRING)REAL_TO_STRING(
+                      (BOOL)__BOOL_LITERAL(TRUE),
+                      NULL,
+                      (REAL)RI),
+                    (STRING)__STRING_LITERAL(0,""));
+                  MSG = LOGMSG(
+                    (BOOL)__BOOL_LITERAL(TRUE),
+                    NULL,
+                    (STRING)MSG,
+                    (LOGLEVEL)LOGLEVEL__DEBUG,
+                    (TERROR)TERROR__E_SUCCESS);
+                };
+              };
+            } else {
+              ALFAS.table[(I) - (0)] = ALFA_I(
                 (BOOL)__BOOL_LITERAL(TRUE),
                 NULL,
                 (REAL)HT,
                 (TMATTER)M,
+                (P_RERE)ALFAS.table[((I - 1)) - (0)],
                 (REAL)TI1,
-                (REAL)(TMID2 - ((TMID2 - 20.0) / 2.2)),
                 (REAL)QI1,
                 (REAL)VI1,
-                (REAL)RI,
-                (BOOL)__BOOL_LITERAL(TRUE));
-            } else {
-              ALFA.A = 0.0;
-              ALFA.B = TI2;
-              if (__BOOL_LITERAL(TRUE)) {
-                ALFAS.table[(0) - (0)] = ALFA_I(
-                  (BOOL)__BOOL_LITERAL(TRUE),
-                  NULL,
-                  (REAL)HT,
-                  (TMATTER)M,
-                  (P_RERE)ALFA,
-                  (REAL)TI1,
-                  (REAL)QI1,
-                  (REAL)VI1,
-                  (REAL)RI);
-              } else {
-                M2.H = 0.001;
-                ALFAS.table[(0) - (0)] = ALFA_04(
-                  (BOOL)__BOOL_LITERAL(TRUE),
-                  NULL,
-                  (REAL)HT,
-                  (TMATTER)M,
-                  (TMATTER)M2,
-                  (P_RERE)ALFA,
-                  (REAL)TI1,
-                  (REAL)QI1,
-                  (REAL)QI2);
-              };
+                (REAL)RI);
             };
-          } else if ((I == N)) {
-            if (PM2.AIR) {
-              if (__BOOL_LITERAL(TRUE)) {
-                M.K = KTO_AIR(
-                  (BOOL)__BOOL_LITERAL(TRUE),
-                  NULL,
-                  (REAL)1.0);
-                XX = BETA_N3(
-                  (BOOL)__BOOL_LITERAL(TRUE),
-                  NULL,
-                  (REAL)HT,
-                  (TMATTER)M,
-                  (P_RERE)ALFAS.table[((N - 1)) - (0)],
-                  (REAL)TI1,
-                  (REAL)TI2,
-                  (REAL)QI1,
-                  (REAL)VI1,
-                  (REAL)RI,
-                  (BOOL)__BOOL_LITERAL(TRUE));
-              } else {
-                ALFAS.table[(N) - (0)] = ALFA_I(
-                  (BOOL)__BOOL_LITERAL(TRUE),
-                  NULL,
-                  (REAL)HT,
-                  (TMATTER)M,
-                  (P_RERE)ALFAS.table[((N - 1)) - (0)],
-                  (REAL)TI1,
-                  (REAL)QI1,
-                  (REAL)VI1,
-                  (REAL)RI);
-                XX = TEMP_I(
-                  (BOOL)__BOOL_LITERAL(TRUE),
-                  NULL,
-                  (P_RERE)ALFAS.table[(N) - (0)],
-                  (REAL)TI2);
-              };
-            } else if ((PM.SOLID && PM2.OIL)) {
-              M.K = KTO_OIL(
-                (BOOL)__BOOL_LITERAL(TRUE),
-                NULL,
-                (REAL)1.0,
-                (REAL)0.0);
-              XX = BETA_N3(
-                (BOOL)__BOOL_LITERAL(TRUE),
-                NULL,
-                (REAL)HT,
-                (TMATTER)M,
-                (P_RERE)ALFAS.table[((N - 1)) - (0)],
-                (REAL)TI1,
-                (REAL)(TMID2 - ((TMID2 - 20.0) / 2.2)),
-                (REAL)QI1,
-                (REAL)VI1,
-                (REAL)RI,
-                (BOOL)__BOOL_LITERAL(TRUE));
-            } else {
-              if (__BOOL_LITERAL(TRUE)) {
-                ALFAS.table[(N) - (0)] = ALFA_I(
-                  (BOOL)__BOOL_LITERAL(TRUE),
-                  NULL,
-                  (REAL)HT,
-                  (TMATTER)M,
-                  (P_RERE)ALFAS.table[((N - 1)) - (0)],
-                  (REAL)TI1,
-                  (REAL)QI1,
-                  (REAL)VI1,
-                  (REAL)RI);
-                XX = TEMP_I(
-                  (BOOL)__BOOL_LITERAL(TRUE),
-                  NULL,
-                  (P_RERE)ALFAS.table[(N) - (0)],
-                  (REAL)TI2);
-              } else {
-                M2.H = 0.001;
-                XX = BETA_N4(
-                  (BOOL)__BOOL_LITERAL(TRUE),
-                  NULL,
-                  (REAL)HT,
-                  (TMATTER)M,
-                  (TMATTER)M2,
-                  (P_RERE)ALFAS.table[((N - 1)) - (0)],
-                  (REAL)TI1,
-                  (REAL)TI2,
-                  (REAL)QI1,
-                  (REAL)QI2);
-              };
-            };
+          }else break;
+        }
+      } /* END_FOR */;
+      /* FOR ... */
+      I = (N - 1);
+      {
+        int __do_increment = 0;
+        while(1) {
+          if(__do_increment){
+            /* BY ... (of FOR loop) */
+            I = (I + -1);
+          } else __do_increment = 1;
+          if(((-1) > 0)? (I <= (0)) : (I >= (0))           ){
+            K.table[(2) - (0)] = I;
+            XX = TEMP_I(
+              (BOOL)__BOOL_LITERAL(TRUE),
+              NULL,
+              (P_RERE)ALFAS.table[(I) - (0)],
+              (REAL)XX);
+            OFF = KNOFF(
+              (BOOL)__BOOL_LITERAL(TRUE),
+              NULL,
+              (INT)SH.KN.table[(0) - (0)],
+              (INT)SH.KN.table[(1) - (0)],
+              (INT)SH.KN.table[(2) - (0)],
+              (INT)K.table[(CX.X) - (0)],
+              (INT)K.table[(CX.Y) - (0)],
+              (INT)K.table[(CX.Z) - (0)]);
             PIT = SET_VAR(
               (BOOL)__BOOL_LITERAL(TRUE),
               NULL,
@@ -16146,7 +16400,7 @@ goto __exit
               MSG = MAKEMSG(
                 (BOOL)__BOOL_LITERAL(TRUE),
                 NULL,
-                (STRING)__STRING_LITERAL(3," T["),
+                (STRING)__STRING_LITERAL(2,"T["),
                 (STRING)INT_TO_STRING(
                   (BOOL)__BOOL_LITERAL(TRUE),
                   NULL,
@@ -16156,46 +16410,6 @@ goto __exit
                   (BOOL)__BOOL_LITERAL(TRUE),
                   NULL,
                   (REAL)XX));
-              MSG = MAKEMSG(
-                (BOOL)__BOOL_LITERAL(TRUE),
-                NULL,
-                (STRING)MSG,
-                (STRING)__STRING_LITERAL(5," M.a="),
-                (STRING)REAL_TO_STRING(
-                  (BOOL)__BOOL_LITERAL(TRUE),
-                  NULL,
-                  (REAL)M.A),
-                (STRING)__STRING_LITERAL(0,""));
-              MSG = MAKEMSG(
-                (BOOL)__BOOL_LITERAL(TRUE),
-                NULL,
-                (STRING)MSG,
-                (STRING)__STRING_LITERAL(5," M.h="),
-                (STRING)REAL_TO_STRING(
-                  (BOOL)__BOOL_LITERAL(TRUE),
-                  NULL,
-                  (REAL)M.H),
-                (STRING)__STRING_LITERAL(0,""));
-              MSG = MAKEMSG(
-                (BOOL)__BOOL_LITERAL(TRUE),
-                NULL,
-                (STRING)MSG,
-                (STRING)__STRING_LITERAL(5," M.l="),
-                (STRING)REAL_TO_STRING(
-                  (BOOL)__BOOL_LITERAL(TRUE),
-                  NULL,
-                  (REAL)M.L),
-                (STRING)__STRING_LITERAL(0,""));
-              MSG = MAKEMSG(
-                (BOOL)__BOOL_LITERAL(TRUE),
-                NULL,
-                (STRING)MSG,
-                (STRING)__STRING_LITERAL(3," R="),
-                (STRING)REAL_TO_STRING(
-                  (BOOL)__BOOL_LITERAL(TRUE),
-                  NULL,
-                  (REAL)RI),
-                (STRING)__STRING_LITERAL(0,""));
               MSG = LOGMSG(
                 (BOOL)__BOOL_LITERAL(TRUE),
                 NULL,
@@ -16203,82 +16417,8 @@ goto __exit
                 (LOGLEVEL)LOGLEVEL__DEBUG,
                 (TERROR)TERROR__E_SUCCESS);
             };
-          };
-        } else {
-          ALFAS.table[(I) - (0)] = ALFA_I(
-            (BOOL)__BOOL_LITERAL(TRUE),
-            NULL,
-            (REAL)HT,
-            (TMATTER)M,
-            (P_RERE)ALFAS.table[((I - 1)) - (0)],
-            (REAL)TI1,
-            (REAL)QI1,
-            (REAL)VI1,
-            (REAL)RI);
-        };
-        /* BY ... (of FOR loop) */
-        I = (I + 1);
-      } /* END_FOR */;
-      /* FOR ... */
-      I = (N - 1);
-      while( ((-1) > 0)? (I <= (0)) : (I >= (0))  ) {
-        K.table[(2) - (0)] = I;
-        XX = TEMP_I(
-          (BOOL)__BOOL_LITERAL(TRUE),
-          NULL,
-          (P_RERE)ALFAS.table[(I) - (0)],
-          (REAL)XX);
-        OFF = KNOFF(
-          (BOOL)__BOOL_LITERAL(TRUE),
-          NULL,
-          (INT)SH.KN.table[(0) - (0)],
-          (INT)SH.KN.table[(1) - (0)],
-          (INT)SH.KN.table[(2) - (0)],
-          (INT)K.table[(CX.X) - (0)],
-          (INT)K.table[(CX.Y) - (0)],
-          (INT)K.table[(CX.Z) - (0)]);
-        PIT = SET_VAR(
-          (BOOL)__BOOL_LITERAL(TRUE),
-          NULL,
-          (THANDLE)ITS_GR(
-            (BOOL)__BOOL_LITERAL(TRUE),
-            NULL,
-            (TPOS8)0),
-          (TPOS8)PIT,
-          (P_INT)OFF,
-          (TVAR)_VAR(
-            (BOOL)__BOOL_LITERAL(TRUE),
-            NULL,
-            (INT)T2C(
-              (BOOL)__BOOL_LITERAL(TRUE),
-              NULL,
-              (REAL)XX),
-            (INT)-16384,
-            (BOOL)__BOOL_LITERAL(FALSE)),
-          (USINT)0);
-        if ((((K.table[(0) - (0)] == 0) && (K.table[(1) - (0)] == 0)) && (PIT == 3))) {
-          MSG = MAKEMSG(
-            (BOOL)__BOOL_LITERAL(TRUE),
-            NULL,
-            (STRING)__STRING_LITERAL(2,"T["),
-            (STRING)INT_TO_STRING(
-              (BOOL)__BOOL_LITERAL(TRUE),
-              NULL,
-              (INT)I),
-            (STRING)__STRING_LITERAL(3,"]= "),
-            (STRING)REAL_TO_STRING(
-              (BOOL)__BOOL_LITERAL(TRUE),
-              NULL,
-              (REAL)XX));
-          MSG = LOGMSG(
-            (BOOL)__BOOL_LITERAL(TRUE),
-            NULL,
-            (STRING)MSG,
-            (LOGLEVEL)LOGLEVEL__DEBUG,
-            (TERROR)TERROR__E_SUCCESS);
-        };
-        /* BY ... (of FOR loop) */
-        I = (I + -1);
+          }else break;
+        }
       } /* END_FOR */;
       K.table[(1) - (0)] = (K.table[(1) - (0)] + 1);
     };
@@ -16754,332 +16894,346 @@ goto __error
           };
           /* FOR ... */
           IM = 0;
-          while( IM <= (M - 1) ) {
-            PIT = KIDS.table[(IM) - (0)];
-            MSG = MAKEMSG(
-              (BOOL)__BOOL_LITERAL(TRUE),
-              NULL,
-              (STRING)__STRING_LITERAL(14,"CheckValid: P="),
-              (STRING)ID2STR(
-                (BOOL)__BOOL_LITERAL(TRUE),
-                NULL,
-                (UINT)IT_ID(
-                  (BOOL)__BOOL_LITERAL(TRUE),
-                  NULL,
-                  (TPOS8)IT.ITEM)),
-              (STRING)__STRING_LITERAL(4,", C="),
-              (STRING)ID2STR(
-                (BOOL)__BOOL_LITERAL(TRUE),
-                NULL,
-                (UINT)IT_ID(
-                  (BOOL)__BOOL_LITERAL(TRUE),
-                  NULL,
-                  (TPOS8)PIT)));
-            if ((IS_CYL(
-              (BOOL)__BOOL_LITERAL(TRUE),
-              NULL,
-              (TPOS8)IT.ITEM) && !(IS_CYL(
-              (BOOL)__BOOL_LITERAL(TRUE),
-              NULL,
-              (TPOS8)PIT)))) {
-              MSG = MAKEMSG(
-                (BOOL)__BOOL_LITERAL(TRUE),
-                NULL,
-                (STRING)MSG,
-                (STRING)__STRING_LITERAL(22,", Er=CS does not match"),
-                (STRING)__STRING_LITERAL(0,""),
-                (STRING)__STRING_LITERAL(0,""));
-              #define GetFbVar(var,...) __GET_VAR(data__->var,__VA_ARGS__)
-              #define SetFbVar(var,val,...) __SET_VAR(data__->,var,__VA_ARGS__,val)
- goto __exit;  
-              #undef GetFbVar
-              #undef SetFbVar
-;
-            };
-            SH = GET_SH(
-              (BOOL)__BOOL_LITERAL(TRUE),
-              NULL,
-              (TPOS8)PIT);
-            P0 = SH.P0;
-            P1 = SH.PL;
-            P2 = SH.LX;
-            MSG = MAKEMSG(
-              (BOOL)__BOOL_LITERAL(TRUE),
-              NULL,
-              (STRING)MSG,
-              (STRING)__STRING_LITERAL(6," LWH=("),
-              (STRING)REAL_TO_STRING(
-                (BOOL)__BOOL_LITERAL(TRUE),
-                NULL,
-                (REAL)P2.table[(0) - (0)]),
-              (STRING)__STRING_LITERAL(1,","));
-            MSG = MAKEMSG(
-              (BOOL)__BOOL_LITERAL(TRUE),
-              NULL,
-              (STRING)MSG,
-              (STRING)__STRING_LITERAL(0,""),
-              (STRING)REAL_TO_STRING(
-                (BOOL)__BOOL_LITERAL(TRUE),
-                NULL,
-                (REAL)P2.table[(1) - (0)]),
-              (STRING)__STRING_LITERAL(1,","));
-            MSG = MAKEMSG(
-              (BOOL)__BOOL_LITERAL(TRUE),
-              NULL,
-              (STRING)MSG,
-              (STRING)__STRING_LITERAL(0,""),
-              (STRING)REAL_TO_STRING(
-                (BOOL)__BOOL_LITERAL(TRUE),
-                NULL,
-                (REAL)P2.table[(2) - (0)]),
-              (STRING)__STRING_LITERAL(2,");"));
-            if ((((P2.table[(0) - (0)] <= 0.1) || (P2.table[(1) - (0)] <= 0.1)) || (P2.table[(2) - (0)] <= 0.1))) {
-              MSG = MAKEMSG(
-                (BOOL)__BOOL_LITERAL(TRUE),
-                NULL,
-                (STRING)MSG,
-                (STRING)__STRING_LITERAL(24,", Er=LWH must be nonzero"),
-                (STRING)__STRING_LITERAL(0,""),
-                (STRING)__STRING_LITERAL(0,""));
-              #define GetFbVar(var,...) __GET_VAR(data__->var,__VA_ARGS__)
-              #define SetFbVar(var,val,...) __SET_VAR(data__->,var,__VA_ARGS__,val)
-goto __exit
-              #undef GetFbVar
-              #undef SetFbVar
-;
-            };
-            P2 = _POINT(
-              (BOOL)__BOOL_LITERAL(TRUE),
-              NULL,
-              (REAL)(P1.table[(0) - (0)] + P2.table[(0) - (0)]),
-              (REAL)(P1.table[(1) - (0)] + P2.table[(1) - (0)]),
-              (REAL)(P1.table[(2) - (0)] + P2.table[(2) - (0)]));
-            P1 = SH_LOC2ABS(
-              (BOOL)__BOOL_LITERAL(TRUE),
-              NULL,
-              (TSHAPE)SH,
-              (REAL)P1.table[(0) - (0)],
-              (REAL)P1.table[(1) - (0)],
-              (REAL)P1.table[(2) - (0)]);
-            P2 = SH_LOC2ABS(
-              (BOOL)__BOOL_LITERAL(TRUE),
-              NULL,
-              (TSHAPE)SH,
-              (REAL)P2.table[(0) - (0)],
-              (REAL)P2.table[(1) - (0)],
-              (REAL)P2.table[(2) - (0)]);
-            MSG = MAKEMSG(
-              (BOOL)__BOOL_LITERAL(TRUE),
-              NULL,
-              (STRING)MSG,
-              (STRING)__STRING_LITERAL(5," P1=("),
-              (STRING)REAL_TO_STRING(
-                (BOOL)__BOOL_LITERAL(TRUE),
-                NULL,
-                (REAL)P1.table[(0) - (0)]),
-              (STRING)__STRING_LITERAL(1,","));
-            MSG = MAKEMSG(
-              (BOOL)__BOOL_LITERAL(TRUE),
-              NULL,
-              (STRING)MSG,
-              (STRING)__STRING_LITERAL(0,""),
-              (STRING)REAL_TO_STRING(
-                (BOOL)__BOOL_LITERAL(TRUE),
-                NULL,
-                (REAL)P1.table[(1) - (0)]),
-              (STRING)__STRING_LITERAL(1,","));
-            MSG = MAKEMSG(
-              (BOOL)__BOOL_LITERAL(TRUE),
-              NULL,
-              (STRING)MSG,
-              (STRING)__STRING_LITERAL(0,""),
-              (STRING)REAL_TO_STRING(
-                (BOOL)__BOOL_LITERAL(TRUE),
-                NULL,
-                (REAL)P1.table[(2) - (0)]),
-              (STRING)__STRING_LITERAL(2,");"));
-            MSG = MAKEMSG(
-              (BOOL)__BOOL_LITERAL(TRUE),
-              NULL,
-              (STRING)MSG,
-              (STRING)__STRING_LITERAL(5," P2=("),
-              (STRING)REAL_TO_STRING(
-                (BOOL)__BOOL_LITERAL(TRUE),
-                NULL,
-                (REAL)P2.table[(0) - (0)]),
-              (STRING)__STRING_LITERAL(1,","));
-            MSG = MAKEMSG(
-              (BOOL)__BOOL_LITERAL(TRUE),
-              NULL,
-              (STRING)MSG,
-              (STRING)__STRING_LITERAL(0,""),
-              (STRING)REAL_TO_STRING(
-                (BOOL)__BOOL_LITERAL(TRUE),
-                NULL,
-                (REAL)P2.table[(1) - (0)]),
-              (STRING)__STRING_LITERAL(1,","));
-            MSG = MAKEMSG(
-              (BOOL)__BOOL_LITERAL(TRUE),
-              NULL,
-              (STRING)MSG,
-              (STRING)__STRING_LITERAL(0,""),
-              (STRING)REAL_TO_STRING(
-                (BOOL)__BOOL_LITERAL(TRUE),
-                NULL,
-                (REAL)P2.table[(2) - (0)]),
-              (STRING)__STRING_LITERAL(2,");"));
-            CHK = SH_POINT2DOT(
-              (BOOL)__BOOL_LITERAL(TRUE),
-              NULL,
-              (TSHAPE)GET_SH(
-                (BOOL)__BOOL_LITERAL(TRUE),
-                NULL,
-                (TPOS8)IT.ITEM),
-              (REAL)P1.table[(0) - (0)],
-              (REAL)P1.table[(1) - (0)],
-              (REAL)P1.table[(2) - (0)],
-              (BOOL)__BOOL_LITERAL(TRUE));
-            if ((CHK.V <= 0)) {
-              MSG = MAKEMSG(
-                (BOOL)__BOOL_LITERAL(TRUE),
-                NULL,
-                (STRING)MSG,
-                (STRING)__STRING_LITERAL(21,", Er=P1 out of parent"),
-                (STRING)__STRING_LITERAL(0,""),
-                (STRING)__STRING_LITERAL(0,""));
-              #define GetFbVar(var,...) __GET_VAR(data__->var,__VA_ARGS__)
-              #define SetFbVar(var,val,...) __SET_VAR(data__->,var,__VA_ARGS__,val)
-goto __exit
-              #undef GetFbVar
-              #undef SetFbVar
-;
-            };
-            CHK = SH_POINT2DOT(
-              (BOOL)__BOOL_LITERAL(TRUE),
-              NULL,
-              (TSHAPE)GET_SH(
-                (BOOL)__BOOL_LITERAL(TRUE),
-                NULL,
-                (TPOS8)IT.ITEM),
-              (REAL)P2.table[(0) - (0)],
-              (REAL)P2.table[(1) - (0)],
-              (REAL)P2.table[(2) - (0)],
-              (BOOL)__BOOL_LITERAL(TRUE));
-            if ((CHK.V <= 0)) {
-              MSG = MAKEMSG(
-                (BOOL)__BOOL_LITERAL(TRUE),
-                NULL,
-                (STRING)MSG,
-                (STRING)__STRING_LITERAL(21,", Er=P2 out of parent"),
-                (STRING)__STRING_LITERAL(0,""),
-                (STRING)__STRING_LITERAL(0,""));
-              #define GetFbVar(var,...) __GET_VAR(data__->var,__VA_ARGS__)
-              #define SetFbVar(var,val,...) __SET_VAR(data__->,var,__VA_ARGS__,val)
-goto __exit
-              #undef GetFbVar
-              #undef SetFbVar
-;
-            };
-            if (!(IS_POLY(
-              (BOOL)__BOOL_LITERAL(TRUE),
-              NULL,
-              (TPOS8)PIT))) {
-              /* FOR ... */
-              J = 0;
-              while( J <= (M - 1) ) {
-                if ((J != IM)) {
-                  PIT2 = KIDS.table[(J) - (0)];
-                  CHK = SH_POINT2DOT(
-                    (BOOL)__BOOL_LITERAL(TRUE),
-                    NULL,
-                    (TSHAPE)GET_SH(
-                      (BOOL)__BOOL_LITERAL(TRUE),
-                      NULL,
-                      (TPOS8)PIT2),
-                    (REAL)P1.table[(0) - (0)],
-                    (REAL)P1.table[(1) - (0)],
-                    (REAL)P1.table[(2) - (0)],
-                    (BOOL)__BOOL_LITERAL(TRUE));
-                  if (((CHK.V == 0x1) || (CHK.V == 0xFF))) {
-                    MSG = MAKEMSG(
-                      (BOOL)__BOOL_LITERAL(TRUE),
-                      NULL,
-                      (STRING)MSG,
-                      (STRING)__STRING_LITERAL(13,", Err: P1 of "),
-                      (STRING)SINT_TO_STRING(
-                        (BOOL)__BOOL_LITERAL(TRUE),
-                        NULL,
-                        (SINT)PIT),
-                      (STRING)__STRING_LITERAL(0,""));
-                    MSG = MAKEMSG(
-                      (BOOL)__BOOL_LITERAL(TRUE),
-                      NULL,
-                      (STRING)MSG,
-                      (STRING)__STRING_LITERAL(9," is into "),
-                      (STRING)SINT_TO_STRING(
-                        (BOOL)__BOOL_LITERAL(TRUE),
-                        NULL,
-                        (SINT)PIT2),
-                      (STRING)__STRING_LITERAL(0,""));
-                    #define GetFbVar(var,...) __GET_VAR(data__->var,__VA_ARGS__)
-                    #define SetFbVar(var,val,...) __SET_VAR(data__->,var,__VA_ARGS__,val)
-goto __exit
-                    #undef GetFbVar
-                    #undef SetFbVar
-;
-                  };
-                  CHK = SH_POINT2DOT(
-                    (BOOL)__BOOL_LITERAL(TRUE),
-                    NULL,
-                    (TSHAPE)GET_SH(
-                      (BOOL)__BOOL_LITERAL(TRUE),
-                      NULL,
-                      (TPOS8)PIT2),
-                    (REAL)P2.table[(0) - (0)],
-                    (REAL)P2.table[(1) - (0)],
-                    (REAL)P2.table[(2) - (0)],
-                    (BOOL)__BOOL_LITERAL(TRUE));
-                  if (((CHK.V == 0x1) || (CHK.V == 0xFF))) {
-                    MSG = MAKEMSG(
-                      (BOOL)__BOOL_LITERAL(TRUE),
-                      NULL,
-                      (STRING)MSG,
-                      (STRING)__STRING_LITERAL(13,", Err: P2 of "),
-                      (STRING)SINT_TO_STRING(
-                        (BOOL)__BOOL_LITERAL(TRUE),
-                        NULL,
-                        (SINT)PIT),
-                      (STRING)__STRING_LITERAL(0,""));
-                    MSG = MAKEMSG(
-                      (BOOL)__BOOL_LITERAL(TRUE),
-                      NULL,
-                      (STRING)MSG,
-                      (STRING)__STRING_LITERAL(9," is into "),
-                      (STRING)SINT_TO_STRING(
-                        (BOOL)__BOOL_LITERAL(TRUE),
-                        NULL,
-                        (SINT)PIT2),
-                      (STRING)__STRING_LITERAL(0,""));
-                    #define GetFbVar(var,...) __GET_VAR(data__->var,__VA_ARGS__)
-                    #define SetFbVar(var,val,...) __SET_VAR(data__->,var,__VA_ARGS__,val)
-goto __exit
-                    #undef GetFbVar
-                    #undef SetFbVar
-;
-                  };
-                };
+          {
+            int __do_increment = 0;
+            while(1) {
+              if(__do_increment){
                 /* BY ... (of FOR loop) */
-                J = (J + 1);
-              } /* END_FOR */;
-            };
-            MSG = LOGMSG(
-              (BOOL)__BOOL_LITERAL(TRUE),
-              NULL,
-              (STRING)MSG,
-              (LOGLEVEL)LOGLEVEL__DEBUG,
-              (TERROR)TERROR__E_SUCCESS);
-            /* BY ... (of FOR loop) */
-            IM = (IM + 1);
+                IM = (IM + 1);
+              } else __do_increment = 1;
+              if(IM <= (M - 1)              ){
+                PIT = KIDS.table[(IM) - (0)];
+                MSG = MAKEMSG(
+                  (BOOL)__BOOL_LITERAL(TRUE),
+                  NULL,
+                  (STRING)__STRING_LITERAL(14,"CheckValid: P="),
+                  (STRING)ID2STR(
+                    (BOOL)__BOOL_LITERAL(TRUE),
+                    NULL,
+                    (UINT)IT_ID(
+                      (BOOL)__BOOL_LITERAL(TRUE),
+                      NULL,
+                      (TPOS8)IT.ITEM)),
+                  (STRING)__STRING_LITERAL(4,", C="),
+                  (STRING)ID2STR(
+                    (BOOL)__BOOL_LITERAL(TRUE),
+                    NULL,
+                    (UINT)IT_ID(
+                      (BOOL)__BOOL_LITERAL(TRUE),
+                      NULL,
+                      (TPOS8)PIT)));
+                if ((IS_CYL(
+                  (BOOL)__BOOL_LITERAL(TRUE),
+                  NULL,
+                  (TPOS8)IT.ITEM) && !(IS_CYL(
+                  (BOOL)__BOOL_LITERAL(TRUE),
+                  NULL,
+                  (TPOS8)PIT)))) {
+                  MSG = MAKEMSG(
+                    (BOOL)__BOOL_LITERAL(TRUE),
+                    NULL,
+                    (STRING)MSG,
+                    (STRING)__STRING_LITERAL(22,", Er=CS does not match"),
+                    (STRING)__STRING_LITERAL(0,""),
+                    (STRING)__STRING_LITERAL(0,""));
+                  #define GetFbVar(var,...) __GET_VAR(data__->var,__VA_ARGS__)
+                  #define SetFbVar(var,val,...) __SET_VAR(data__->,var,__VA_ARGS__,val)
+ goto __exit;  
+                  #undef GetFbVar
+                  #undef SetFbVar
+;
+                };
+                SH = GET_SH(
+                  (BOOL)__BOOL_LITERAL(TRUE),
+                  NULL,
+                  (TPOS8)PIT);
+                P0 = SH.P0;
+                P1 = SH.PL;
+                P2 = SH.LX;
+                MSG = MAKEMSG(
+                  (BOOL)__BOOL_LITERAL(TRUE),
+                  NULL,
+                  (STRING)MSG,
+                  (STRING)__STRING_LITERAL(6," LWH=("),
+                  (STRING)REAL_TO_STRING(
+                    (BOOL)__BOOL_LITERAL(TRUE),
+                    NULL,
+                    (REAL)P2.table[(0) - (0)]),
+                  (STRING)__STRING_LITERAL(1,","));
+                MSG = MAKEMSG(
+                  (BOOL)__BOOL_LITERAL(TRUE),
+                  NULL,
+                  (STRING)MSG,
+                  (STRING)__STRING_LITERAL(0,""),
+                  (STRING)REAL_TO_STRING(
+                    (BOOL)__BOOL_LITERAL(TRUE),
+                    NULL,
+                    (REAL)P2.table[(1) - (0)]),
+                  (STRING)__STRING_LITERAL(1,","));
+                MSG = MAKEMSG(
+                  (BOOL)__BOOL_LITERAL(TRUE),
+                  NULL,
+                  (STRING)MSG,
+                  (STRING)__STRING_LITERAL(0,""),
+                  (STRING)REAL_TO_STRING(
+                    (BOOL)__BOOL_LITERAL(TRUE),
+                    NULL,
+                    (REAL)P2.table[(2) - (0)]),
+                  (STRING)__STRING_LITERAL(2,");"));
+                if ((((P2.table[(0) - (0)] <= 0.1) || (P2.table[(1) - (0)] <= 0.1)) || (P2.table[(2) - (0)] <= 0.1))) {
+                  MSG = MAKEMSG(
+                    (BOOL)__BOOL_LITERAL(TRUE),
+                    NULL,
+                    (STRING)MSG,
+                    (STRING)__STRING_LITERAL(24,", Er=LWH must be nonzero"),
+                    (STRING)__STRING_LITERAL(0,""),
+                    (STRING)__STRING_LITERAL(0,""));
+                  #define GetFbVar(var,...) __GET_VAR(data__->var,__VA_ARGS__)
+                  #define SetFbVar(var,val,...) __SET_VAR(data__->,var,__VA_ARGS__,val)
+goto __exit
+                  #undef GetFbVar
+                  #undef SetFbVar
+;
+                };
+                P2 = _POINT(
+                  (BOOL)__BOOL_LITERAL(TRUE),
+                  NULL,
+                  (REAL)(P1.table[(0) - (0)] + P2.table[(0) - (0)]),
+                  (REAL)(P1.table[(1) - (0)] + P2.table[(1) - (0)]),
+                  (REAL)(P1.table[(2) - (0)] + P2.table[(2) - (0)]));
+                P1 = SH_LOC2ABS(
+                  (BOOL)__BOOL_LITERAL(TRUE),
+                  NULL,
+                  (TSHAPE)SH,
+                  (REAL)P1.table[(0) - (0)],
+                  (REAL)P1.table[(1) - (0)],
+                  (REAL)P1.table[(2) - (0)]);
+                P2 = SH_LOC2ABS(
+                  (BOOL)__BOOL_LITERAL(TRUE),
+                  NULL,
+                  (TSHAPE)SH,
+                  (REAL)P2.table[(0) - (0)],
+                  (REAL)P2.table[(1) - (0)],
+                  (REAL)P2.table[(2) - (0)]);
+                MSG = MAKEMSG(
+                  (BOOL)__BOOL_LITERAL(TRUE),
+                  NULL,
+                  (STRING)MSG,
+                  (STRING)__STRING_LITERAL(5," P1=("),
+                  (STRING)REAL_TO_STRING(
+                    (BOOL)__BOOL_LITERAL(TRUE),
+                    NULL,
+                    (REAL)P1.table[(0) - (0)]),
+                  (STRING)__STRING_LITERAL(1,","));
+                MSG = MAKEMSG(
+                  (BOOL)__BOOL_LITERAL(TRUE),
+                  NULL,
+                  (STRING)MSG,
+                  (STRING)__STRING_LITERAL(0,""),
+                  (STRING)REAL_TO_STRING(
+                    (BOOL)__BOOL_LITERAL(TRUE),
+                    NULL,
+                    (REAL)P1.table[(1) - (0)]),
+                  (STRING)__STRING_LITERAL(1,","));
+                MSG = MAKEMSG(
+                  (BOOL)__BOOL_LITERAL(TRUE),
+                  NULL,
+                  (STRING)MSG,
+                  (STRING)__STRING_LITERAL(0,""),
+                  (STRING)REAL_TO_STRING(
+                    (BOOL)__BOOL_LITERAL(TRUE),
+                    NULL,
+                    (REAL)P1.table[(2) - (0)]),
+                  (STRING)__STRING_LITERAL(2,");"));
+                MSG = MAKEMSG(
+                  (BOOL)__BOOL_LITERAL(TRUE),
+                  NULL,
+                  (STRING)MSG,
+                  (STRING)__STRING_LITERAL(5," P2=("),
+                  (STRING)REAL_TO_STRING(
+                    (BOOL)__BOOL_LITERAL(TRUE),
+                    NULL,
+                    (REAL)P2.table[(0) - (0)]),
+                  (STRING)__STRING_LITERAL(1,","));
+                MSG = MAKEMSG(
+                  (BOOL)__BOOL_LITERAL(TRUE),
+                  NULL,
+                  (STRING)MSG,
+                  (STRING)__STRING_LITERAL(0,""),
+                  (STRING)REAL_TO_STRING(
+                    (BOOL)__BOOL_LITERAL(TRUE),
+                    NULL,
+                    (REAL)P2.table[(1) - (0)]),
+                  (STRING)__STRING_LITERAL(1,","));
+                MSG = MAKEMSG(
+                  (BOOL)__BOOL_LITERAL(TRUE),
+                  NULL,
+                  (STRING)MSG,
+                  (STRING)__STRING_LITERAL(0,""),
+                  (STRING)REAL_TO_STRING(
+                    (BOOL)__BOOL_LITERAL(TRUE),
+                    NULL,
+                    (REAL)P2.table[(2) - (0)]),
+                  (STRING)__STRING_LITERAL(2,");"));
+                CHK = SH_POINT2DOT(
+                  (BOOL)__BOOL_LITERAL(TRUE),
+                  NULL,
+                  (TSHAPE)GET_SH(
+                    (BOOL)__BOOL_LITERAL(TRUE),
+                    NULL,
+                    (TPOS8)IT.ITEM),
+                  (REAL)P1.table[(0) - (0)],
+                  (REAL)P1.table[(1) - (0)],
+                  (REAL)P1.table[(2) - (0)],
+                  (BOOL)__BOOL_LITERAL(TRUE));
+                if ((CHK.V <= 0)) {
+                  MSG = MAKEMSG(
+                    (BOOL)__BOOL_LITERAL(TRUE),
+                    NULL,
+                    (STRING)MSG,
+                    (STRING)__STRING_LITERAL(21,", Er=P1 out of parent"),
+                    (STRING)__STRING_LITERAL(0,""),
+                    (STRING)__STRING_LITERAL(0,""));
+                  #define GetFbVar(var,...) __GET_VAR(data__->var,__VA_ARGS__)
+                  #define SetFbVar(var,val,...) __SET_VAR(data__->,var,__VA_ARGS__,val)
+goto __exit
+                  #undef GetFbVar
+                  #undef SetFbVar
+;
+                };
+                CHK = SH_POINT2DOT(
+                  (BOOL)__BOOL_LITERAL(TRUE),
+                  NULL,
+                  (TSHAPE)GET_SH(
+                    (BOOL)__BOOL_LITERAL(TRUE),
+                    NULL,
+                    (TPOS8)IT.ITEM),
+                  (REAL)P2.table[(0) - (0)],
+                  (REAL)P2.table[(1) - (0)],
+                  (REAL)P2.table[(2) - (0)],
+                  (BOOL)__BOOL_LITERAL(TRUE));
+                if ((CHK.V <= 0)) {
+                  MSG = MAKEMSG(
+                    (BOOL)__BOOL_LITERAL(TRUE),
+                    NULL,
+                    (STRING)MSG,
+                    (STRING)__STRING_LITERAL(21,", Er=P2 out of parent"),
+                    (STRING)__STRING_LITERAL(0,""),
+                    (STRING)__STRING_LITERAL(0,""));
+                  #define GetFbVar(var,...) __GET_VAR(data__->var,__VA_ARGS__)
+                  #define SetFbVar(var,val,...) __SET_VAR(data__->,var,__VA_ARGS__,val)
+goto __exit
+                  #undef GetFbVar
+                  #undef SetFbVar
+;
+                };
+                if (!(IS_POLY(
+                  (BOOL)__BOOL_LITERAL(TRUE),
+                  NULL,
+                  (TPOS8)PIT))) {
+                  /* FOR ... */
+                  J = 0;
+                  {
+                    int __do_increment = 0;
+                    while(1) {
+                      if(__do_increment){
+                        /* BY ... (of FOR loop) */
+                        J = (J + 1);
+                      } else __do_increment = 1;
+                      if(J <= (M - 1)                      ){
+                        if ((J != IM)) {
+                          PIT2 = KIDS.table[(J) - (0)];
+                          CHK = SH_POINT2DOT(
+                            (BOOL)__BOOL_LITERAL(TRUE),
+                            NULL,
+                            (TSHAPE)GET_SH(
+                              (BOOL)__BOOL_LITERAL(TRUE),
+                              NULL,
+                              (TPOS8)PIT2),
+                            (REAL)P1.table[(0) - (0)],
+                            (REAL)P1.table[(1) - (0)],
+                            (REAL)P1.table[(2) - (0)],
+                            (BOOL)__BOOL_LITERAL(TRUE));
+                          if (((CHK.V == 0x1) || (CHK.V == 0xFF))) {
+                            MSG = MAKEMSG(
+                              (BOOL)__BOOL_LITERAL(TRUE),
+                              NULL,
+                              (STRING)MSG,
+                              (STRING)__STRING_LITERAL(13,", Err: P1 of "),
+                              (STRING)SINT_TO_STRING(
+                                (BOOL)__BOOL_LITERAL(TRUE),
+                                NULL,
+                                (SINT)PIT),
+                              (STRING)__STRING_LITERAL(0,""));
+                            MSG = MAKEMSG(
+                              (BOOL)__BOOL_LITERAL(TRUE),
+                              NULL,
+                              (STRING)MSG,
+                              (STRING)__STRING_LITERAL(9," is into "),
+                              (STRING)SINT_TO_STRING(
+                                (BOOL)__BOOL_LITERAL(TRUE),
+                                NULL,
+                                (SINT)PIT2),
+                              (STRING)__STRING_LITERAL(0,""));
+                            #define GetFbVar(var,...) __GET_VAR(data__->var,__VA_ARGS__)
+                            #define SetFbVar(var,val,...) __SET_VAR(data__->,var,__VA_ARGS__,val)
+goto __exit
+                            #undef GetFbVar
+                            #undef SetFbVar
+;
+                          };
+                          CHK = SH_POINT2DOT(
+                            (BOOL)__BOOL_LITERAL(TRUE),
+                            NULL,
+                            (TSHAPE)GET_SH(
+                              (BOOL)__BOOL_LITERAL(TRUE),
+                              NULL,
+                              (TPOS8)PIT2),
+                            (REAL)P2.table[(0) - (0)],
+                            (REAL)P2.table[(1) - (0)],
+                            (REAL)P2.table[(2) - (0)],
+                            (BOOL)__BOOL_LITERAL(TRUE));
+                          if (((CHK.V == 0x1) || (CHK.V == 0xFF))) {
+                            MSG = MAKEMSG(
+                              (BOOL)__BOOL_LITERAL(TRUE),
+                              NULL,
+                              (STRING)MSG,
+                              (STRING)__STRING_LITERAL(13,", Err: P2 of "),
+                              (STRING)SINT_TO_STRING(
+                                (BOOL)__BOOL_LITERAL(TRUE),
+                                NULL,
+                                (SINT)PIT),
+                              (STRING)__STRING_LITERAL(0,""));
+                            MSG = MAKEMSG(
+                              (BOOL)__BOOL_LITERAL(TRUE),
+                              NULL,
+                              (STRING)MSG,
+                              (STRING)__STRING_LITERAL(9," is into "),
+                              (STRING)SINT_TO_STRING(
+                                (BOOL)__BOOL_LITERAL(TRUE),
+                                NULL,
+                                (SINT)PIT2),
+                              (STRING)__STRING_LITERAL(0,""));
+                            #define GetFbVar(var,...) __GET_VAR(data__->var,__VA_ARGS__)
+                            #define SetFbVar(var,val,...) __SET_VAR(data__->,var,__VA_ARGS__,val)
+goto __exit
+                            #undef GetFbVar
+                            #undef SetFbVar
+;
+                          };
+                        };
+                      }else break;
+                    }
+                  } /* END_FOR */;
+                };
+                MSG = LOGMSG(
+                  (BOOL)__BOOL_LITERAL(TRUE),
+                  NULL,
+                  (STRING)MSG,
+                  (LOGLEVEL)LOGLEVEL__DEBUG,
+                  (TERROR)TERROR__E_SUCCESS);
+              }else break;
+            }
           } /* END_FOR */;
         } else {
           if ((N > 99)) {
@@ -17196,155 +17350,183 @@ INT DO_LINKITEMS(
           (TPOS8)IT.ITEM);
         /* FOR ... */
         I = 0;
-        while( I <= (SH.KN.table[(0) - (0)] - 1) ) {
-          /* FOR ... */
-          J = 0;
-          while( J <= (SH.KN.table[(1) - (0)] - 1) ) {
-            /* FOR ... */
-            K = 0;
-            while( K <= (SH.KN.table[(2) - (0)] - 1) ) {
-              if (!(IS_POLY(
-                (BOOL)__BOOL_LITERAL(TRUE),
-                NULL,
-                (TPOS8)IT.ITEM))) {
-                if (((I == 0) || (I == (SH.KN.table[(0) - (0)] - 1)))) {
-                  DOT = LINK_VAR(
-                    (BOOL)__BOOL_LITERAL(TRUE),
-                    NULL,
-                    (THANDLE)ITS_GR(
-                      (BOOL)__BOOL_LITERAL(TRUE),
-                      NULL,
-                      (TPOS8)0),
-                    (TPOS8)IT.ITEM,
-                    (TSHAPE)SH,
-                    (INT)I,
-                    (INT)J,
-                    (INT)K,
-                    (USINT)1,
-                    (TPOS8)IT.ITEM,
-                    (REAL)0.1,
-                    (REAL)0.1);
-                  if ((DOT.V == -1)) {
-                    if ((I == 0)) {
-                      B = (B | SHL__BYTE__BYTE__SINT(
-                        (BOOL)__BOOL_LITERAL(TRUE),
-                        NULL,
-                        (BYTE)0x1,
-                        (SINT)1));
-                    } else {
-                      B = (B | SHL__BYTE__BYTE__SINT(
-                        (BOOL)__BOOL_LITERAL(TRUE),
-                        NULL,
-                        (BYTE)0x1,
-                        (SINT)2));
-                    };
-                  };
-                };
-                if (((J == 0) || (J == (SH.KN.table[(1) - (0)] - 1)))) {
-                  DOT = LINK_VAR(
-                    (BOOL)__BOOL_LITERAL(TRUE),
-                    NULL,
-                    (THANDLE)ITS_GR(
-                      (BOOL)__BOOL_LITERAL(TRUE),
-                      NULL,
-                      (TPOS8)0),
-                    (TPOS8)IT.ITEM,
-                    (TSHAPE)SH,
-                    (INT)I,
-                    (INT)J,
-                    (INT)K,
-                    (USINT)2,
-                    (TPOS8)IT.ITEM,
-                    (REAL)0.1,
-                    (REAL)0.1);
-                  if ((DOT.V == -1)) {
-                    if ((J == 0)) {
-                      B = (B | SHL__BYTE__BYTE__SINT(
-                        (BOOL)__BOOL_LITERAL(TRUE),
-                        NULL,
-                        (BYTE)0x1,
-                        (SINT)3));
-                    } else {
-                      B = (B | SHL__BYTE__BYTE__SINT(
-                        (BOOL)__BOOL_LITERAL(TRUE),
-                        NULL,
-                        (BYTE)0x1,
-                        (SINT)4));
-                    };
-                  };
-                };
-                if (((K == 0) || (K == (SH.KN.table[(2) - (0)] - 1)))) {
-                  DOT = LINK_VAR(
-                    (BOOL)__BOOL_LITERAL(TRUE),
-                    NULL,
-                    (THANDLE)ITS_GR(
-                      (BOOL)__BOOL_LITERAL(TRUE),
-                      NULL,
-                      (TPOS8)0),
-                    (TPOS8)IT.ITEM,
-                    (TSHAPE)SH,
-                    (INT)I,
-                    (INT)J,
-                    (INT)K,
-                    (USINT)3,
-                    (TPOS8)IT.ITEM,
-                    (REAL)0.1,
-                    (REAL)0.1);
-                  if ((DOT.V == -1)) {
-                    if ((K == 0)) {
-                      B = (B | SHL__BYTE__BYTE__SINT(
-                        (BOOL)__BOOL_LITERAL(TRUE),
-                        NULL,
-                        (BYTE)0x1,
-                        (SINT)5));
-                    } else {
-                      B = (B | SHL__BYTE__BYTE__SINT(
-                        (BOOL)__BOOL_LITERAL(TRUE),
-                        NULL,
-                        (BYTE)0x1,
-                        (SINT)6));
-                    };
-                  };
-                };
-              } else {
-                DOT = LINK_VAR(
-                  (BOOL)__BOOL_LITERAL(TRUE),
-                  NULL,
-                  (THANDLE)ITS_GR(
-                    (BOOL)__BOOL_LITERAL(TRUE),
-                    NULL,
-                    (TPOS8)0),
-                  (TPOS8)IT.ITEM,
-                  (TSHAPE)SH,
-                  (INT)I,
-                  (INT)J,
-                  (INT)K,
-                  (USINT)0,
-                  (TPOS8)-1,
-                  (REAL)0.1,
-                  (REAL)0.1);
-              };
+        {
+          int __do_increment = 0;
+          while(1) {
+            if(__do_increment){
               /* BY ... (of FOR loop) */
-              K = (K + 1);
-            } /* END_FOR */;
-            /* BY ... (of FOR loop) */
-            J = (J + 1);
-          } /* END_FOR */;
-          /* BY ... (of FOR loop) */
-          I = (I + 1);
+              I = (I + 1);
+            } else __do_increment = 1;
+            if(I <= (SH.KN.table[(0) - (0)] - 1)            ){
+              /* FOR ... */
+              J = 0;
+              {
+                int __do_increment = 0;
+                while(1) {
+                  if(__do_increment){
+                    /* BY ... (of FOR loop) */
+                    J = (J + 1);
+                  } else __do_increment = 1;
+                  if(J <= (SH.KN.table[(1) - (0)] - 1)                  ){
+                    /* FOR ... */
+                    K = 0;
+                    {
+                      int __do_increment = 0;
+                      while(1) {
+                        if(__do_increment){
+                          /* BY ... (of FOR loop) */
+                          K = (K + 1);
+                        } else __do_increment = 1;
+                        if(K <= (SH.KN.table[(2) - (0)] - 1)                        ){
+                          if (!(IS_POLY(
+                            (BOOL)__BOOL_LITERAL(TRUE),
+                            NULL,
+                            (TPOS8)IT.ITEM))) {
+                            if (((I == 0) || (I == (SH.KN.table[(0) - (0)] - 1)))) {
+                              DOT = LINK_VAR(
+                                (BOOL)__BOOL_LITERAL(TRUE),
+                                NULL,
+                                (THANDLE)ITS_GR(
+                                  (BOOL)__BOOL_LITERAL(TRUE),
+                                  NULL,
+                                  (TPOS8)0),
+                                (TPOS8)IT.ITEM,
+                                (TSHAPE)SH,
+                                (INT)I,
+                                (INT)J,
+                                (INT)K,
+                                (USINT)1,
+                                (TPOS8)IT.ITEM,
+                                (REAL)0.1,
+                                (REAL)0.1);
+                              if ((DOT.V == -1)) {
+                                if ((I == 0)) {
+                                  B = (B | SHL__BYTE__BYTE__SINT(
+                                    (BOOL)__BOOL_LITERAL(TRUE),
+                                    NULL,
+                                    (BYTE)0x1,
+                                    (SINT)1));
+                                } else {
+                                  B = (B | SHL__BYTE__BYTE__SINT(
+                                    (BOOL)__BOOL_LITERAL(TRUE),
+                                    NULL,
+                                    (BYTE)0x1,
+                                    (SINT)2));
+                                };
+                              };
+                            };
+                            if (((J == 0) || (J == (SH.KN.table[(1) - (0)] - 1)))) {
+                              DOT = LINK_VAR(
+                                (BOOL)__BOOL_LITERAL(TRUE),
+                                NULL,
+                                (THANDLE)ITS_GR(
+                                  (BOOL)__BOOL_LITERAL(TRUE),
+                                  NULL,
+                                  (TPOS8)0),
+                                (TPOS8)IT.ITEM,
+                                (TSHAPE)SH,
+                                (INT)I,
+                                (INT)J,
+                                (INT)K,
+                                (USINT)2,
+                                (TPOS8)IT.ITEM,
+                                (REAL)0.1,
+                                (REAL)0.1);
+                              if ((DOT.V == -1)) {
+                                if ((J == 0)) {
+                                  B = (B | SHL__BYTE__BYTE__SINT(
+                                    (BOOL)__BOOL_LITERAL(TRUE),
+                                    NULL,
+                                    (BYTE)0x1,
+                                    (SINT)3));
+                                } else {
+                                  B = (B | SHL__BYTE__BYTE__SINT(
+                                    (BOOL)__BOOL_LITERAL(TRUE),
+                                    NULL,
+                                    (BYTE)0x1,
+                                    (SINT)4));
+                                };
+                              };
+                            };
+                            if (((K == 0) || (K == (SH.KN.table[(2) - (0)] - 1)))) {
+                              DOT = LINK_VAR(
+                                (BOOL)__BOOL_LITERAL(TRUE),
+                                NULL,
+                                (THANDLE)ITS_GR(
+                                  (BOOL)__BOOL_LITERAL(TRUE),
+                                  NULL,
+                                  (TPOS8)0),
+                                (TPOS8)IT.ITEM,
+                                (TSHAPE)SH,
+                                (INT)I,
+                                (INT)J,
+                                (INT)K,
+                                (USINT)3,
+                                (TPOS8)IT.ITEM,
+                                (REAL)0.1,
+                                (REAL)0.1);
+                              if ((DOT.V == -1)) {
+                                if ((K == 0)) {
+                                  B = (B | SHL__BYTE__BYTE__SINT(
+                                    (BOOL)__BOOL_LITERAL(TRUE),
+                                    NULL,
+                                    (BYTE)0x1,
+                                    (SINT)5));
+                                } else {
+                                  B = (B | SHL__BYTE__BYTE__SINT(
+                                    (BOOL)__BOOL_LITERAL(TRUE),
+                                    NULL,
+                                    (BYTE)0x1,
+                                    (SINT)6));
+                                };
+                              };
+                            };
+                          } else {
+                            DOT = LINK_VAR(
+                              (BOOL)__BOOL_LITERAL(TRUE),
+                              NULL,
+                              (THANDLE)ITS_GR(
+                                (BOOL)__BOOL_LITERAL(TRUE),
+                                NULL,
+                                (TPOS8)0),
+                              (TPOS8)IT.ITEM,
+                              (TSHAPE)SH,
+                              (INT)I,
+                              (INT)J,
+                              (INT)K,
+                              (USINT)0,
+                              (TPOS8)-1,
+                              (REAL)0.1,
+                              (REAL)0.1);
+                          };
+                        }else break;
+                      }
+                    } /* END_FOR */;
+                  }else break;
+                }
+              } /* END_FOR */;
+            }else break;
+          }
         } /* END_FOR */;
         /* FOR ... */
         I = 1;
-        while( I <= 6 ) {
-          if (((B & SHL__BYTE__BYTE__INT(
-            (BOOL)__BOOL_LITERAL(TRUE),
-            NULL,
-            (BYTE)0x1,
-            (INT)I)) != 0)) {
-            NAIR = (NAIR + 1);
-          };
-          /* BY ... (of FOR loop) */
-          I = (I + 1);
+        {
+          int __do_increment = 0;
+          while(1) {
+            if(__do_increment){
+              /* BY ... (of FOR loop) */
+              I = (I + 1);
+            } else __do_increment = 1;
+            if(I <= 6            ){
+              if (((B & SHL__BYTE__BYTE__INT(
+                (BOOL)__BOOL_LITERAL(TRUE),
+                NULL,
+                (BYTE)0x1,
+                (INT)I)) != 0)) {
+                NAIR = (NAIR + 1);
+              };
+            }else break;
+          }
         } /* END_FOR */;
         if ((NAIR > 0)) {
           NITEMS = (NITEMS + 1);
@@ -17589,101 +17771,108 @@ goto __exit
     (TERROR)TERROR__E_SUCCESS));
   /* FOR ... */
   __SET_VAR(data__->,I,,0);
-  while( __GET_VAR(data__->I,) <= (__GET_EXTERNAL(data__->HDR,.NM) - 1) ) {
-    __SET_VAR(data__->_GETMAT.,I,,__GET_VAR(data__->I,));
-    GETMAT_body__(&data__->_GETMAT);
-    __SET_EXTERNAL(data__->,STS,.MT.table[(__GET_VAR(data__->I,)) - (0)],__GET_VAR(data__->_GETMAT.MAT));
-    __SET_VAR(data__->,MSG,,MAKEMSG(
-      (BOOL)__BOOL_LITERAL(TRUE),
-      NULL,
-      (STRING)__STRING_LITERAL(17," - Get material ["),
-      (STRING)SINT_TO_STRING(
-        (BOOL)__BOOL_LITERAL(TRUE),
-        NULL,
-        (SINT)__GET_VAR(data__->I,)),
-      (STRING)__STRING_LITERAL(7,"] ... ("),
-      (STRING)__STRING_LITERAL(0,"")));
-    __SET_VAR(data__->,MSG,,MAKEMSG(
-      (BOOL)__BOOL_LITERAL(TRUE),
-      NULL,
-      (STRING)__GET_VAR(data__->MSG,),
-      (STRING)REAL_TO_STRING(
-        (BOOL)__BOOL_LITERAL(TRUE),
-        NULL,
-        (REAL)__GET_EXTERNAL(data__->STS,.MT.table[(__GET_VAR(data__->I,)) - (0)].KT)),
-      (STRING)__STRING_LITERAL(2,", "),
-      (STRING)__STRING_LITERAL(0,"")));
-    __SET_VAR(data__->,MSG,,MAKEMSG(
-      (BOOL)__BOOL_LITERAL(TRUE),
-      NULL,
-      (STRING)__GET_VAR(data__->MSG,),
-      (STRING)REAL_TO_STRING(
-        (BOOL)__BOOL_LITERAL(TRUE),
-        NULL,
-        (REAL)__GET_EXTERNAL(data__->STS,.MT.table[(__GET_VAR(data__->I,)) - (0)].CP)),
-      (STRING)__STRING_LITERAL(2,", "),
-      (STRING)__STRING_LITERAL(0,"")));
-    __SET_VAR(data__->,MSG,,MAKEMSG(
-      (BOOL)__BOOL_LITERAL(TRUE),
-      NULL,
-      (STRING)__GET_VAR(data__->MSG,),
-      (STRING)REAL_TO_STRING(
-        (BOOL)__BOOL_LITERAL(TRUE),
-        NULL,
-        (REAL)__GET_EXTERNAL(data__->STS,.MT.table[(__GET_VAR(data__->I,)) - (0)].PL)),
-      (STRING)__STRING_LITERAL(2,", "),
-      (STRING)__STRING_LITERAL(0,"")));
-    __SET_VAR(data__->,MSG,,MAKEMSG(
-      (BOOL)__BOOL_LITERAL(TRUE),
-      NULL,
-      (STRING)__GET_VAR(data__->MSG,),
-      (STRING)REAL_TO_STRING(
-        (BOOL)__BOOL_LITERAL(TRUE),
-        NULL,
-        (REAL)__GET_EXTERNAL(data__->STS,.MT.table[(__GET_VAR(data__->I,)) - (0)].MD)),
-      (STRING)__STRING_LITERAL(1,")"),
-      (STRING)__STRING_LITERAL(0,"")));
-    if ((__GET_EXTERNAL(data__->STS,.MT.table[(__GET_VAR(data__->I,)) - (0)].KT) < 1.0E-8)) {
-      __SET_VAR(data__->,NRES,,TERROR__E_MATER);
-      #define GetFbVar(var,...) __GET_VAR(data__->var,__VA_ARGS__)
-      #define SetFbVar(var,val,...) __SET_VAR(data__->,var,__VA_ARGS__,val)
+  {
+    int __do_increment = 0;
+    while(1) {
+      if(__do_increment){
+        /* BY ... (of FOR loop) */
+        __SET_VAR(data__->,I,,(__GET_VAR(data__->I,) + 1));
+      } else __do_increment = 1;
+      if(__GET_VAR(data__->I,) <= (__GET_EXTERNAL(data__->HDR,.NM) - 1)      ){
+        __SET_VAR(data__->_GETMAT.,I,,__GET_VAR(data__->I,));
+        GETMAT_body__(&data__->_GETMAT);
+        __SET_EXTERNAL(data__->,STS,.MT.table[(__GET_VAR(data__->I,)) - (0)],__GET_VAR(data__->_GETMAT.MAT));
+        __SET_VAR(data__->,MSG,,MAKEMSG(
+          (BOOL)__BOOL_LITERAL(TRUE),
+          NULL,
+          (STRING)__STRING_LITERAL(17," - Get material ["),
+          (STRING)SINT_TO_STRING(
+            (BOOL)__BOOL_LITERAL(TRUE),
+            NULL,
+            (SINT)__GET_VAR(data__->I,)),
+          (STRING)__STRING_LITERAL(7,"] ... ("),
+          (STRING)__STRING_LITERAL(0,"")));
+        __SET_VAR(data__->,MSG,,MAKEMSG(
+          (BOOL)__BOOL_LITERAL(TRUE),
+          NULL,
+          (STRING)__GET_VAR(data__->MSG,),
+          (STRING)REAL_TO_STRING(
+            (BOOL)__BOOL_LITERAL(TRUE),
+            NULL,
+            (REAL)__GET_EXTERNAL(data__->STS,.MT.table[(__GET_VAR(data__->I,)) - (0)].KT)),
+          (STRING)__STRING_LITERAL(2,", "),
+          (STRING)__STRING_LITERAL(0,"")));
+        __SET_VAR(data__->,MSG,,MAKEMSG(
+          (BOOL)__BOOL_LITERAL(TRUE),
+          NULL,
+          (STRING)__GET_VAR(data__->MSG,),
+          (STRING)REAL_TO_STRING(
+            (BOOL)__BOOL_LITERAL(TRUE),
+            NULL,
+            (REAL)__GET_EXTERNAL(data__->STS,.MT.table[(__GET_VAR(data__->I,)) - (0)].CP)),
+          (STRING)__STRING_LITERAL(2,", "),
+          (STRING)__STRING_LITERAL(0,"")));
+        __SET_VAR(data__->,MSG,,MAKEMSG(
+          (BOOL)__BOOL_LITERAL(TRUE),
+          NULL,
+          (STRING)__GET_VAR(data__->MSG,),
+          (STRING)REAL_TO_STRING(
+            (BOOL)__BOOL_LITERAL(TRUE),
+            NULL,
+            (REAL)__GET_EXTERNAL(data__->STS,.MT.table[(__GET_VAR(data__->I,)) - (0)].PL)),
+          (STRING)__STRING_LITERAL(2,", "),
+          (STRING)__STRING_LITERAL(0,"")));
+        __SET_VAR(data__->,MSG,,MAKEMSG(
+          (BOOL)__BOOL_LITERAL(TRUE),
+          NULL,
+          (STRING)__GET_VAR(data__->MSG,),
+          (STRING)REAL_TO_STRING(
+            (BOOL)__BOOL_LITERAL(TRUE),
+            NULL,
+            (REAL)__GET_EXTERNAL(data__->STS,.MT.table[(__GET_VAR(data__->I,)) - (0)].MD)),
+          (STRING)__STRING_LITERAL(1,")"),
+          (STRING)__STRING_LITERAL(0,"")));
+        if ((__GET_EXTERNAL(data__->STS,.MT.table[(__GET_VAR(data__->I,)) - (0)].KT) < 1.0E-8)) {
+          __SET_VAR(data__->,NRES,,TERROR__E_MATER);
+          #define GetFbVar(var,...) __GET_VAR(data__->var,__VA_ARGS__)
+          #define SetFbVar(var,val,...) __SET_VAR(data__->,var,__VA_ARGS__,val)
 goto __exit
-      #undef GetFbVar
-      #undef SetFbVar
+          #undef GetFbVar
+          #undef SetFbVar
 ;
-    };
-    if ((__GET_EXTERNAL(data__->STS,.MT.table[(__GET_VAR(data__->I,)) - (0)].CP) < 1.0E-8)) {
-      __SET_VAR(data__->,NRES,,TERROR__E_MATER);
-      #define GetFbVar(var,...) __GET_VAR(data__->var,__VA_ARGS__)
-      #define SetFbVar(var,val,...) __SET_VAR(data__->,var,__VA_ARGS__,val)
+        };
+        if ((__GET_EXTERNAL(data__->STS,.MT.table[(__GET_VAR(data__->I,)) - (0)].CP) < 1.0E-8)) {
+          __SET_VAR(data__->,NRES,,TERROR__E_MATER);
+          #define GetFbVar(var,...) __GET_VAR(data__->var,__VA_ARGS__)
+          #define SetFbVar(var,val,...) __SET_VAR(data__->,var,__VA_ARGS__,val)
 goto __exit
-      #undef GetFbVar
-      #undef SetFbVar
+          #undef GetFbVar
+          #undef SetFbVar
 ;
-    };
-    if ((__GET_EXTERNAL(data__->STS,.MT.table[(__GET_VAR(data__->I,)) - (0)].PL) < 1.0E-8)) {
-      __SET_VAR(data__->,NRES,,TERROR__E_MATER);
-      #define GetFbVar(var,...) __GET_VAR(data__->var,__VA_ARGS__)
-      #define SetFbVar(var,val,...) __SET_VAR(data__->,var,__VA_ARGS__,val)
+        };
+        if ((__GET_EXTERNAL(data__->STS,.MT.table[(__GET_VAR(data__->I,)) - (0)].PL) < 1.0E-8)) {
+          __SET_VAR(data__->,NRES,,TERROR__E_MATER);
+          #define GetFbVar(var,...) __GET_VAR(data__->var,__VA_ARGS__)
+          #define SetFbVar(var,val,...) __SET_VAR(data__->,var,__VA_ARGS__,val)
 goto __exit
-      #undef GetFbVar
-      #undef SetFbVar
+          #undef GetFbVar
+          #undef SetFbVar
 ;
-    };
-    __SET_VAR(data__->,MSG,,LOGMSG(
-      (BOOL)__BOOL_LITERAL(TRUE),
-      NULL,
-      (STRING)MAKEMSG(
-        (BOOL)__BOOL_LITERAL(TRUE),
-        NULL,
-        (STRING)__GET_VAR(data__->MSG,),
-        (STRING)__STRING_LITERAL(1,";"),
-        (STRING)__STRING_LITERAL(0,""),
-        (STRING)__STRING_LITERAL(0,"")),
-      (LOGLEVEL)LOGLEVEL__DEBUG,
-      (TERROR)TERROR__E_SUCCESS));
-    /* BY ... (of FOR loop) */
-    __SET_VAR(data__->,I,,(__GET_VAR(data__->I,) + 1));
+        };
+        __SET_VAR(data__->,MSG,,LOGMSG(
+          (BOOL)__BOOL_LITERAL(TRUE),
+          NULL,
+          (STRING)MAKEMSG(
+            (BOOL)__BOOL_LITERAL(TRUE),
+            NULL,
+            (STRING)__GET_VAR(data__->MSG,),
+            (STRING)__STRING_LITERAL(1,";"),
+            (STRING)__STRING_LITERAL(0,""),
+            (STRING)__STRING_LITERAL(0,"")),
+          (LOGLEVEL)LOGLEVEL__DEBUG,
+          (TERROR)TERROR__E_SUCCESS));
+      }else break;
+    }
   } /* END_FOR */;
   __SET_VAR(data__->,MSG,,LOGMSG(
     (BOOL)__BOOL_LITERAL(TRUE),
@@ -17693,78 +17882,92 @@ goto __exit
     (TERROR)TERROR__E_SUCCESS));
   /* FOR ... */
   __SET_VAR(data__->,I,,0);
-  while( __GET_VAR(data__->I,) <= (__GET_EXTERNAL(data__->HDR,.NP) - 1) ) {
-    __SET_VAR(data__->_GETPROF.,I,,__GET_VAR(data__->I,));
-    GETPROF_body__(&data__->_GETPROF);
-    __SET_EXTERNAL(data__->,STS,.PR.table[(__GET_VAR(data__->I,)) - (0)],__GET_VAR(data__->_GETPROF.PROF));
-    __SET_VAR(data__->,MSG,,MAKEMSG(
-      (BOOL)__BOOL_LITERAL(TRUE),
-      NULL,
-      (STRING)__STRING_LITERAL(16," - Get profile ["),
-      (STRING)SINT_TO_STRING(
-        (BOOL)__BOOL_LITERAL(TRUE),
-        NULL,
-        (SINT)__GET_VAR(data__->I,)),
-      (STRING)__STRING_LITERAL(5,"] ..."),
-      (STRING)__STRING_LITERAL(0,"")));
-    /* FOR ... */
-    __SET_VAR(data__->,J,,0);
-    while( __GET_VAR(data__->J,) <= 11 ) {
-      __SET_VAR(data__->,MSG,,MAKEMSG(
-        (BOOL)__BOOL_LITERAL(TRUE),
-        NULL,
-        (STRING)__GET_VAR(data__->MSG,),
-        (STRING)__STRING_LITERAL(2," ("),
-        (STRING)SINT_TO_STRING(
+  {
+    int __do_increment = 0;
+    while(1) {
+      if(__do_increment){
+        /* BY ... (of FOR loop) */
+        __SET_VAR(data__->,I,,(__GET_VAR(data__->I,) + 1));
+      } else __do_increment = 1;
+      if(__GET_VAR(data__->I,) <= (__GET_EXTERNAL(data__->HDR,.NP) - 1)      ){
+        __SET_VAR(data__->_GETPROF.,I,,__GET_VAR(data__->I,));
+        GETPROF_body__(&data__->_GETPROF);
+        __SET_EXTERNAL(data__->,STS,.PR.table[(__GET_VAR(data__->I,)) - (0)],__GET_VAR(data__->_GETPROF.PROF));
+        __SET_VAR(data__->,MSG,,MAKEMSG(
           (BOOL)__BOOL_LITERAL(TRUE),
           NULL,
-          (SINT)__GET_EXTERNAL(data__->STS,.PR.table[(__GET_VAR(data__->I,)) - (0)].table[(__GET_VAR(data__->J,)) - (0)].A)),
-        (STRING)__STRING_LITERAL(1,",")));
-      __SET_VAR(data__->,MSG,,MAKEMSG(
-        (BOOL)__BOOL_LITERAL(TRUE),
-        NULL,
-        (STRING)__GET_VAR(data__->MSG,),
-        (STRING)SINT_TO_STRING(
+          (STRING)__STRING_LITERAL(16," - Get profile ["),
+          (STRING)SINT_TO_STRING(
+            (BOOL)__BOOL_LITERAL(TRUE),
+            NULL,
+            (SINT)__GET_VAR(data__->I,)),
+          (STRING)__STRING_LITERAL(5,"] ..."),
+          (STRING)__STRING_LITERAL(0,"")));
+        /* FOR ... */
+        __SET_VAR(data__->,J,,0);
+        {
+          int __do_increment = 0;
+          while(1) {
+            if(__do_increment){
+              /* BY ... (of FOR loop) */
+              __SET_VAR(data__->,J,,(__GET_VAR(data__->J,) + 1));
+            } else __do_increment = 1;
+            if(__GET_VAR(data__->J,) <= 11            ){
+              __SET_VAR(data__->,MSG,,MAKEMSG(
+                (BOOL)__BOOL_LITERAL(TRUE),
+                NULL,
+                (STRING)__GET_VAR(data__->MSG,),
+                (STRING)__STRING_LITERAL(2," ("),
+                (STRING)SINT_TO_STRING(
+                  (BOOL)__BOOL_LITERAL(TRUE),
+                  NULL,
+                  (SINT)__GET_EXTERNAL(data__->STS,.PR.table[(__GET_VAR(data__->I,)) - (0)].table[(__GET_VAR(data__->J,)) - (0)].A)),
+                (STRING)__STRING_LITERAL(1,",")));
+              __SET_VAR(data__->,MSG,,MAKEMSG(
+                (BOOL)__BOOL_LITERAL(TRUE),
+                NULL,
+                (STRING)__GET_VAR(data__->MSG,),
+                (STRING)SINT_TO_STRING(
+                  (BOOL)__BOOL_LITERAL(TRUE),
+                  NULL,
+                  (SINT)__GET_EXTERNAL(data__->STS,.PR.table[(__GET_VAR(data__->I,)) - (0)].table[(__GET_VAR(data__->J,)) - (0)].B)),
+                (STRING)__STRING_LITERAL(1,")"),
+                (STRING)__STRING_LITERAL(0,"")));
+              if (((__GET_EXTERNAL(data__->STS,.PR.table[(__GET_VAR(data__->I,)) - (0)].table[(__GET_VAR(data__->J,)) - (0)].A) < 0) || (__GET_EXTERNAL(data__->STS,.PR.table[(__GET_VAR(data__->I,)) - (0)].table[(__GET_VAR(data__->J,)) - (0)].A) > 100))) {
+                __SET_VAR(data__->,NRES,,TERROR__E_PROFILE);
+                #define GetFbVar(var,...) __GET_VAR(data__->var,__VA_ARGS__)
+                #define SetFbVar(var,val,...) __SET_VAR(data__->,var,__VA_ARGS__,val)
+goto __exit
+                #undef GetFbVar
+                #undef SetFbVar
+;
+              };
+              if (((__GET_EXTERNAL(data__->STS,.PR.table[(__GET_VAR(data__->I,)) - (0)].table[(__GET_VAR(data__->J,)) - (0)].B) < -100) || (__GET_EXTERNAL(data__->STS,.PR.table[(__GET_VAR(data__->I,)) - (0)].table[(__GET_VAR(data__->J,)) - (0)].B) > 100))) {
+                __SET_VAR(data__->,NRES,,TERROR__E_PROFILE);
+                #define GetFbVar(var,...) __GET_VAR(data__->var,__VA_ARGS__)
+                #define SetFbVar(var,val,...) __SET_VAR(data__->,var,__VA_ARGS__,val)
+goto __exit
+                #undef GetFbVar
+                #undef SetFbVar
+;
+              };
+            }else break;
+          }
+        } /* END_FOR */;
+        __SET_VAR(data__->,MSG,,LOGMSG(
           (BOOL)__BOOL_LITERAL(TRUE),
           NULL,
-          (SINT)__GET_EXTERNAL(data__->STS,.PR.table[(__GET_VAR(data__->I,)) - (0)].table[(__GET_VAR(data__->J,)) - (0)].B)),
-        (STRING)__STRING_LITERAL(1,")"),
-        (STRING)__STRING_LITERAL(0,"")));
-      if (((__GET_EXTERNAL(data__->STS,.PR.table[(__GET_VAR(data__->I,)) - (0)].table[(__GET_VAR(data__->J,)) - (0)].A) < 0) || (__GET_EXTERNAL(data__->STS,.PR.table[(__GET_VAR(data__->I,)) - (0)].table[(__GET_VAR(data__->J,)) - (0)].A) > 100))) {
-        __SET_VAR(data__->,NRES,,TERROR__E_PROFILE);
-        #define GetFbVar(var,...) __GET_VAR(data__->var,__VA_ARGS__)
-        #define SetFbVar(var,val,...) __SET_VAR(data__->,var,__VA_ARGS__,val)
-goto __exit
-        #undef GetFbVar
-        #undef SetFbVar
-;
-      };
-      if (((__GET_EXTERNAL(data__->STS,.PR.table[(__GET_VAR(data__->I,)) - (0)].table[(__GET_VAR(data__->J,)) - (0)].B) < -100) || (__GET_EXTERNAL(data__->STS,.PR.table[(__GET_VAR(data__->I,)) - (0)].table[(__GET_VAR(data__->J,)) - (0)].B) > 100))) {
-        __SET_VAR(data__->,NRES,,TERROR__E_PROFILE);
-        #define GetFbVar(var,...) __GET_VAR(data__->var,__VA_ARGS__)
-        #define SetFbVar(var,val,...) __SET_VAR(data__->,var,__VA_ARGS__,val)
-goto __exit
-        #undef GetFbVar
-        #undef SetFbVar
-;
-      };
-      /* BY ... (of FOR loop) */
-      __SET_VAR(data__->,J,,(__GET_VAR(data__->J,) + 1));
-    } /* END_FOR */;
-    __SET_VAR(data__->,MSG,,LOGMSG(
-      (BOOL)__BOOL_LITERAL(TRUE),
-      NULL,
-      (STRING)MAKEMSG(
-        (BOOL)__BOOL_LITERAL(TRUE),
-        NULL,
-        (STRING)__GET_VAR(data__->MSG,),
-        (STRING)__STRING_LITERAL(1,";"),
-        (STRING)__STRING_LITERAL(0,""),
-        (STRING)__STRING_LITERAL(0,"")),
-      (LOGLEVEL)LOGLEVEL__DEBUG,
-      (TERROR)TERROR__E_SUCCESS));
-    /* BY ... (of FOR loop) */
-    __SET_VAR(data__->,I,,(__GET_VAR(data__->I,) + 1));
+          (STRING)MAKEMSG(
+            (BOOL)__BOOL_LITERAL(TRUE),
+            NULL,
+            (STRING)__GET_VAR(data__->MSG,),
+            (STRING)__STRING_LITERAL(1,";"),
+            (STRING)__STRING_LITERAL(0,""),
+            (STRING)__STRING_LITERAL(0,"")),
+          (LOGLEVEL)LOGLEVEL__DEBUG,
+          (TERROR)TERROR__E_SUCCESS));
+      }else break;
+    }
   } /* END_FOR */;
   __SET_VAR(data__->,MSG,,LOGMSG(
     (BOOL)__BOOL_LITERAL(TRUE),
@@ -17774,90 +17977,104 @@ goto __exit
     (TERROR)TERROR__E_SUCCESS));
   /* FOR ... */
   __SET_VAR(data__->,I,,0);
-  while( __GET_VAR(data__->I,) <= (__GET_EXTERNAL(data__->HDR,.NV) - 1) ) {
-    __SET_VAR(data__->_GETVAL.,I,,__GET_VAR(data__->I,));
-    GETVAL_body__(&data__->_GETVAL);
-    __SET_EXTERNAL(data__->,STS,.VL.table[(__GET_VAR(data__->I,)) - (0)],__GET_VAR(data__->_GETVAL.VAL));
-    __SET_VAR(data__->,MSG,,MAKEMSG(
-      (BOOL)__BOOL_LITERAL(TRUE),
-      NULL,
-      (STRING)__STRING_LITERAL(14," - Get value ["),
-      (STRING)SINT_TO_STRING(
-        (BOOL)__BOOL_LITERAL(TRUE),
-        NULL,
-        (SINT)__GET_VAR(data__->I,)),
-      (STRING)__STRING_LITERAL(5,"] ..."),
-      (STRING)__STRING_LITERAL(0,"")));
-    if (((__GET_EXTERNAL(data__->STS,.VL.table[(__GET_VAR(data__->I,)) - (0)].IV) >= USINT_TO_INT(
-      (BOOL)__BOOL_LITERAL(TRUE),
-      NULL,
-      (USINT)30)) && (__GET_EXTERNAL(data__->STS,.VL.table[(__GET_VAR(data__->I,)) - (0)].IV) != -1))) {
-      __SET_VAR(data__->,NRES,,TERROR__E_VALUE);
-      #define GetFbVar(var,...) __GET_VAR(data__->var,__VA_ARGS__)
-      #define SetFbVar(var,val,...) __SET_VAR(data__->,var,__VA_ARGS__,val)
-goto __exit
-      #undef GetFbVar
-      #undef SetFbVar
-;
-    };
-    /* FOR ... */
-    __SET_VAR(data__->,J,,0);
-    while( __GET_VAR(data__->J,) <= 2 ) {
-      __SET_VAR(data__->,MSG,,MAKEMSG(
-        (BOOL)__BOOL_LITERAL(TRUE),
-        NULL,
-        (STRING)__GET_VAR(data__->MSG,),
-        (STRING)__STRING_LITERAL(2," ("),
-        (STRING)SINT_TO_STRING(
+  {
+    int __do_increment = 0;
+    while(1) {
+      if(__do_increment){
+        /* BY ... (of FOR loop) */
+        __SET_VAR(data__->,I,,(__GET_VAR(data__->I,) + 1));
+      } else __do_increment = 1;
+      if(__GET_VAR(data__->I,) <= (__GET_EXTERNAL(data__->HDR,.NV) - 1)      ){
+        __SET_VAR(data__->_GETVAL.,I,,__GET_VAR(data__->I,));
+        GETVAL_body__(&data__->_GETVAL);
+        __SET_EXTERNAL(data__->,STS,.VL.table[(__GET_VAR(data__->I,)) - (0)],__GET_VAR(data__->_GETVAL.VAL));
+        __SET_VAR(data__->,MSG,,MAKEMSG(
           (BOOL)__BOOL_LITERAL(TRUE),
           NULL,
-          (SINT)__GET_EXTERNAL(data__->STS,.VL.table[(__GET_VAR(data__->I,)) - (0)].VI.table[(__GET_VAR(data__->J,)) - (0)].A)),
-        (STRING)__STRING_LITERAL(1,",")));
-      __SET_VAR(data__->,MSG,,MAKEMSG(
-        (BOOL)__BOOL_LITERAL(TRUE),
-        NULL,
-        (STRING)__GET_VAR(data__->MSG,),
-        (STRING)SINT_TO_STRING(
+          (STRING)__STRING_LITERAL(14," - Get value ["),
+          (STRING)SINT_TO_STRING(
+            (BOOL)__BOOL_LITERAL(TRUE),
+            NULL,
+            (SINT)__GET_VAR(data__->I,)),
+          (STRING)__STRING_LITERAL(5,"] ..."),
+          (STRING)__STRING_LITERAL(0,"")));
+        if (((__GET_EXTERNAL(data__->STS,.VL.table[(__GET_VAR(data__->I,)) - (0)].IV) >= USINT_TO_INT(
           (BOOL)__BOOL_LITERAL(TRUE),
           NULL,
-          (SINT)__GET_EXTERNAL(data__->STS,.VL.table[(__GET_VAR(data__->I,)) - (0)].VI.table[(__GET_VAR(data__->J,)) - (0)].B)),
-        (STRING)__STRING_LITERAL(1,")"),
-        (STRING)__STRING_LITERAL(0,"")));
-      if (((__GET_EXTERNAL(data__->STS,.VL.table[(__GET_VAR(data__->I,)) - (0)].VI.table[(__GET_VAR(data__->J,)) - (0)].A) < 0) || (__GET_EXTERNAL(data__->STS,.VL.table[(__GET_VAR(data__->I,)) - (0)].VI.table[(__GET_VAR(data__->J,)) - (0)].A) > 100))) {
-        __SET_VAR(data__->,NRES,,TERROR__E_VALUE);
-        #define GetFbVar(var,...) __GET_VAR(data__->var,__VA_ARGS__)
-        #define SetFbVar(var,val,...) __SET_VAR(data__->,var,__VA_ARGS__,val)
+          (USINT)30)) && (__GET_EXTERNAL(data__->STS,.VL.table[(__GET_VAR(data__->I,)) - (0)].IV) != -1))) {
+          __SET_VAR(data__->,NRES,,TERROR__E_VALUE);
+          #define GetFbVar(var,...) __GET_VAR(data__->var,__VA_ARGS__)
+          #define SetFbVar(var,val,...) __SET_VAR(data__->,var,__VA_ARGS__,val)
 goto __exit
-        #undef GetFbVar
-        #undef SetFbVar
+          #undef GetFbVar
+          #undef SetFbVar
 ;
-      };
-      if (((__GET_EXTERNAL(data__->STS,.VL.table[(__GET_VAR(data__->I,)) - (0)].VI.table[(__GET_VAR(data__->J,)) - (0)].B) < 0) || (__GET_EXTERNAL(data__->STS,.VL.table[(__GET_VAR(data__->I,)) - (0)].VI.table[(__GET_VAR(data__->J,)) - (0)].B) >= __GET_EXTERNAL(data__->HDR,.NP)))) {
-        __SET_VAR(data__->,NRES,,TERROR__E_VALUE);
-        #define GetFbVar(var,...) __GET_VAR(data__->var,__VA_ARGS__)
-        #define SetFbVar(var,val,...) __SET_VAR(data__->,var,__VA_ARGS__,val)
+        };
+        /* FOR ... */
+        __SET_VAR(data__->,J,,0);
+        {
+          int __do_increment = 0;
+          while(1) {
+            if(__do_increment){
+              /* BY ... (of FOR loop) */
+              __SET_VAR(data__->,J,,(__GET_VAR(data__->J,) + 1));
+            } else __do_increment = 1;
+            if(__GET_VAR(data__->J,) <= 2            ){
+              __SET_VAR(data__->,MSG,,MAKEMSG(
+                (BOOL)__BOOL_LITERAL(TRUE),
+                NULL,
+                (STRING)__GET_VAR(data__->MSG,),
+                (STRING)__STRING_LITERAL(2," ("),
+                (STRING)SINT_TO_STRING(
+                  (BOOL)__BOOL_LITERAL(TRUE),
+                  NULL,
+                  (SINT)__GET_EXTERNAL(data__->STS,.VL.table[(__GET_VAR(data__->I,)) - (0)].VI.table[(__GET_VAR(data__->J,)) - (0)].A)),
+                (STRING)__STRING_LITERAL(1,",")));
+              __SET_VAR(data__->,MSG,,MAKEMSG(
+                (BOOL)__BOOL_LITERAL(TRUE),
+                NULL,
+                (STRING)__GET_VAR(data__->MSG,),
+                (STRING)SINT_TO_STRING(
+                  (BOOL)__BOOL_LITERAL(TRUE),
+                  NULL,
+                  (SINT)__GET_EXTERNAL(data__->STS,.VL.table[(__GET_VAR(data__->I,)) - (0)].VI.table[(__GET_VAR(data__->J,)) - (0)].B)),
+                (STRING)__STRING_LITERAL(1,")"),
+                (STRING)__STRING_LITERAL(0,"")));
+              if (((__GET_EXTERNAL(data__->STS,.VL.table[(__GET_VAR(data__->I,)) - (0)].VI.table[(__GET_VAR(data__->J,)) - (0)].A) < 0) || (__GET_EXTERNAL(data__->STS,.VL.table[(__GET_VAR(data__->I,)) - (0)].VI.table[(__GET_VAR(data__->J,)) - (0)].A) > 100))) {
+                __SET_VAR(data__->,NRES,,TERROR__E_VALUE);
+                #define GetFbVar(var,...) __GET_VAR(data__->var,__VA_ARGS__)
+                #define SetFbVar(var,val,...) __SET_VAR(data__->,var,__VA_ARGS__,val)
 goto __exit
-        #undef GetFbVar
-        #undef SetFbVar
+                #undef GetFbVar
+                #undef SetFbVar
 ;
-      };
-      /* BY ... (of FOR loop) */
-      __SET_VAR(data__->,J,,(__GET_VAR(data__->J,) + 1));
-    } /* END_FOR */;
-    __SET_VAR(data__->,MSG,,LOGMSG(
-      (BOOL)__BOOL_LITERAL(TRUE),
-      NULL,
-      (STRING)MAKEMSG(
-        (BOOL)__BOOL_LITERAL(TRUE),
-        NULL,
-        (STRING)__GET_VAR(data__->MSG,),
-        (STRING)__STRING_LITERAL(1,";"),
-        (STRING)__STRING_LITERAL(0,""),
-        (STRING)__STRING_LITERAL(0,"")),
-      (LOGLEVEL)LOGLEVEL__DEBUG,
-      (TERROR)TERROR__E_SUCCESS));
-    /* BY ... (of FOR loop) */
-    __SET_VAR(data__->,I,,(__GET_VAR(data__->I,) + 1));
+              };
+              if (((__GET_EXTERNAL(data__->STS,.VL.table[(__GET_VAR(data__->I,)) - (0)].VI.table[(__GET_VAR(data__->J,)) - (0)].B) < 0) || (__GET_EXTERNAL(data__->STS,.VL.table[(__GET_VAR(data__->I,)) - (0)].VI.table[(__GET_VAR(data__->J,)) - (0)].B) >= __GET_EXTERNAL(data__->HDR,.NP)))) {
+                __SET_VAR(data__->,NRES,,TERROR__E_VALUE);
+                #define GetFbVar(var,...) __GET_VAR(data__->var,__VA_ARGS__)
+                #define SetFbVar(var,val,...) __SET_VAR(data__->,var,__VA_ARGS__,val)
+goto __exit
+                #undef GetFbVar
+                #undef SetFbVar
+;
+              };
+            }else break;
+          }
+        } /* END_FOR */;
+        __SET_VAR(data__->,MSG,,LOGMSG(
+          (BOOL)__BOOL_LITERAL(TRUE),
+          NULL,
+          (STRING)MAKEMSG(
+            (BOOL)__BOOL_LITERAL(TRUE),
+            NULL,
+            (STRING)__GET_VAR(data__->MSG,),
+            (STRING)__STRING_LITERAL(1,";"),
+            (STRING)__STRING_LITERAL(0,""),
+            (STRING)__STRING_LITERAL(0,"")),
+          (LOGLEVEL)LOGLEVEL__DEBUG,
+          (TERROR)TERROR__E_SUCCESS));
+      }else break;
+    }
   } /* END_FOR */;
   __SET_VAR(data__->,MSG,,LOGMSG(
     (BOOL)__BOOL_LITERAL(TRUE),
@@ -17867,75 +18084,82 @@ goto __exit
     (TERROR)TERROR__E_SUCCESS));
   /* FOR ... */
   __SET_VAR(data__->,PIT,,0);
-  while( __GET_VAR(data__->PIT,) <= (__GET_EXTERNAL(data__->HDR,.NI) - 1) ) {
-    __SET_VAR(data__->_READITEM.,PIT,,__GET_VAR(data__->PIT,));
-    READITEM_body__(&data__->_READITEM);
-    __SET_VAR(data__->,NRES,,__GET_VAR(data__->_READITEM.IRES));
-    if ((LEN__ULINT__STRING(
-      (BOOL)__BOOL_LITERAL(TRUE),
-      NULL,
-      (STRING)__GET_VAR(data__->MSG,)) == 0)) {
-      __SET_VAR(data__->,MSG,,MAKEMSG(
-        (BOOL)__BOOL_LITERAL(TRUE),
-        NULL,
-        (STRING)__STRING_LITERAL(18," - Updated items: "),
-        (STRING)__STRING_LITERAL(0,""),
-        (STRING)__STRING_LITERAL(0,""),
-        (STRING)__STRING_LITERAL(0,"")));
-    };
-    __SET_VAR(data__->,MSG,,MAKEMSG(
-      (BOOL)__BOOL_LITERAL(TRUE),
-      NULL,
-      (STRING)__GET_VAR(data__->MSG,),
-      (STRING)__STRING_LITERAL(2," ["),
-      (STRING)ID2STR(
-        (BOOL)__BOOL_LITERAL(TRUE),
-        NULL,
-        (UINT)IT_ID(
+  {
+    int __do_increment = 0;
+    while(1) {
+      if(__do_increment){
+        /* BY ... (of FOR loop) */
+        __SET_VAR(data__->,PIT,,(__GET_VAR(data__->PIT,) + 1));
+      } else __do_increment = 1;
+      if(__GET_VAR(data__->PIT,) <= (__GET_EXTERNAL(data__->HDR,.NI) - 1)      ){
+        __SET_VAR(data__->_READITEM.,PIT,,__GET_VAR(data__->PIT,));
+        READITEM_body__(&data__->_READITEM);
+        __SET_VAR(data__->,NRES,,__GET_VAR(data__->_READITEM.IRES));
+        if ((LEN__ULINT__STRING(
           (BOOL)__BOOL_LITERAL(TRUE),
           NULL,
-          (TPOS8)__GET_VAR(data__->PIT,))),
-      (STRING)__STRING_LITERAL(1,",")));
-    __SET_VAR(data__->,MSG,,MAKEMSG(
-      (BOOL)__BOOL_LITERAL(TRUE),
-      NULL,
-      (STRING)__GET_VAR(data__->MSG,),
-      (STRING)SINT_TO_STRING(
-        (BOOL)__BOOL_LITERAL(TRUE),
-        NULL,
-        (SINT)__GET_VAR(data__->PIT,)),
-      (STRING)__STRING_LITERAL(1,"]"),
-      (STRING)__STRING_LITERAL(0,"")));
-    if ((MOD__SINT__SINT__SINT(
-      (BOOL)__BOOL_LITERAL(TRUE),
-      NULL,
-      (SINT)(__GET_VAR(data__->PIT,) + 1),
-      (SINT)5) == 0)) {
-      __SET_VAR(data__->,MSG,,LOGMSG(
-        (BOOL)__BOOL_LITERAL(TRUE),
-        NULL,
-        (STRING)MAKEMSG(
+          (STRING)__GET_VAR(data__->MSG,)) == 0)) {
+          __SET_VAR(data__->,MSG,,MAKEMSG(
+            (BOOL)__BOOL_LITERAL(TRUE),
+            NULL,
+            (STRING)__STRING_LITERAL(18," - Updated items: "),
+            (STRING)__STRING_LITERAL(0,""),
+            (STRING)__STRING_LITERAL(0,""),
+            (STRING)__STRING_LITERAL(0,"")));
+        };
+        __SET_VAR(data__->,MSG,,MAKEMSG(
           (BOOL)__BOOL_LITERAL(TRUE),
           NULL,
           (STRING)__GET_VAR(data__->MSG,),
-          (STRING)__STRING_LITERAL(1,";"),
-          (STRING)__STRING_LITERAL(0,""),
-          (STRING)__STRING_LITERAL(0,"")),
-        (LOGLEVEL)LOGLEVEL__DEBUG,
-        (TERROR)TERROR__E_SUCCESS));
-    };
-    if ((__GET_VAR(data__->NRES,) != TERROR__E_SUCCESS)) {
-      #define GetFbVar(var,...) __GET_VAR(data__->var,__VA_ARGS__)
-      #define SetFbVar(var,val,...) __SET_VAR(data__->,var,__VA_ARGS__,val)
+          (STRING)__STRING_LITERAL(2," ["),
+          (STRING)ID2STR(
+            (BOOL)__BOOL_LITERAL(TRUE),
+            NULL,
+            (UINT)IT_ID(
+              (BOOL)__BOOL_LITERAL(TRUE),
+              NULL,
+              (TPOS8)__GET_VAR(data__->PIT,))),
+          (STRING)__STRING_LITERAL(1,",")));
+        __SET_VAR(data__->,MSG,,MAKEMSG(
+          (BOOL)__BOOL_LITERAL(TRUE),
+          NULL,
+          (STRING)__GET_VAR(data__->MSG,),
+          (STRING)SINT_TO_STRING(
+            (BOOL)__BOOL_LITERAL(TRUE),
+            NULL,
+            (SINT)__GET_VAR(data__->PIT,)),
+          (STRING)__STRING_LITERAL(1,"]"),
+          (STRING)__STRING_LITERAL(0,"")));
+        if ((MOD__SINT__SINT__SINT(
+          (BOOL)__BOOL_LITERAL(TRUE),
+          NULL,
+          (SINT)(__GET_VAR(data__->PIT,) + 1),
+          (SINT)5) == 0)) {
+          __SET_VAR(data__->,MSG,,LOGMSG(
+            (BOOL)__BOOL_LITERAL(TRUE),
+            NULL,
+            (STRING)MAKEMSG(
+              (BOOL)__BOOL_LITERAL(TRUE),
+              NULL,
+              (STRING)__GET_VAR(data__->MSG,),
+              (STRING)__STRING_LITERAL(1,";"),
+              (STRING)__STRING_LITERAL(0,""),
+              (STRING)__STRING_LITERAL(0,"")),
+            (LOGLEVEL)LOGLEVEL__DEBUG,
+            (TERROR)TERROR__E_SUCCESS));
+        };
+        if ((__GET_VAR(data__->NRES,) != TERROR__E_SUCCESS)) {
+          #define GetFbVar(var,...) __GET_VAR(data__->var,__VA_ARGS__)
+          #define SetFbVar(var,val,...) __SET_VAR(data__->,var,__VA_ARGS__,val)
 goto __exit
-      #undef GetFbVar
-      #undef SetFbVar
+          #undef GetFbVar
+          #undef SetFbVar
 ;
-    };
-    __SET_EXTERNAL(data__->,ITS,.PR.table[(__GET_VAR(data__->PIT,)) - (0)].A,__GET_EXTERNAL(data__->ITS,.IT.table[(__GET_VAR(data__->PIT,)) - (0)].ID));
-    __SET_EXTERNAL(data__->,ITS,.PR.table[(__GET_VAR(data__->PIT,)) - (0)].B,__GET_VAR(data__->PIT,));
-    /* BY ... (of FOR loop) */
-    __SET_VAR(data__->,PIT,,(__GET_VAR(data__->PIT,) + 1));
+        };
+        __SET_EXTERNAL(data__->,ITS,.PR.table[(__GET_VAR(data__->PIT,)) - (0)].A,__GET_EXTERNAL(data__->ITS,.IT.table[(__GET_VAR(data__->PIT,)) - (0)].ID));
+        __SET_EXTERNAL(data__->,ITS,.PR.table[(__GET_VAR(data__->PIT,)) - (0)].B,__GET_VAR(data__->PIT,));
+      }else break;
+    }
   } /* END_FOR */;
   if ((LEN__ULINT__STRING(
     (BOOL)__BOOL_LITERAL(TRUE),
@@ -17993,24 +18217,20 @@ goto __exit
   __SET_EXTERNAL(data__->,ITS,.IT.table[(__GET_VAR(data__->IPAR,)) - (0)].PAR,-1);
   /* FOR ... */
   __SET_VAR(data__->,IDX,,1);
-  while( __GET_VAR(data__->IDX,) <= (__GET_EXTERNAL(data__->HDR,.NI) - 1) ) {
-    __SET_VAR(data__->,PIT,,__GET_EXTERNAL(data__->ITS,.PR.table[(__GET_VAR(data__->IDX,)) - (0)].B));
-    __SET_VAR(data__->,L,,IT_LEV(
-      (BOOL)__BOOL_LITERAL(TRUE),
-      NULL,
-      (TPOS8)__GET_VAR(data__->PIT,)));
-    if ((__GET_VAR(data__->L,) < 0)) {
-      __SET_VAR(data__->,NRES,,TERROR__E_STRUCT);
-      #define GetFbVar(var,...) __GET_VAR(data__->var,__VA_ARGS__)
-      #define SetFbVar(var,val,...) __SET_VAR(data__->,var,__VA_ARGS__,val)
-goto __exit
-      #undef GetFbVar
-      #undef SetFbVar
-;
-    };
-    if ((__GET_VAR(data__->L,) != __GET_VAR(data__->ILEV,))) {
-      if ((__GET_VAR(data__->L,) > __GET_VAR(data__->ILEV,))) {
-        if (((__GET_VAR(data__->L,) - __GET_VAR(data__->ILEV,)) != 1)) {
+  {
+    int __do_increment = 0;
+    while(1) {
+      if(__do_increment){
+        /* BY ... (of FOR loop) */
+        __SET_VAR(data__->,IDX,,(__GET_VAR(data__->IDX,) + 1));
+      } else __do_increment = 1;
+      if(__GET_VAR(data__->IDX,) <= (__GET_EXTERNAL(data__->HDR,.NI) - 1)      ){
+        __SET_VAR(data__->,PIT,,__GET_EXTERNAL(data__->ITS,.PR.table[(__GET_VAR(data__->IDX,)) - (0)].B));
+        __SET_VAR(data__->,L,,IT_LEV(
+          (BOOL)__BOOL_LITERAL(TRUE),
+          NULL,
+          (TPOS8)__GET_VAR(data__->PIT,)));
+        if ((__GET_VAR(data__->L,) < 0)) {
           __SET_VAR(data__->,NRES,,TERROR__E_STRUCT);
           #define GetFbVar(var,...) __GET_VAR(data__->var,__VA_ARGS__)
           #define SetFbVar(var,val,...) __SET_VAR(data__->,var,__VA_ARGS__,val)
@@ -18019,39 +18239,57 @@ goto __exit
           #undef SetFbVar
 ;
         };
-        __SET_VAR(data__->,IPAR,,__GET_VAR(data__->IPREV,));
-      } else {
-        __SET_VAR(data__->,IPAR,,__GET_VAR(data__->IPREV,));
-        /* FOR ... */
-        __SET_VAR(data__->,K,,__GET_VAR(data__->L,));
-        while( __GET_VAR(data__->K,) <= __GET_VAR(data__->ILEV,) ) {
-          if ((__GET_VAR(data__->IPAR,) != -1)) {
-            __SET_VAR(data__->,IPAR,,__GET_EXTERNAL(data__->ITS,.IT.table[(__GET_VAR(data__->IPAR,)) - (0)].PAR));
-          };
-          /* BY ... (of FOR loop) */
-          __SET_VAR(data__->,K,,(__GET_VAR(data__->K,) + 1));
-        } /* END_FOR */;
-      };
-    } else {
-      __SET_VAR(data__->,IPAR,,__GET_VAR(data__->IPAR,));
-    };
-    if ((__GET_VAR(data__->IPAR,) == -1)) {
-      __SET_VAR(data__->,NRES,,TERROR__E_STRUCT);
-      #define GetFbVar(var,...) __GET_VAR(data__->var,__VA_ARGS__)
-      #define SetFbVar(var,val,...) __SET_VAR(data__->,var,__VA_ARGS__,val)
+        if ((__GET_VAR(data__->L,) != __GET_VAR(data__->ILEV,))) {
+          if ((__GET_VAR(data__->L,) > __GET_VAR(data__->ILEV,))) {
+            if (((__GET_VAR(data__->L,) - __GET_VAR(data__->ILEV,)) != 1)) {
+              __SET_VAR(data__->,NRES,,TERROR__E_STRUCT);
+              #define GetFbVar(var,...) __GET_VAR(data__->var,__VA_ARGS__)
+              #define SetFbVar(var,val,...) __SET_VAR(data__->,var,__VA_ARGS__,val)
 goto __exit
-      #undef GetFbVar
-      #undef SetFbVar
+              #undef GetFbVar
+              #undef SetFbVar
 ;
-    };
-    __SET_EXTERNAL(data__->,ITS,.IT.table[(__GET_VAR(data__->PIT,)) - (0)].PAR,__GET_VAR(data__->IPAR,));
-    __SET_VAR(data__->,K,,__GET_EXTERNAL(data__->ITS,.IT.table[(__GET_VAR(data__->IPAR,)) - (0)].NUM));
-    __SET_EXTERNAL(data__->,ITS,.IT.table[(__GET_VAR(data__->IPAR,)) - (0)].KIDS.table[(__GET_VAR(data__->K,)) - (0)],__GET_VAR(data__->PIT,));
-    __SET_EXTERNAL(data__->,ITS,.IT.table[(__GET_VAR(data__->IPAR,)) - (0)].NUM,(__GET_VAR(data__->K,) + 1));
-    __SET_VAR(data__->,ILEV,,__GET_VAR(data__->L,));
-    __SET_VAR(data__->,IPREV,,__GET_VAR(data__->PIT,));
-    /* BY ... (of FOR loop) */
-    __SET_VAR(data__->,IDX,,(__GET_VAR(data__->IDX,) + 1));
+            };
+            __SET_VAR(data__->,IPAR,,__GET_VAR(data__->IPREV,));
+          } else {
+            __SET_VAR(data__->,IPAR,,__GET_VAR(data__->IPREV,));
+            /* FOR ... */
+            __SET_VAR(data__->,K,,__GET_VAR(data__->L,));
+            {
+              int __do_increment = 0;
+              while(1) {
+                if(__do_increment){
+                  /* BY ... (of FOR loop) */
+                  __SET_VAR(data__->,K,,(__GET_VAR(data__->K,) + 1));
+                } else __do_increment = 1;
+                if(__GET_VAR(data__->K,) <= __GET_VAR(data__->ILEV,)                ){
+                  if ((__GET_VAR(data__->IPAR,) != -1)) {
+                    __SET_VAR(data__->,IPAR,,__GET_EXTERNAL(data__->ITS,.IT.table[(__GET_VAR(data__->IPAR,)) - (0)].PAR));
+                  };
+                }else break;
+              }
+            } /* END_FOR */;
+          };
+        } else {
+          __SET_VAR(data__->,IPAR,,__GET_VAR(data__->IPAR,));
+        };
+        if ((__GET_VAR(data__->IPAR,) == -1)) {
+          __SET_VAR(data__->,NRES,,TERROR__E_STRUCT);
+          #define GetFbVar(var,...) __GET_VAR(data__->var,__VA_ARGS__)
+          #define SetFbVar(var,val,...) __SET_VAR(data__->,var,__VA_ARGS__,val)
+goto __exit
+          #undef GetFbVar
+          #undef SetFbVar
+;
+        };
+        __SET_EXTERNAL(data__->,ITS,.IT.table[(__GET_VAR(data__->PIT,)) - (0)].PAR,__GET_VAR(data__->IPAR,));
+        __SET_VAR(data__->,K,,__GET_EXTERNAL(data__->ITS,.IT.table[(__GET_VAR(data__->IPAR,)) - (0)].NUM));
+        __SET_EXTERNAL(data__->,ITS,.IT.table[(__GET_VAR(data__->IPAR,)) - (0)].KIDS.table[(__GET_VAR(data__->K,)) - (0)],__GET_VAR(data__->PIT,));
+        __SET_EXTERNAL(data__->,ITS,.IT.table[(__GET_VAR(data__->IPAR,)) - (0)].NUM,(__GET_VAR(data__->K,) + 1));
+        __SET_VAR(data__->,ILEV,,__GET_VAR(data__->L,));
+        __SET_VAR(data__->,IPREV,,__GET_VAR(data__->PIT,));
+      }else break;
+    }
   } /* END_FOR */;
   __SET_VAR(data__->,BRES,,DO_VALIDATE(
     (BOOL)__BOOL_LITERAL(TRUE),
